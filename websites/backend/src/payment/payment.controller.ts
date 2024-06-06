@@ -5,6 +5,9 @@ import {
   Get,
   Param,
   Post,
+  RawBodyRequest,
+  Request,
+  Response,
   UseGuards,
 } from '@nestjs/common';
 
@@ -12,7 +15,7 @@ import { PaymentService } from './payment.service';
 import { HasProjectAccessGuard } from '../projects/guards/hasProjectAccess';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 
-@Controller('payment')
+@Controller('payments')
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
@@ -32,18 +35,17 @@ export class PaymentController {
       body.count,
     );
 
-    return { clientSecret: session.client_secret };
+    return { sessionUrl: session.url };
   }
 
-  @Get('/checkout/:id/session/:sessionId')
-  @UseGuards(HasProjectAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async getSessionStatus(@Param('sessionId') sessionId: string) {
-    const session = await this.paymentService.getSessionStatus(sessionId);
-
-    return {
-      status: session.status,
-      customerEmail: session.customer_details.email,
-    };
+  @Post('/webhooks')
+  async handleWebhooks(@Request() req: RawBodyRequest<Request>) {
+    try {
+      const sig = req.headers['stripe-signature'];
+      await this.paymentService.fulfillOrder(req.rawBody, sig);
+      return null;
+    } catch (err) {
+      throw new BadRequestException();
+    }
   }
 }

@@ -4,7 +4,7 @@ export const createCheckoutSession = (
   projectId: string,
   count: number,
   accessToken: string
-) =>
+): Promise<{ sessionUrl: string }> =>
   fetch(`${Constants.BackendUrl}/payments/checkout/${projectId}`, {
     method: "POST",
     body: JSON.stringify({ count }),

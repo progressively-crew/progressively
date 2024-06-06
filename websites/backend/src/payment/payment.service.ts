@@ -14,22 +14,68 @@ export class PaymentService {
 
   async createCheckoutSession(projectId: string, quantity: number) {
     const session = await this.stripe.checkout.sessions.create({
-      ui_mode: 'embedded',
       line_items: [
         {
-          price: 'price_1POaMoIIMJ2kplmTNKjQkTh3',
+          price: this.env.ProductId,
           quantity,
         },
       ],
       mode: 'payment',
-      return_url: `${this.env.FrontendUrl}/dashboard/projects/${projectId}/settings?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${this.env.FrontendUrl}/dashboard/projects/${projectId}/settings?checkoutSuccess=true`,
+      cancel_url: `${this.env.FrontendUrl}/dashboard/projects/${projectId}/settings?checkoutCanceled=true`,
       automatic_tax: { enabled: true },
+      metadata: {
+        projectId,
+      },
     });
 
     return session;
   }
 
-  getSessionStatus(sessionId: string) {
-    return this.stripe.checkout.sessions.retrieve(sessionId);
+  async fulfillOrder(payload: any, sig: string) {
+    const event = await this.stripe.webhooks.constructEvent(
+      payload,
+      sig,
+      this.env.WebhookSecret,
+    );
+
+    switch (event.type) {
+      case 'checkout.session.completed': {
+        const session = event.data.object;
+        const projectId = event.data.object.metadata.projectId;
+
+        // Save an order in your database, marked as 'awaiting payment'
+        // createOrder(session);
+
+        // Check if the order is paid (for example, from a card payment)
+        //
+        // A delayed notification payment will have an `unpaid` status, as
+        // you're still waiting for funds to be transferred from the customer's
+        // account.
+        if (session.payment_status === 'paid') {
+          // fulfillOrder(session);
+        }
+
+        break;
+      }
+
+      case 'checkout.session.async_payment_succeeded': {
+        const session = event.data.object;
+
+        // Fulfill the purchase...
+        //   fulfillOrder(session);
+
+        break;
+      }
+
+      case 'checkout.session.async_payment_failed': {
+        const session = event.data.object;
+
+        // Send an email to the customer asking them to retry their order
+        // emailCustomerAboutFailedPayment(session);
+
+        break;
+      }
+    }
   }
 }

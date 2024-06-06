@@ -2,7 +2,12 @@ import { Section, SectionHeader } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { UserTable } from "~/modules/user/components/UserTable";
-import { ActionFunction, MetaFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  redirect,
+} from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -14,6 +19,7 @@ import {
   Form,
   Outlet,
   useActionData,
+  useLoaderData,
   useNavigation,
   useSearchParams,
 } from "@remix-run/react";
@@ -29,6 +35,8 @@ import { Spacer } from "~/components/Spacer";
 import { EditButton } from "~/components/Buttons/EditButton";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { IoRefreshCircleOutline } from "react-icons/io5";
+import { CheckoutForm } from "~/modules/payments/components/CheckoutForm";
+import { createCheckoutSession } from "~/modules/payments/services/createCheckoutSession";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -41,7 +49,7 @@ export const meta: MetaFunction = ({ matches }) => {
 };
 
 interface ActionDataType {
-  success: boolean;
+  success?: boolean;
 }
 
 export const action: ActionFunction = async ({
@@ -50,6 +58,17 @@ export const action: ActionFunction = async ({
 }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
+  const formData = await request.formData();
+  const type = formData.get("_type")?.toString();
+
+  if (type === "start-payment") {
+    const countStr = formData.get("count")?.toString();
+    const count = countStr ? Number(countStr) : 1;
+
+    const session = await createCheckoutSession(params.id!, count, authCookie);
+
+    throw redirect(session.sessionUrl);
+  }
 
   try {
     await rotateSecretKey(params.id!, authCookie);
@@ -145,7 +164,10 @@ export default function SettingsPage() {
                       <IconButton
                         icon={<IoRefreshCircleOutline />}
                         tooltip={"Rotate secret key"}
-                        isLoading={navigation.state !== "idle"}
+                        isLoading={
+                          navigation.state !== "idle" &&
+                          !navigation.formData?.get("_type")
+                        }
                       />
                     </Form>
                   </div>
@@ -154,6 +176,21 @@ export default function SettingsPage() {
             </Section>
           </CardContent>
         </Card>
+
+        {userRole === UserRoles.Admin && (
+          <Card>
+            <CardContent>
+              <Section id="payment">
+                <SectionHeader
+                  title="Payment"
+                  titleAs="h3"
+                  description={"You can buy credits to get more events."}
+                />
+                <CheckoutForm />
+              </Section>
+            </CardContent>
+          </Card>
+        )}
 
         <Card>
           <Section id="members">
