@@ -85,6 +85,8 @@ export default function SettingsPage() {
   const navigation = useNavigation();
   const isMemberRemoved = searchParams.get("memberRemoved") || undefined;
 
+  const checkoutSuccess = searchParams.get("checkoutSuccess") === "true";
+
   const actionResult =
     actionData?.success === true ? (
       <SuccessBox id="secret-key-rotated">
@@ -103,12 +105,19 @@ export default function SettingsPage() {
       <DashboardLayout
         subNav={<ProjectNavBar project={project} />}
         status={
-          actionResult ??
-          (isMemberRemoved ? (
-            <SuccessBox id={"plan-add-success"}>
-              The member has been successfully removed.
+          checkoutSuccess ? (
+            <SuccessBox id="checkout-succeed">
+              Checkout sent! It may take a few minutes before seeing your
+              credits appearing.
             </SuccessBox>
-          ) : null)
+          ) : (
+            actionResult ??
+            (isMemberRemoved ? (
+              <SuccessBox id={"plan-add-success"}>
+                The member has been successfully removed.
+              </SuccessBox>
+            ) : null)
+          )
         }
       >
         <PageTitle
@@ -186,7 +195,10 @@ export default function SettingsPage() {
                   titleAs="h3"
                   description={"You can buy credits to get more events."}
                 />
-                <CheckoutForm />
+
+                <div className="pt-4">
+                  <CheckoutForm />
+                </div>
               </Section>
             </CardContent>
           </Card>
