@@ -15,12 +15,16 @@ import { PaymentService } from './payment.service';
 import { HasProjectAccessGuard } from '../projects/guards/hasProjectAccess';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { UserId } from '../users/users.decorator';
+import { UserRoles } from '../users/roles';
+import { Roles } from '../shared/decorators/Roles';
+import { EventsPerCredits } from './constants';
 
 @Controller('payments')
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
-  @Post('/checkout/:id')
+  @Post(':id/checkout')
+  @Roles(UserRoles.Admin)
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
   async createCheckoutSession(
@@ -39,6 +43,16 @@ export class PaymentController {
     );
 
     return { sessionUrl: session.url };
+  }
+
+  @Get(':id/usage')
+  @Roles(UserRoles.Admin)
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getEventUsage(@Param('id') id: string) {
+    const usage = await this.paymentService.getEventUsage(id);
+
+    return { ...usage, eventsPerCredits: EventsPerCredits };
   }
 
   @Post('/webhooks')

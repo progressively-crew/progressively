@@ -37,6 +37,7 @@ import { IconButton } from "~/components/Buttons/IconButton";
 import { IoRefreshCircleOutline } from "react-icons/io5";
 import { CheckoutForm } from "~/modules/payments/components/CheckoutForm";
 import { createCheckoutSession } from "~/modules/payments/services/createCheckoutSession";
+import { getEventUsage } from "~/modules/payments/services/getEventUsage";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -78,8 +79,17 @@ export const action: ActionFunction = async ({
   }
 };
 
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const usage = await getEventUsage(params.id!, authCookie);
+
+  return usage;
+};
+
 export default function SettingsPage() {
   const { project, userRole } = useProject();
+  const { eventsCount, eventsPerCredits } = useLoaderData<typeof loader>();
   const [searchParams] = useSearchParams();
   const actionData = useActionData<ActionDataType>();
   const navigation = useNavigation();
@@ -174,7 +184,7 @@ export default function SettingsPage() {
                         icon={<IoRefreshCircleOutline />}
                         tooltip={"Rotate secret key"}
                         isLoading={
-                          navigation.state !== "idle" &&
+                          navigation.state === "submitting" &&
                           !navigation.formData?.get("_type")
                         }
                       />
@@ -193,10 +203,27 @@ export default function SettingsPage() {
                 <SectionHeader
                   title="Payment"
                   titleAs="h3"
-                  description={"You can buy credits to get more events."}
+                  description={
+                    <>
+                      <strong className="font-bold">1 credit</strong>{" "}
+                      corresponds to{" "}
+                      <strong className="font-bold">
+                        {eventsPerCredits} events in total
+                      </strong>
+                      . It includes feature flags evaluations, page views, and
+                      custom events.
+                    </>
+                  }
                 />
 
-                <div className="pt-4">
+                <div className="rounded-xl bg-gray-100 p-6 inline-block mt-4">
+                  <div className="pb-4">
+                    <strong className="text-gray-950 text-3xl">
+                      {project.credits} credits available
+                    </strong>
+                    <span className="pl-2 text-sm">({eventsCount} events)</span>
+                  </div>
+
                   <CheckoutForm />
                 </div>
               </Section>

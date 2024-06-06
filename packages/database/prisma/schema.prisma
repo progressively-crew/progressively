@@ -45,8 +45,10 @@ model Project {
   clientKey   String        @default(uuid())
   secretKey   String        @default(uuid())
   domain      String?
+  credits     Int           @default(0)
   Session     Session[]
   StripeOrder StripeOrder[]
+  EventUsage  EventUsage[]
 }
 
 model UserProject {
@@ -198,4 +200,10 @@ model StripeOrder {
   userUuid        String
   status          String
   updatedAt       DateTime? @default(now())
+}
+
+model EventUsage {
+  project     Project @relation(fields: [projectUuid], references: [uuid])
+  projectUuid String  @id
+  eventsCount Int
 }

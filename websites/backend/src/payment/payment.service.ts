@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
 import { getEnv } from './getEnv';
 import { PrismaService } from '../database/prisma.service';
+import { EventsPerCredits } from './constants';
 
 @Injectable()
 export class PaymentService {
@@ -11,6 +12,12 @@ export class PaymentService {
   constructor(private readonly prisma: PrismaService) {
     this.env = getEnv();
     this.stripe = new Stripe(this.env.PrivateStripeKey);
+  }
+
+  getEventUsage(projectUuid: string) {
+    return this.prisma.eventUsage.findUnique({
+      where: { projectUuid },
+    });
   }
 
   async createCheckoutSession(
@@ -41,14 +48,37 @@ export class PaymentService {
   }
 
   orderSucceeded(session: Stripe.Checkout.Session) {
-    return this.prisma.stripeOrder.updateMany({
-      data: {
-        status: 'paid',
-      },
-      where: {
-        stripeSessionId: session.id,
-      },
-    });
+    const quantity = Number(session.metadata.quantity);
+    const projectUuid = session.metadata.projectId;
+
+    return this.prisma.$transaction([
+      this.prisma.stripeOrder.updateMany({
+        data: {
+          status: 'paid',
+        },
+        where: {
+          stripeSessionId: session.id,
+        },
+      }),
+      this.prisma.project.update({
+        where: { uuid: projectUuid },
+        data: {
+          credits: {
+            increment: quantity,
+          },
+        },
+      }),
+      this.prisma.eventUsage.update({
+        where: {
+          projectUuid,
+        },
+        data: {
+          eventsCount: {
+            increment: quantity * EventsPerCredits,
+          },
+        },
+      }),
+    ]);
   }
 
   orderFailed(session: Stripe.Checkout.Session) {
