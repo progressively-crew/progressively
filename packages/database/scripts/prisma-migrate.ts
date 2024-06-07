@@ -38,10 +38,9 @@ const guardUrl = () => {
 };
 
 const main = async () => {
-  const { dbUrl, shadowUrl } = guardUrl();
+  const { dbUrl } = guardUrl();
 
-  const isDevelopmentMigration =
-    dbUrl.includes("localhost") || shadowUrl.includes("localhost");
+  const isDevelopmentMigration = dbUrl.includes("localhost");
 
   if (isDevelopmentMigration) {
     console.info("\n\nℹ️ Running migration on DEVELOPMENT locally.\n\n");
