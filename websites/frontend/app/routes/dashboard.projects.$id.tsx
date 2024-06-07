@@ -18,11 +18,11 @@ export const handle = {
     );
 
     return {
-      link: `/dashboard/projects/${match.params.id}/flags/all`,
+      link: `/dashboard/projects/${match.params.id}/home`,
       label: match.data.project.name,
       isProject: true,
       menuItems: routeWithProjects.data.projects.map((p: any) => ({
-        href: `/dashboard/projects/${p.project.uuid}/flags/all`,
+        href: `/dashboard/projects/${p.project.uuid}/home`,
         label: p.project.name,
         icon: <ProjectIcon />,
       })),

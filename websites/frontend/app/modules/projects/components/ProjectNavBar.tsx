@@ -4,6 +4,7 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TbChartAreaLine } from "react-icons/tb";
 import { IoFunnelOutline } from "react-icons/io5";
 import { SettingsIcon } from "~/components/Icons/SettingsIcon";
+import { HomeIcon } from "~/components/Icons/HomeIcon";
 
 export interface ProjectNavBarProps {
   project: Project;
@@ -12,33 +13,43 @@ export interface ProjectNavBarProps {
 export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
   return (
     <HorizontalNav label={"Navigate in project"}>
-      <NavItem
-        to={`/dashboard/projects/${project.uuid}/flags/all`}
-        icon={<FlagIcon />}
-      >
-        Feature flags
-      </NavItem>
+      <ul className="flex flex-row items-center">
+        <NavItem
+          to={`/dashboard/projects/${project.uuid}/home`}
+          icon={<HomeIcon />}
+        >
+          Home
+        </NavItem>
+        <NavItem
+          to={`/dashboard/projects/${project.uuid}/flags/all`}
+          icon={<FlagIcon />}
+        >
+          Feature flags
+        </NavItem>
 
-      <NavItem
-        to={`/dashboard/projects/${project.uuid}/analytics`}
-        icon={<TbChartAreaLine />}
-      >
-        Analytics
-      </NavItem>
+        <NavItem
+          to={`/dashboard/projects/${project.uuid}/analytics`}
+          icon={<TbChartAreaLine />}
+        >
+          Analytics
+        </NavItem>
 
-      <NavItem
-        to={`/dashboard/projects/${project.uuid}/funnels`}
-        icon={<IoFunnelOutline />}
-      >
-        Funnels
-      </NavItem>
+        <NavItem
+          to={`/dashboard/projects/${project.uuid}/funnels`}
+          icon={<IoFunnelOutline />}
+        >
+          Funnels
+        </NavItem>
+      </ul>
 
-      <NavItem
-        to={`/dashboard/projects/${project.uuid}/settings`}
-        icon={<SettingsIcon />}
-      >
-        Settings
-      </NavItem>
+      <ul className="flex flex-row items-center">
+        <NavItem
+          to={`/dashboard/projects/${project.uuid}/settings`}
+          icon={<SettingsIcon />}
+        >
+          Settings
+        </NavItem>
+      </ul>
     </HorizontalNav>
   );
 };

@@ -48,9 +48,7 @@ export const action: ActionFunction = async ({
     session.get("auth-cookie")
   );
 
-  return redirect(
-    `/dashboard/projects/${project.uuid}/flags/all?projectCreated=true#project-added`
-  );
+  return redirect(`/dashboard/projects/${project.uuid}/home`);
 };
 
 export default function OnboardingPage() {

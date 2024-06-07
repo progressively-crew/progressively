@@ -31,7 +31,7 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
       <Td>
         <Link
           ref={linkRef}
-          to={`/dashboard/projects/${project.projectId}/flags/all`}
+          to={`/dashboard/projects/${project.projectId}/home`}
         >
           {project.project.name}
         </Link>

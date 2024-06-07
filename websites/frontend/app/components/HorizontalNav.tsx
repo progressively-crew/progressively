@@ -9,9 +9,9 @@ export interface HorizontalNavProps {
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
     <nav aria-label={label} className="bg-gray-50 px-4">
-      <ul className="flex flex-row items-center overflow-x-scroll">
+      <div className="flex flex-row items-center overflow-x-scroll justify-between">
         {children}
-      </ul>
+      </div>
     </nav>
   );
 };

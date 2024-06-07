@@ -76,7 +76,7 @@ export const action: ActionFunction = async ({
   let url = "";
 
   if (projects?.length === 1) {
-    url += `/dashboard/projects/${projects[0].projectId}/flags/all`;
+    url += `/dashboard/projects/${projects[0].projectId}/home`;
   } else {
     url = "/dashboard/projects/all";
   }
