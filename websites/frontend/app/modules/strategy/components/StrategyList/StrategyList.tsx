@@ -2,6 +2,7 @@ import { Strategy } from "../../types";
 import { Variant } from "~/modules/variants/types";
 import { StrategyItem } from "./StrategyListItem";
 import { Form } from "@remix-run/react";
+import React from "react";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -28,12 +29,21 @@ export const StrategyList = ({ items, variants }: StrategyListProps) => {
         <div className="flex flex-col gap-2 pt-4">
           {items.map((strategy, index) => {
             return (
-              <StrategyItem
-                key={strategy.uuid}
-                strategy={strategy}
-                variants={variants}
-                index={index}
-              />
+              <React.Fragment key={strategy.uuid}>
+                {index > 0 && (
+                  <div className="flex justify-center items-center relative">
+                    <div className="z-10 uppercase font-mono text-xs inline-block rounded-full px-4 py-1 text-gray-900 bg-gray-100">
+                      Or
+                    </div>
+                    <div className="absolute h-px w-3/4 border-t border-dashed" />
+                  </div>
+                )}
+                <StrategyItem
+                  strategy={strategy}
+                  variants={variants}
+                  index={index}
+                />
+              </React.Fragment>
             );
           })}
         </div>

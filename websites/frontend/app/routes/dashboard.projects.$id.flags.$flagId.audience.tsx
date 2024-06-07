@@ -186,12 +186,12 @@ export default function FlagById() {
             <StrategyList items={strategies} variants={variants} />
           ) : null}
 
-          <Form method="post" className="pt-2">
+          <Form method="post" className="pt-4">
             <input type="hidden" name="_type" value="add-strategy" />
             <button
               aria-busy={isCreatingStrategy}
               type="submit"
-              className="relative border border-dashed border-slate-300 w-full py-4 rounded text-slate-600 hover:bg-slate-100 active:bg-slate-200"
+              className="relative border border-dashed border-slate-300 w-full py-4 rounded-xl text-slate-600 hover:bg-slate-100 active:bg-slate-200"
             >
               Add a strategy
             </button>
