@@ -40,10 +40,6 @@ export class SdkModule implements OnModuleInit {
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
   ) {}
 
-  async onModuleDestroy() {
-    await this.wsGateway.teardown();
-  }
-
   async onModuleInit() {
     this.wsGateway.registerSubscriptionHandler(
       (entity, fields: FieldRecord) => {

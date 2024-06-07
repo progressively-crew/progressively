@@ -106,10 +106,6 @@ export class WebsocketGateway
     this.subscribers.push(subscriber);
   }
 
-  async teardown() {
-    await this.pubsubService.teardown();
-  }
-
   notifyChanges(entity: unknown) {
     this.pubsubService.notifyChannel('flag-env-changed', entity);
   }
