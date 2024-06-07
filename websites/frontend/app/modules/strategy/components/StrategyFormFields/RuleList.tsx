@@ -29,7 +29,7 @@ export const RuleList = ({ rules, onRemoveRule, index }: RuleListProps) => {
             <div className="pt-1">
               <IconButton
                 type="button"
-                icon={<IoMdClose className="text-xl text-slate-400" />}
+                icon={<IoMdClose className="text-xl text-gray-400" />}
                 tooltip="Remove rule"
                 onClick={() => onRemoveRule(rule)}
               />

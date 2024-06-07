@@ -108,7 +108,7 @@ export const StrategyItem = ({
                   <button
                     type="button"
                     onClick={addRule}
-                    className="border border-dashed border-slate-300 w-full py-2 rounded-xl text-slate-600 text-xs hover:bg-slate-50 active:bg-slate-100"
+                    className="border border-dashed border-gray-300 w-full py-2 rounded-xl text-gray-600 text-xs hover:bg-gray-50 active:bg-gray-100"
                   >
                     Add a rule
                   </button>

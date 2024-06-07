@@ -220,7 +220,7 @@ export default function CreateFunnel() {
               return (
                 <li
                   key={funnelEntry.eventName || funnelEntry.flagUuid}
-                  className="flex flex-row justify-between bg-slate-50 pr-2 pl-4 rounded-lg items-center h-14"
+                  className="flex flex-row justify-between bg-gray-50 pr-2 pl-4 rounded-lg items-center h-14"
                 >
                   <div>
                     <input

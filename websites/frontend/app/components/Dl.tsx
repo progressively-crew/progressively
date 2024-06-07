@@ -12,7 +12,7 @@ export const Dl = ({ children }: DlProps) => {
 
 export const Dt = ({ children }: DlProps) => {
   return (
-    <Typography as="dt" className="text-slate-600 text-xs">
+    <Typography as="dt" className="text-gray-600 text-xs">
       {children}
     </Typography>
   );

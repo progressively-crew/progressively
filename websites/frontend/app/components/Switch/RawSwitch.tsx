@@ -7,7 +7,7 @@ const RawSwitch = React.forwardRef<
 >((props, ref) => (
   <SwitchPrimitives.Root
     className={
-      "peer inline-flex items-center h-[24px] w-[44px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-slate-200 data-[state=checked]:bg-emerald-300"
+      "peer inline-flex items-center h-[24px] w-[44px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-gray-200 data-[state=checked]:bg-emerald-300"
     }
     {...props}
     ref={ref}

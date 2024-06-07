@@ -25,7 +25,7 @@ export const Switch = ({
 
   return (
     <div className="flex items-center gap-2">
-      <label htmlFor={id} className="text-slate-900 text-sm" aria-hidden>
+      <label htmlFor={id} className="text-gray-900 text-sm" aria-hidden>
         {label}
       </label>
       <RawSwitch

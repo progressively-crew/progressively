@@ -37,9 +37,9 @@ export const PercentageField = ({
 
       <div className="inline-block h-10 flex flex-row items-center gap-2">
         <div className="relative flex flex-row items-center">
-          <div className="w-full absolute h-2 bg-slate-200 rounded-full" />
+          <div className="w-full absolute h-2 bg-gray-200 rounded-full" />
           <div
-            className="h-2 bg-slate-700 absolute rounded-full"
+            className="h-2 bg-gray-700 absolute rounded-full"
             style={{ width: `${value}%` }}
           />
           <input

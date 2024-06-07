@@ -21,7 +21,7 @@ export const DashedButton = ({
     <button
       form={form}
       type={type}
-      className={`${sizeClass} text-center text-slate-600 border border-dashed border-slate-300 block rounded w-full hover:border-slate-200 hover:text-slate-400 active:border-slate-100 active:text-slate-300 flex flex-row items-center justify-center gap-4`}
+      className={`${sizeClass} text-center text-gray-600 border border-dashed border-gray-300 block rounded w-full hover:border-gray-200 hover:text-gray-400 active:border-gray-100 active:text-gray-300 flex flex-row items-center justify-center gap-4`}
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}
     >

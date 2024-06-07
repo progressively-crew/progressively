@@ -18,7 +18,7 @@ export const SkipNavLink = ({ children }: SkipNavLinkProps) => {
       href="#content"
       tabIndex={inert ? -1 : 0}
       aria-hidden={inert}
-      className="sr-only focus:not-sr-only focus:absolute bg-slate-800 text-white focus:p-4 rounded-xl focus:m-4 z-30"
+      className="sr-only focus:not-sr-only focus:absolute bg-gray-800 text-white focus:p-4 rounded-xl focus:m-4 z-30"
     >
       {children}
     </a>

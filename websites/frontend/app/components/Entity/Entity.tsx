@@ -49,7 +49,7 @@ export const Entity = ({
               )}
             </div>
             {description && (
-              <div className="text-sm text-slate-500 mt-1">{description}</div>
+              <div className="text-sm text-gray-500 mt-1">{description}</div>
             )}
           </div>
         </div>
