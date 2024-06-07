@@ -74,13 +74,14 @@ export class SdkController {
     const fields = parseBase64Params(base64Params);
     const userAgent = request.headers['user-agent'] || '';
     const ip = request.ip;
+    const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
     fields.id = resolveUserId(fields, userAgent, ip);
 
     const concernedProject = await this._guardSdkEndpoint(request, fields);
-    const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
     return await this.sdkService.computeFlags(
+      base64Params,
       concernedProject,
       fields,
       shouldSkipHits,

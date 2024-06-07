@@ -24,7 +24,7 @@ import { KafkaTopics } from '../queuing/topics';
 import { FlagsService } from '../flags/flags.service';
 import { Project } from '@progressively/database';
 import { StrategyService } from '../strategy/strategy.service';
-import { EventsService } from '..//events/events.service';
+import { EventsService } from '../events/events.service';
 
 @Injectable()
 export class SdkService {
@@ -149,7 +149,12 @@ export class SdkService {
     });
   }
 
-  async computeFlags(project: Project, fields: FieldRecord, skipHit: boolean) {
+  async computeFlags(
+    b64: string,
+    project: Project,
+    fields: FieldRecord,
+    skipHit: boolean,
+  ) {
     const flags = await this.flagService.getPopulatedFlags(project.uuid);
 
     const resolveFlags = {};

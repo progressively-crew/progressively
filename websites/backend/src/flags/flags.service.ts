@@ -39,8 +39,8 @@ export class FlagsService {
     }) as unknown as Promise<Array<PopulatedFlag>>;
   }
 
-  changeFlagStatus(flagId: string, status: FlagStatus) {
-    return this.prisma.flag.update({
+  async changeFlagStatus(flagId: string, status: FlagStatus) {
+    return await this.prisma.flag.update({
       where: {
         uuid: flagId,
       },

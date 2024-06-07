@@ -273,7 +273,7 @@ export class EventsService {
     return dataset;
   }
 
-  async getDistinctUrl(projectId: String, timeframe: Timeframe) {
+  async getDistinctUrl(projectId: string, timeframe: Timeframe) {
     const resultSet = await this.clickhouse.query({
       query: `SELECT DISTINCT(url)
     FROM events
@@ -282,12 +282,10 @@ export class EventsService {
       format: 'JSONEachRow',
     });
 
-    const dataset = await resultSet.json();
-
-    return dataset;
+    return await resultSet.json();
   }
 
-  async getDistinctEvents(projectId: String, timeframe: Timeframe) {
+  async getDistinctEvents(projectId: string, timeframe: Timeframe) {
     const resultSet = await this.clickhouse.query({
       query: `SELECT DISTINCT(name)
     FROM events
@@ -296,9 +294,7 @@ export class EventsService {
       format: 'JSONEachRow',
     });
 
-    const dataset = await resultSet.json();
-
-    return dataset;
+    return await resultSet.json();
   }
 
   async deleteOutdatedEvents() {
@@ -391,9 +387,7 @@ export class EventsService {
       format: 'JSONEachRow',
     });
 
-    const dataset = await resultSet.json();
-
-    return dataset;
+    return await resultSet.json();
   }
 
   async getDistinctViewport(
@@ -413,8 +407,6 @@ export class EventsService {
       format: 'JSONEachRow',
     });
 
-    const dataset = await resultSet.json();
-
-    return dataset;
+    return await resultSet.json();
   }
 }

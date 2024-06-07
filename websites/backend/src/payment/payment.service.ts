@@ -25,7 +25,7 @@ export class PaymentService {
     userId: string,
     quantity: number,
   ) {
-    const session = await this.stripe.checkout.sessions.create({
+    return await this.stripe.checkout.sessions.create({
       line_items: [
         {
           price: this.env.ProductId,
@@ -43,8 +43,6 @@ export class PaymentService {
         quantity,
       },
     });
-
-    return session;
   }
 
   orderSucceeded(session: Stripe.Checkout.Session) {
