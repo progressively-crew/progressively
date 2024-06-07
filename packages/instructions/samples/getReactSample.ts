@@ -4,13 +4,13 @@ export const setupFeatureFlagSample = async () => {
   const rawCode = `import { useFlags } from "@progressively/react";
 
 const FlaggedComponent = () => {
-const { flags } = useFlags();
+  const { flags } = useFlags();
 
-if (flags.myFlagKey) {
-  return <div>New page!</div>;
-}
+  if (flags.myFlagKey) {
+    return <div>New page!</div>;
+  }
 
-return <div>Old page</div>;
+  return <div>Old page</div>;
 };
   `;
 

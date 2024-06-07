@@ -21,6 +21,7 @@ import {
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { Codeblock } from "~/components/Codeblock";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -105,15 +106,30 @@ export default function SettingsPage() {
                 </TabList>
                 <TabContent value="react">
                   <CardContent>
-                    <Codeblock
-                      html={setupProviderSampleCode.html}
-                      rawCode={setupProviderSampleCode.rawCode}
-                    />
+                    <Typography className="text-sm pb-4">
+                      1. Wrap your application with the ProgressivelyProvider:
+                    </Typography>
+                    <Card>
+                      <CardContent>
+                        <Codeblock
+                          html={setupProviderSampleCode.html}
+                          rawCode={setupProviderSampleCode.rawCode}
+                        />
+                      </CardContent>
+                    </Card>
 
-                    <Codeblock
-                      html={setupFeatureFlagSampleCode.html}
-                      rawCode={setupFeatureFlagSampleCode.rawCode}
-                    />
+                    <Typography className="text-sm py-4">
+                      2. Get the feature flags dictionary and make a condition
+                      to start using it
+                    </Typography>
+                    <Card>
+                      <CardContent>
+                        <Codeblock
+                          html={setupFeatureFlagSampleCode.html}
+                          rawCode={setupFeatureFlagSampleCode.rawCode}
+                        />
+                      </CardContent>
+                    </Card>
                   </CardContent>
                 </TabContent>
               </Tabs>
