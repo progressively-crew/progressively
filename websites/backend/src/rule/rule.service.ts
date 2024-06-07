@@ -21,18 +21,9 @@ export class RuleService {
     return false;
   }
 
-  isMatchingAtLeastOneRule(
-    rules: Array<Partial<RuleType>>,
-    fields: FieldRecord,
-  ) {
-    if (rules.length === 0) return true;
-
-    return Boolean(rules.find((rule) => this.isMatchingRule(rule, fields)));
-  }
-
   // Make sure the list of rules are matching with the "and" operator
-  isMatchingAllRules(rules: Array<RuleType>, fields: FieldRecord) {
-    if (rules.length === 0) return false;
+  isMatchingAllRules(rules: Array<Partial<RuleType>>, fields: FieldRecord) {
+    if (rules.length === 0) return true;
 
     return rules.every((rule) => this.isMatchingRule(rule, fields));
   }
