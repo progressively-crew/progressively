@@ -217,39 +217,50 @@ export default function SettingsPage() {
         </Card>
 
         {userRole === UserRoles.Admin && isPricingEnabled && (
-          <Card>
-            <CardContent>
-              <Section id="payment">
-                <SectionHeader
-                  title="Payment"
-                  titleAs="h3"
-                  description={
-                    <>
-                      <strong className="font-bold">1 credit</strong>{" "}
-                      corresponds to{" "}
-                      <strong className="font-bold">
-                        {eventsPerCredits} events in total
-                      </strong>
-                      . It includes feature flags evaluations, page views, and
-                      custom events.
-                    </>
-                  }
-                />
+          <Section id="payment">
+            <Card>
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex-1">
+                  <CardContent>
+                    <SectionHeader
+                      title="Payment"
+                      titleAs="h2"
+                      description={
+                        <>
+                          <strong className="font-bold">1 credit</strong>{" "}
+                          corresponds to{" "}
+                          <strong className="font-bold">
+                            {eventsPerCredits} events in total
+                          </strong>
+                          . It includes feature flags evaluations, page views,
+                          and custom events.
+                        </>
+                      }
+                    />
+                  </CardContent>
+                </div>
 
-                <div className="rounded-xl bg-gray-100 p-6 inline-block mt-4">
+                <div className="rounded-t-xl md:rounded-t-none md:rounded-r-xl bg-gray-100 p-12 shrink-0">
                   <div className="pb-4">
-                    <strong className="text-gray-950 text-3xl">
-                      {(eventsCount / eventsPerCredits).toFixed(3)} credits
-                      available
+                    <Typography as="h4" className="text-xs !text-gray-800">
+                      Credits available
+                    </Typography>
+                    <strong className="text-gray-950 text-5xl">
+                      {(eventsCount / eventsPerCredits).toFixed(3)}
                     </strong>
-                    <span className="pl-2 text-sm">({eventsCount} events)</span>
+                    <span className="pl-2 text-xs text-gray-800">
+                      ({eventsCount} events)
+                    </span>
                   </div>
 
+                  <Typography as="h4" className="text-xs !text-gray-800 pb-2">
+                    Buy more credits
+                  </Typography>
                   <CheckoutForm />
                 </div>
-              </Section>
-            </CardContent>
-          </Card>
+              </div>
+            </Card>
+          </Section>
         )}
 
         <Card>

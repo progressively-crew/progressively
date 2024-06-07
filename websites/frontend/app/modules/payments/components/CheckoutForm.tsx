@@ -15,7 +15,7 @@ export const CheckoutForm = () => {
         hiddenLabel
       />
 
-      <Button type="submit">Buy more now</Button>
+      <Button type="submit">Buy</Button>
     </Form>
   );
 };
