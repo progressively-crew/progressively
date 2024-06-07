@@ -27,7 +27,7 @@ describe('RuleService', () => {
   });
 
   describe('isMatchingAllRules', () => {
-    it('returns false when no rules are passed', () => {
+    it('returns true when no rules are passed', () => {
       const rules: Array<RuleType> = [];
 
       const fields: FieldRecord = {
@@ -35,7 +35,7 @@ describe('RuleService', () => {
         email: 'marv',
       };
 
-      expect(service.isMatchingAllRules(rules, fields)).toBe(false);
+      expect(service.isMatchingAllRules(rules, fields)).toBe(true);
     });
 
     it(`resolves rules using the "AND" operator`, () => {
