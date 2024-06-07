@@ -39,6 +39,7 @@ import { IoRefreshCircleOutline } from "react-icons/io5";
 import { CheckoutForm } from "~/modules/payments/components/CheckoutForm";
 import { createCheckoutSession } from "~/modules/payments/services/createCheckoutSession";
 import { getEventUsage } from "~/modules/payments/services/getEventUsage";
+import { authGuard } from "~/modules/auth/services/auth-guard";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -84,6 +85,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const usage = await getEventUsage(params.id!, authCookie);
+  const user = await authGuard(request);
 
   try {
     const sdk = Progressively.init({
@@ -92,6 +94,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       apiUrl: "https://api.progressively.app",
       fields: {
         environment: process.env.NODE_ENV!,
+        email: user.email,
       },
     });
 
