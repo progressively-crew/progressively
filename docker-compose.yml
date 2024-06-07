@@ -22,6 +22,7 @@ services:
       DATABASE_URL: postgresql://admin:admin@db/progressively
       SHADOW_DATABASE_URL: postgresql://admin:admin@db-shadow/progressively
       REDIS_URL: redis://redis-cache
+      REDIS_CACHING_URL: redis://redis-cache
       CLICKHOUSE_HOST: http://clickhouse:8123
       CLICKHOUSE_USER: admin
       CLICKHOUSE_PASSWORD: admin

@@ -12,8 +12,7 @@ description: How to deploy Progressively to Fly.io?
 - A connection string to a Redis database (you can use [Upstash](https://upstash.com/) for example)
 - A connection string to a [Clickhouse](https://clickhouse.com/) database (you can use the online service or the [Docker image](https://hub.docker.com/r/clickhouse/clickhouse-server/))
 - An account on [Fly.io](https://fly.io/)
-- The [Fly.io CLI](https://fly.io/docs/hands-on/install-flyctl/) installed on your machine 
-
+- The [Fly.io CLI](https://fly.io/docs/hands-on/install-flyctl/) installed on your machine
 
 ## Steps
 
@@ -42,6 +41,7 @@ $ fly secrets set \
   DATABASE_URL=YOUR_POSTGRES_URL \
   SHADOW_DATABASE_URL=YOUR_SHADOW_POSTGRES_URL \
   REDIS_URL=YOUR_REDIS_URL \
+  REDIS_CACHING_URL=YOUR_REDIS_URL \
   CLICKHOUSE_HOST=YOUR_CLICKHOUSE_HOST \
   CLICKHOUSE_USER=YOUR_CLICKHOUSE_USER \
   CLICKHOUSE_PASSWORD=YOUR_CLICKHOUSE_PASSWORD \
@@ -52,7 +52,6 @@ $ fly secrets set \
   --config fly.backend.toml
 $ fly deploy --config fly.backend.toml
 ```
-
 
 ### Setup the frontend
 
@@ -69,5 +68,4 @@ $ fly deploy --config fly.frontend.toml
 The services are ready. You can now:
 
 - Open the frontend url on `/welcome` to create your admin user
-- Choose a SDK and integrate it in your application 
-
+- Choose a SDK and integrate it in your application
