@@ -90,6 +90,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       secretKey: process.env.PROGRESSIVELY_SECRET_KEY!,
       websocketUrl: "wss://api.progressively.app",
       apiUrl: "https://api.progressively.app",
+      fields: {
+        environment: process.env.NODE_ENV!,
+      },
     });
 
     const { data } = await sdk.loadFlags();
@@ -102,9 +105,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export default function SettingsPage() {
   const { project, userRole } = useProject();
-  const { eventsCount, eventsPerCredits } = useLoaderData<typeof loader>();
+  const { eventsCount, eventsPerCredits, isPricingEnabled } =
+    useLoaderData<typeof loader>();
   const [searchParams] = useSearchParams();
-  const { isPricingEnabled } = useLoaderData<typeof loader>();
   const actionData = useActionData<ActionDataType>();
   const navigation = useNavigation();
   const isMemberRemoved = searchParams.get("memberRemoved") || undefined;
@@ -233,7 +236,8 @@ export default function SettingsPage() {
                 <div className="rounded-xl bg-gray-100 p-6 inline-block mt-4">
                   <div className="pb-4">
                     <strong className="text-gray-950 text-3xl">
-                      {project.credits} credits available
+                      {(eventsCount / eventsPerCredits).toFixed(3)} credits
+                      available
                     </strong>
                     <span className="pl-2 text-sm">({eventsCount} events)</span>
                   </div>
