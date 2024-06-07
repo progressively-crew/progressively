@@ -18,6 +18,7 @@ import {
   setupFeatureFlagSample,
   setupProviderSample,
 } from "@progressively/instructions/samples/getReactSample";
+import { setupNode } from "@progressively/instructions/samples/getNodeSample";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { Codeblock } from "~/components/Codeblock";
@@ -39,19 +40,27 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     params.id!,
     session.get("auth-cookie")
   );
-  const [setupFeatureFlagSampleCode, setupProviderSampleCode] =
+  const [setupFeatureFlagSampleCode, setupProviderSampleCode, nodeSampleCode] =
     await Promise.all([
       setupFeatureFlagSample(),
       setupProviderSample(project.clientKey),
+      setupNode(project.clientKey),
     ]);
 
-  return { setupFeatureFlagSampleCode, setupProviderSampleCode };
+  return {
+    setupFeatureFlagSampleCode,
+    setupProviderSampleCode,
+    nodeSampleCode,
+  };
 };
 
 export default function SettingsPage() {
   const { project } = useProject();
-  const { setupFeatureFlagSampleCode, setupProviderSampleCode } =
-    useLoaderData<typeof loader>();
+  const {
+    setupFeatureFlagSampleCode,
+    setupProviderSampleCode,
+    nodeSampleCode,
+  } = useLoaderData<typeof loader>();
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -103,11 +112,24 @@ export default function SettingsPage() {
               <Tabs initialValue="react">
                 <TabList>
                   <Tab value="react">React</Tab>
+                  <Tab value="node">Node</Tab>
                 </TabList>
                 <TabContent value="react">
                   <CardContent>
                     <Typography className="text-sm pb-4">
-                      1. Wrap your application with the ProgressivelyProvider:
+                      1. Install the dependency
+                    </Typography>
+                    <Card>
+                      <CardContent>
+                        <Codeblock
+                          html={setupProviderSampleCode.installation}
+                          rawCode={setupProviderSampleCode.installation}
+                        />
+                      </CardContent>
+                    </Card>
+
+                    <Typography className="text-sm py-4">
+                      2. Wrap your application with the ProgressivelyProvider:
                     </Typography>
                     <Card>
                       <CardContent>
@@ -119,7 +141,7 @@ export default function SettingsPage() {
                     </Card>
 
                     <Typography className="text-sm py-4">
-                      2. Get the feature flags dictionary and make a condition
+                      3. Get the feature flags dictionary and make a condition
                       to start using it
                     </Typography>
                     <Card>
@@ -127,6 +149,34 @@ export default function SettingsPage() {
                         <Codeblock
                           html={setupFeatureFlagSampleCode.html}
                           rawCode={setupFeatureFlagSampleCode.rawCode}
+                        />
+                      </CardContent>
+                    </Card>
+                  </CardContent>
+                </TabContent>
+
+                <TabContent value="node">
+                  <CardContent>
+                    <Typography className="text-sm pb-4">
+                      1. Install the dependency
+                    </Typography>
+                    <Card>
+                      <CardContent>
+                        <Codeblock
+                          html={nodeSampleCode.installation}
+                          rawCode={nodeSampleCode.installation}
+                        />
+                      </CardContent>
+                    </Card>
+
+                    <Typography className="text-sm py-4">
+                      2. Prepare the SDK
+                    </Typography>
+                    <Card>
+                      <CardContent>
+                        <Codeblock
+                          html={nodeSampleCode.html}
+                          rawCode={nodeSampleCode.rawCode}
                         />
                       </CardContent>
                     </Card>

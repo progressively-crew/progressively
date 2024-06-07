@@ -18,7 +18,10 @@ export const Codeblock = ({ html, rawCode }: CodeblockProps) => {
           Copy
         </ButtonCopy>
       </div>
-      <div dangerouslySetInnerHTML={{ __html: html }} className="text-xs"></div>
+      <div
+        dangerouslySetInnerHTML={{ __html: html }}
+        className="text-xs overflow-auto"
+      ></div>
     </div>
   );
 };
