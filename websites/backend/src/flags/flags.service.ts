@@ -40,7 +40,7 @@ export class FlagsService {
   }
 
   async changeFlagStatus(flagId: string, status: FlagStatus) {
-    const updatedFlag = await this.prisma.flag.update({
+    return await this.prisma.flag.update({
       where: {
         uuid: flagId,
       },
@@ -66,8 +66,6 @@ export class FlagsService {
         },
       },
     });
-
-    return updatedFlag;
   }
 
   getFlagById(flagId: string) {

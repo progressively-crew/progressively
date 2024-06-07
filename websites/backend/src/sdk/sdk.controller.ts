@@ -80,14 +80,12 @@ export class SdkController {
 
     const concernedProject = await this._guardSdkEndpoint(request, fields);
 
-    const flags = await this.sdkService.computeFlags(
+    return await this.sdkService.computeFlags(
       base64Params,
       concernedProject,
       fields,
       shouldSkipHits,
     );
-
-    return flags;
   }
 
   @Get('/types/gen')

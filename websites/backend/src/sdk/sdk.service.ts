@@ -25,8 +25,6 @@ import { FlagsService } from '../flags/flags.service';
 import { Project } from '@progressively/database';
 import { StrategyService } from '../strategy/strategy.service';
 import { EventsService } from '../events/events.service';
-import { projectEpochKey, sdkB64EpochToEntryKey } from '../caching/keys';
-import { FiveHours } from 'src/caching/constants';
 
 @Injectable()
 export class SdkService {
