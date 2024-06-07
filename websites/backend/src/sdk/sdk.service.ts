@@ -25,8 +25,8 @@ import { FlagsService } from '../flags/flags.service';
 import { Project } from '@progressively/database';
 import { StrategyService } from '../strategy/strategy.service';
 import { EventsService } from '../events/events.service';
-import { ICachingService } from '../caching/types';
 import { projectEpochKey, sdkB64EpochToEntryKey } from '../caching/keys';
+import { FiveHours } from 'src/caching/constants';
 
 @Injectable()
 export class SdkService {
@@ -38,7 +38,6 @@ export class SdkService {
     private readonly eventService: EventsService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
-    @Inject('CachingService') private readonly cachingService: ICachingService,
   ) {}
 
   resolveFlagStatus(flag: PopulatedFlag, fields: FieldRecord) {
@@ -158,18 +157,6 @@ export class SdkService {
     fields: FieldRecord,
     skipHit: boolean,
   ) {
-    const projectEpoch = await this.cachingService.get(
-      projectEpochKey(project.uuid),
-    );
-
-    if (projectEpoch) {
-      const entry = await this.cachingService.get(
-        sdkB64EpochToEntryKey(b64, projectEpoch),
-      );
-
-      if (entry) return JSON.parse(entry);
-    }
-
     const flags = await this.flagService.getPopulatedFlags(project.uuid);
 
     const resolveFlags = {};
@@ -179,11 +166,6 @@ export class SdkService {
     );
 
     await Promise.all(promises);
-
-    await this.cachingService.set(
-      sdkB64EpochToEntryKey(b64, projectEpoch),
-      JSON.stringify(resolveFlags),
-    );
 
     return resolveFlags;
   }

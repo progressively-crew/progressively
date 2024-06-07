@@ -9,8 +9,12 @@ export class RedisService implements ICachingService {
     this.redis = new Redis(redisUrl);
   }
 
-  async set(k: string, v: any) {
-    await this.redis.set(k, v);
+  async set(k: string, v: any, timeInS?: number) {
+    if (timeInS) {
+      await this.redis.set(k, v, 'EX', timeInS);
+    } else {
+      this.redis.set(k, v);
+    }
   }
 
   get(k: string) {

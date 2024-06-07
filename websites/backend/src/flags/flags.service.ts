@@ -7,15 +7,12 @@ import camelcase from 'camelcase';
 import { FlagAlreadyExists } from '../projects/errors';
 import { ClickHouseClient } from '@progressively/database';
 import { Timeframe } from '../events/types';
-import { ICachingService } from '../caching/types';
-import { projectEpochKey } from '../caching/keys';
 
 @Injectable()
 export class FlagsService {
   constructor(
     private prisma: PrismaService,
     @Inject('ClickhouseService') private readonly clickhouse: ClickHouseClient,
-    @Inject('CachingService') private readonly cachingService: ICachingService,
   ) {}
 
   getPopulatedFlags(projectId: string) {
@@ -40,14 +37,6 @@ export class FlagsService {
         },
       },
     }) as unknown as Promise<Array<PopulatedFlag>>;
-  }
-
-  // Invalidate the cache for the feature flag resolution
-  changeEpoch(projectId: string) {
-    return this.cachingService.set(
-      projectEpochKey(projectId),
-      Date.now().toString(),
-    );
   }
 
   async changeFlagStatus(flagId: string, status: FlagStatus) {
@@ -77,8 +66,6 @@ export class FlagsService {
         },
       },
     });
-
-    await this.changeEpoch(updatedFlag.projectUuid);
 
     return updatedFlag;
   }
