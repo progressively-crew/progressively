@@ -1,8 +1,14 @@
+import { Progressively } from "@progressively/server-side";
 import { Section, SectionHeader } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { UserTable } from "~/modules/user/components/UserTable";
-import { ActionFunction, MetaFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  redirect,
+} from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -14,6 +20,7 @@ import {
   Form,
   Outlet,
   useActionData,
+  useLoaderData,
   useNavigation,
   useSearchParams,
 } from "@remix-run/react";
@@ -29,6 +36,9 @@ import { Spacer } from "~/components/Spacer";
 import { EditButton } from "~/components/Buttons/EditButton";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { IoRefreshCircleOutline } from "react-icons/io5";
+import { CheckoutForm } from "~/modules/payments/components/CheckoutForm";
+import { createCheckoutSession } from "~/modules/payments/services/createCheckoutSession";
+import { getEventUsage } from "~/modules/payments/services/getEventUsage";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -41,7 +51,7 @@ export const meta: MetaFunction = ({ matches }) => {
 };
 
 interface ActionDataType {
-  success: boolean;
+  success?: boolean;
 }
 
 export const action: ActionFunction = async ({
@@ -50,6 +60,17 @@ export const action: ActionFunction = async ({
 }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
+  const formData = await request.formData();
+  const type = formData.get("_type")?.toString();
+
+  if (type === "start-payment") {
+    const countStr = formData.get("count")?.toString();
+    const count = countStr ? Number(countStr) : 1;
+
+    const session = await createCheckoutSession(params.id!, count, authCookie);
+
+    throw redirect(session.sessionUrl);
+  }
 
   try {
     await rotateSecretKey(params.id!, authCookie);
@@ -59,12 +80,39 @@ export const action: ActionFunction = async ({
   }
 };
 
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const usage = await getEventUsage(params.id!, authCookie);
+
+  try {
+    const sdk = Progressively.init({
+      secretKey: process.env.PROGRESSIVELY_SECRET_KEY!,
+      websocketUrl: "wss://api.progressively.app",
+      apiUrl: "https://api.progressively.app",
+      fields: {
+        environment: process.env.NODE_ENV!,
+      },
+    });
+
+    const { data } = await sdk.loadFlags();
+
+    return { isPricingEnabled: data?.flags?.pricingEnabled ?? false, ...usage };
+  } catch {
+    return { isPricingEnabled: false, ...usage };
+  }
+};
+
 export default function SettingsPage() {
   const { project, userRole } = useProject();
+  const { eventsCount, eventsPerCredits, isPricingEnabled } =
+    useLoaderData<typeof loader>();
   const [searchParams] = useSearchParams();
   const actionData = useActionData<ActionDataType>();
   const navigation = useNavigation();
   const isMemberRemoved = searchParams.get("memberRemoved") || undefined;
+
+  const checkoutSuccess = searchParams.get("checkoutSuccess") === "true";
 
   const actionResult =
     actionData?.success === true ? (
@@ -84,12 +132,19 @@ export default function SettingsPage() {
       <DashboardLayout
         subNav={<ProjectNavBar project={project} />}
         status={
-          actionResult ??
-          (isMemberRemoved ? (
-            <SuccessBox id={"plan-add-success"}>
-              The member has been successfully removed.
+          checkoutSuccess ? (
+            <SuccessBox id="checkout-succeed">
+              Checkout sent! It may take a few minutes before seeing your
+              credits appearing.
             </SuccessBox>
-          ) : null)
+          ) : (
+            actionResult ??
+            (isMemberRemoved ? (
+              <SuccessBox id={"plan-add-success"}>
+                The member has been successfully removed.
+              </SuccessBox>
+            ) : null)
+          )
         }
       >
         <PageTitle
@@ -145,7 +200,10 @@ export default function SettingsPage() {
                       <IconButton
                         icon={<IoRefreshCircleOutline />}
                         tooltip={"Rotate secret key"}
-                        isLoading={navigation.state !== "idle"}
+                        isLoading={
+                          navigation.state === "submitting" &&
+                          !navigation.formData?.get("_type")
+                        }
                       />
                     </Form>
                   </div>
@@ -154,6 +212,42 @@ export default function SettingsPage() {
             </Section>
           </CardContent>
         </Card>
+
+        {userRole === UserRoles.Admin && isPricingEnabled && (
+          <Card>
+            <CardContent>
+              <Section id="payment">
+                <SectionHeader
+                  title="Payment"
+                  titleAs="h3"
+                  description={
+                    <>
+                      <strong className="font-bold">1 credit</strong>{" "}
+                      corresponds to{" "}
+                      <strong className="font-bold">
+                        {eventsPerCredits} events in total
+                      </strong>
+                      . It includes feature flags evaluations, page views, and
+                      custom events.
+                    </>
+                  }
+                />
+
+                <div className="rounded-xl bg-gray-100 p-6 inline-block mt-4">
+                  <div className="pb-4">
+                    <strong className="text-gray-950 text-3xl">
+                      {(eventsCount / eventsPerCredits).toFixed(3)} credits
+                      available
+                    </strong>
+                    <span className="pl-2 text-sm">({eventsCount} events)</span>
+                  </div>
+
+                  <CheckoutForm />
+                </div>
+              </Section>
+            </CardContent>
+          </Card>
+        )}
 
         <Card>
           <Section id="members">

@@ -14,6 +14,7 @@ export interface Project {
   clientKey: string;
   secretKey: string;
   domain: string;
+  credits: number;
 }
 
 export interface UserProject {

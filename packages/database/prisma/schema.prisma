@@ -32,6 +32,7 @@ model User {
   authProviders       UserOfProvider[]
   userProject         UserProject[]
   ActivityLog         ActivityLog[]
+  StripeOrder         StripeOrder[]
 }
 
 model Project {
@@ -44,7 +45,10 @@ model Project {
   clientKey   String        @default(uuid())
   secretKey   String        @default(uuid())
   domain      String?
+  credits     Int           @default(0)
   Session     Session[]
+  StripeOrder StripeOrder[]
+  EventUsage  EventUsage[]
 }
 
 model UserProject {
@@ -181,4 +185,25 @@ model StrategyVariant {
   strategyUuid      String
 
   @@id([strategyUuid, variantUuid])
+}
+
+model StripeOrder {
+  uuid            String    @id @default(uuid())
+  stripeSessionId String
+  createdAt       DateTime? @default(now())
+  itemId          String
+  quantity        Int
+  total           Int
+  project         Project   @relation(fields: [projectUuid], references: [uuid])
+  user            User      @relation(fields: [userUuid], references: [uuid])
+  projectUuid     String
+  userUuid        String
+  status          String
+  updatedAt       DateTime? @default(now())
+}
+
+model EventUsage {
+  project     Project @relation(fields: [projectUuid], references: [uuid])
+  projectUuid String  @id
+  eventsCount Int
 }

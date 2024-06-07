@@ -8,6 +8,12 @@ export const seedProjects = async (prismaClient: PrismaClient) => {
       clientKey: "valid-sdk-key",
       secretKey: "secret-key",
       domain: "**",
+      EventUsage: {
+        create: {
+          eventsCount: 500,
+        },
+      },
+      credits: 1,
     },
   });
 
@@ -18,6 +24,12 @@ export const seedProjects = async (prismaClient: PrismaClient) => {
       clientKey: "valid-sdk-key-2",
       secretKey: "secret-key-2",
       domain: "hello-world",
+      EventUsage: {
+        create: {
+          eventsCount: 500,
+        },
+      },
+      credits: 1,
     },
   });
 

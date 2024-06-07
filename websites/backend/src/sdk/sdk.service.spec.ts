@@ -42,6 +42,7 @@ describe('SdkService', () => {
         secretKey: 'secret-key',
         domain: '**',
         createdAt: new Date(),
+        credits: 10,
       },
     };
   });

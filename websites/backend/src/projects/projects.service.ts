@@ -6,6 +6,7 @@ import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
 import { EventsService } from '../events/events.service';
 import { FlagsService } from '../flags/flags.service';
+import { EventsPerCredits, InitialCreditCount } from '../payment/constants';
 
 @Injectable()
 export class ProjectsService {
@@ -52,11 +53,12 @@ export class ProjectsService {
     });
   }
 
-  createProject(name: string, userId: string, prodDomain: string) {
-    return this.prisma.project.create({
+  async createProject(name: string, userId: string, prodDomain: string) {
+    const project = await this.prisma.project.create({
       data: {
         name,
         domain: prodDomain,
+        credits: InitialCreditCount,
         userProject: {
           create: {
             userId,
@@ -65,6 +67,15 @@ export class ProjectsService {
         },
       },
     });
+
+    await this.prisma.eventUsage.create({
+      data: {
+        projectUuid: project.uuid,
+        eventsCount: EventsPerCredits,
+      },
+    });
+
+    return project;
   }
 
   getAll(userId: string) {
@@ -161,6 +172,11 @@ export class ProjectsService {
 
   async deleteProject(projectId: string) {
     const deleteQueries = [
+      this.prisma.eventUsage.deleteMany({
+        where: {
+          projectUuid: projectId,
+        },
+      }),
       this.prisma.webhook.deleteMany({
         where: {
           Flag: {
