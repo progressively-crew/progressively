@@ -5,6 +5,10 @@ export class InMemoryService implements ICachingService {
   constructor() {
     this.dict = {};
   }
+  teardown() {
+    return Promise.resolve();
+  }
+
   get(k: string) {
     return Promise.resolve(this.dict[k]);
   }

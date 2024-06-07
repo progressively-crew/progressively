@@ -41,7 +41,6 @@ export class SdkModule implements OnModuleInit {
   ) {}
 
   async onModuleDestroy() {
-    await this.queuingService.teardown();
     await this.wsGateway.teardown();
   }
 

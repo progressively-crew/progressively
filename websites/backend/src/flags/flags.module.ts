@@ -27,15 +27,11 @@ import { CachingModule } from '../caching/caching.module';
   controllers: [FlagsController],
   exports: [FlagsService],
 })
-export class FlagsModule implements OnModuleInit, OnModuleDestroy {
+export class FlagsModule implements OnModuleInit {
   constructor(
     private readonly flagService: FlagsService,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
   ) {}
-
-  async onModuleDestroy() {
-    await this.queuingService.teardown();
-  }
 
   async onModuleInit() {
     await this.queuingService.consume<QueuedFlagHit>(
