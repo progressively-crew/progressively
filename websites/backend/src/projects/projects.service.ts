@@ -172,6 +172,11 @@ export class ProjectsService {
 
   async deleteProject(projectId: string) {
     const deleteQueries = [
+      this.prisma.eventUsage.deleteMany({
+        where: {
+          projectUuid: projectId,
+        },
+      }),
       this.prisma.webhook.deleteMany({
         where: {
           Flag: {
