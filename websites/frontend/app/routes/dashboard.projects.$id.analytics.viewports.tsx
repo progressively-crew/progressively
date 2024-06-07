@@ -114,7 +114,7 @@ export default function ProjectInsights() {
           >
             <button
               type="submit"
-              className="bg-slate-50 p-4 rounded-lg flex items-center justify-center flex-col gap-2 hover:bg-slate-100 active:bg-slate-100"
+              className="bg-gray-50 p-4 rounded-lg flex items-center justify-center flex-col gap-2 hover:bg-gray-100 active:bg-gray-100"
             >
               <input type="hidden" name="time" value={Date.now()} />
               <input

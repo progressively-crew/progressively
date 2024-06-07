@@ -63,7 +63,7 @@ export const ButtonCopy = forwardRef(
 
     const sizeClass = sizeClasses[size];
 
-    const sharedClassName = `${sizeClass} rounded-xl font-mono text-xs whitespace-nowrap inline-flex flex-row items-center border border-gray-300 text-gray-500 hover:bg-slate-50 active:bg-slate-100`;
+    const sharedClassName = `${sizeClass} rounded-xl font-mono text-xs whitespace-nowrap inline-flex flex-row items-center border border-gray-300 text-gray-500 hover:bg-gray-50 active:bg-gray-100`;
 
     const sharedIconClassName =
       "rounded-xs flex items-center justify-center text-lg h-10 w-10";

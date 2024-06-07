@@ -104,7 +104,7 @@ export default function FlagInsights() {
             label={"Total Flag eval. count"}
             value={flagEvaluationsCount}
             unit={"evals."}
-            icon={<TbApps className="h-6 w-6 text-slate-200" />}
+            icon={<TbApps className="h-6 w-6 text-gray-200" />}
             detail="100%"
           />
 

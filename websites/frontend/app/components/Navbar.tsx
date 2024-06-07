@@ -9,7 +9,7 @@ export interface NavItemProps {
 }
 
 export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
-  const shared = `h-10 rounded whitespace-nowrap shrink-0 text-sm block flex items-center px-3 text-gray-700 hover:bg-slate-100`;
+  const shared = `h-10 rounded whitespace-nowrap shrink-0 text-sm block flex items-center px-3 text-gray-700 hover:bg-gray-100`;
 
   return (
     <li>
@@ -18,7 +18,7 @@ export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
         end
         target={target}
         className={({ isActive }) =>
-          isActive ? `${shared} border-b-slate-900 text-slate-900` : shared
+          isActive ? `${shared} border-b-gray-900 text-gray-900` : shared
         }
       >
         <HStack spacing={2}>

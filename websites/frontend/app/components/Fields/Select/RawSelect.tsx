@@ -16,7 +16,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={
-      "w-full md:min-w-[220px] bg-white flex h-10 w-full items-center justify-between rounded-xl border border-slate-200 py-2 px-3 text-sm placeholder:text-slate-400 disabled:cursor-not-allowed disabled:opacity-50"
+      "w-full md:min-w-[220px] bg-white flex h-10 w-full items-center justify-between rounded-xl border border-gray-200 py-2 px-3 text-sm placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50"
     }
     {...props}
   >
@@ -34,7 +34,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={
-        "relative z-50 min-w-[8rem] overflow-hidden rounded-xl border border-slate-100 bg-white text-slate-700 shadow-md animate-in fade-in-80"
+        "relative z-50 min-w-[8rem] overflow-hidden rounded-xl border border-gray-100 bg-white text-gray-700 shadow-md animate-in fade-in-80"
       }
       {...props}
     >
@@ -52,7 +52,7 @@ const SelectLabel = React.forwardRef<
 >((props, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={"py-1.5 pr-2 pl-8 text-sm font-semibold text-slate-900"}
+    className={"py-1.5 pr-2 pl-8 text-sm font-semibold text-gray-900"}
     {...props}
   />
 ));
@@ -86,7 +86,7 @@ const SelectSeparator = React.forwardRef<
 >((props, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={"-mx-1 my-1 h-px bg-slate-100"}
+    className={"-mx-1 my-1 h-px bg-gray-100"}
     {...props}
   />
 ));

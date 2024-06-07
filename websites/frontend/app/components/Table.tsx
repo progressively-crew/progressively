@@ -12,7 +12,7 @@ export const Table = ({ children, noBorder }: TableProps) => {
       className={
         noBorder
           ? "overflow-hidden w-full"
-          : "border border-slate-200 overflow-hidden rounded-xl"
+          : "border border-gray-200 overflow-hidden rounded-xl"
       }
     >
       <div className="overflow-x-scroll">
@@ -27,7 +27,7 @@ export const Th = ({ children, className }: TableProps) => {
   return (
     <th
       className={
-        "whitespace-nowrap bg-slate-50 font-medium p-4 pl-8 py-3 text-slate-500 text-left " +
+        "whitespace-nowrap bg-gray-50 font-medium p-4 pl-8 py-3 text-gray-500 text-left " +
         (className || "")
       }
     >
@@ -41,7 +41,7 @@ export const Td = ({
 }: TableProps & HTMLAttributes<HTMLTableCellElement>) => {
   return (
     <td
-      className="border-t border-slate-200 p-4 pl-8 text-slate-500"
+      className="border-t border-gray-200 p-4 pl-8 text-gray-500"
       style={style}
     >
       {children}
@@ -60,7 +60,7 @@ export const Tr = ({
   return (
     <tr
       className={
-        onClick ? "cursor-pointer hover:bg-slate-50 active:bg-slate-100" : ""
+        onClick ? "cursor-pointer hover:bg-gray-50 active:bg-gray-100" : ""
       }
       onClick={onClick}
     >

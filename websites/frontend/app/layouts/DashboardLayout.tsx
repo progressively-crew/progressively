@@ -55,7 +55,7 @@ export const DashboardLayout = ({
       <div className="bg-gray-50 h-full flex-1">
         {lastCrumb && (
           <div
-            className={`bg-white border-b border-slate-200 rounded-t-lg pt-1 ${
+            className={`bg-white border-b border-gray-200 rounded-t-lg pt-1 ${
               hasMoreThanOneCrumb ? "pt-1" : "py-1"
             }`}
           >

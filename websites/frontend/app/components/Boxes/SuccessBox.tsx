@@ -56,7 +56,7 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
 
         <Link
           to={location.pathname}
-          className="text-xl rounded bg-transparent hover:bg-slate-100 active:bg-slate-200 flex items-center justify-center w-6 h-6"
+          className="text-xl rounded bg-transparent hover:bg-gray-100 active:bg-gray-200 flex items-center justify-center w-6 h-6"
           preventScrollReset={true}
         >
           <MdClose aria-label="Close the banner" />

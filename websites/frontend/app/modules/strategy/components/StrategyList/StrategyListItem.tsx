@@ -47,9 +47,9 @@ export const StrategyItem = ({
 
   return (
     <div>
-      <div className="bg-slate-100 p-4 rounded-lg">
-        <div className="flex flex-row gap-4 justify-between items-center pb-2">
-          <Typography as="h2" className="text-sm text-slate-600">
+      <div className="bg-gray-100 p-4 rounded-xl">
+        <div className="flex flex-row gap-4 justify-between items-center pb-4">
+          <Typography as="h2" className="font-semibold">
             Strategy #{index}
           </Typography>
 
@@ -63,7 +63,7 @@ export const StrategyItem = ({
           />
         </div>
 
-        <div className="grid md:grid-cols-[auto_1fr] gap-x-4 gap-y-2 ">
+        <div className="grid md:grid-cols-[auto_1fr] gap-x-4 gap-y-4">
           <Typography
             as="span"
             className="pt-7 font-mono text-sm font-semibold"
@@ -108,7 +108,7 @@ export const StrategyItem = ({
                   <button
                     type="button"
                     onClick={addRule}
-                    className="border border-dashed border-slate-300 w-full py-2 rounded text-slate-600 text-xs hover:bg-slate-50 active:bg-slate-100"
+                    className="border border-dashed border-gray-300 w-full py-2 rounded-xl text-gray-600 text-xs hover:bg-gray-50 active:bg-gray-100"
                   >
                     Add a rule
                   </button>
