@@ -1,31 +1,32 @@
 import { transform } from "../helpers/transform";
 
-export const getReactSample = () =>
-  transform(
-    `import { ProgressivelyProvider, useFlags } from "@progressively/react";
+export const setupFeatureFlagSample = async () => {
+  const rawCode = `import { useFlags } from "@progressively/react";
 
 const FlaggedComponent = () => {
-  const { flags } = useFlags();
+const { flags } = useFlags();
 
-  if (flags.myFlagKey) {
-    return <div>New page!</div>;
-  }
+if (flags.myFlagKey) {
+  return <div>New page!</div>;
+}
 
-  return <div>Old page</div>;
+return <div>Old page</div>;
+};
+  `;
+
+  return { rawCode, html: await transform(rawCode) };
 };
 
-const progressivelyProps = {
-  clientKey: "YOUR_ENVIRONMENT_CLIENT_KEY",
-  apiUrl: "your url server", // These options are only necessary when self hosting
-  websocketUrl: "your url server for websockets", // These options are only necessary when self hosting
-};
+export const setupProviderSample = async (clientKey: string) => {
+  const rawCode = `import { ProgressivelyProvider } from "@progressively/react";
 
-const YourPage = () => {
+const YourApp = () => {
   return (
-    <ProgressivelyProvider {...progressivelyProps}>
-      <FlaggedComponent />
+    <ProgressivelyProvider clientKey="${clientKey}">
+      <YourComponent />
     </ProgressivelyProvider>
   );
+};`;
+
+  return { rawCode, html: await transform(rawCode) };
 };
-    `
-  );

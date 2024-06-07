@@ -11,8 +11,11 @@ export interface TabsValueProps {
   value: string;
 }
 
-export const Tabs = ({ children }: TabsProps) => {
-  return <RTabs.Root>{children}</RTabs.Root>;
+export const Tabs = ({
+  children,
+  initialValue,
+}: TabsProps & { initialValue?: string }) => {
+  return <RTabs.Root defaultValue={initialValue}>{children}</RTabs.Root>;
 };
 
 export const TabList = ({ children }: TabsProps) => {
