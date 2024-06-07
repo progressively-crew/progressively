@@ -1,3 +1,4 @@
+import { Progressively } from "@progressively/server-side";
 import { Section, SectionHeader } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
@@ -84,13 +85,26 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const authCookie = session.get("auth-cookie");
   const usage = await getEventUsage(params.id!, authCookie);
 
-  return usage;
+  try {
+    const sdk = Progressively.init({
+      secretKey: process.env.PROGRESSIVELY_SECRET_KEY!,
+      websocketUrl: "wss://api.progressively.app",
+      apiUrl: "https://api.progressively.app",
+    });
+
+    const { data } = await sdk.loadFlags();
+
+    return { isPricingEnabled: data?.flags?.pricingEnabled ?? false, ...usage };
+  } catch {
+    return { isPricingEnabled: false, ...usage };
+  }
 };
 
 export default function SettingsPage() {
   const { project, userRole } = useProject();
   const { eventsCount, eventsPerCredits } = useLoaderData<typeof loader>();
   const [searchParams] = useSearchParams();
+  const { isPricingEnabled } = useLoaderData<typeof loader>();
   const actionData = useActionData<ActionDataType>();
   const navigation = useNavigation();
   const isMemberRemoved = searchParams.get("memberRemoved") || undefined;
@@ -196,7 +210,7 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        {userRole === UserRoles.Admin && (
+        {userRole === UserRoles.Admin && isPricingEnabled && (
           <Card>
             <CardContent>
               <Section id="payment">
