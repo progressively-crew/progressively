@@ -56,7 +56,7 @@ export class SdkService {
 
       if (!isValidStrategyDate) continue;
 
-      const isMatching = this.ruleService.isMatchingAtLeastOneRule(
+      const isMatching = this.ruleService.isMatchingAllRules(
         strategy.rules,
         fields,
       );

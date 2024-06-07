@@ -26,7 +26,7 @@ describe('RuleService', () => {
     service = module.get<RuleService>(RuleService);
   });
 
-  describe('isMatchingAtLeastOneRule', () => {
+  describe('isMatchingAllRules', () => {
     it('returns true when no rules are passed', () => {
       const rules: Array<RuleType> = [];
 
@@ -35,64 +35,7 @@ describe('RuleService', () => {
         email: 'marv',
       };
 
-      expect(service.isMatchingAtLeastOneRule(rules, fields)).toBe(true);
-    });
-
-    it('returns true when at least one rule is valid', () => {
-      const rules: Array<RuleType> = [
-        {
-          fieldComparator: ComparatorEnum.Equals,
-          fieldName: 'email',
-          fieldValue: 'marvin',
-        },
-        {
-          fieldComparator: ComparatorEnum.Equals,
-          fieldName: 'id',
-          fieldValue: '1234',
-        },
-      ];
-
-      const fields: FieldRecord = {
-        id: 'abcd',
-        email: 'marvin',
-      };
-
-      expect(service.isMatchingAtLeastOneRule(rules, fields)).toBe(true);
-    });
-
-    it('returns fals when absolutely no rule is matching', () => {
-      const rules: Array<RuleType> = [
-        {
-          fieldComparator: ComparatorEnum.Equals,
-          fieldName: 'email',
-          fieldValue: 'marvin',
-        },
-        {
-          fieldComparator: ComparatorEnum.Equals,
-          fieldName: 'id',
-          fieldValue: '1234',
-        },
-      ];
-
-      const fields: FieldRecord = {
-        id: 'not-matching',
-        email: 'not-matching',
-      };
-
-      expect(service.isMatchingAtLeastOneRule(rules, fields)).toBe(false);
-    });
-  });
-
-  describe('isMatchingAllRules', () => {
-    it('returns false when no rules are passed', () => {
-      const rules: Array<RuleType> = [];
-
-      const fields: FieldRecord = {
-        id: '1234',
-        email: 'marv',
-      };
-
-      expect(service.isMatchingAllRules(rules, fields)).toBe(false);
+      expect(service.isMatchingAllRules(rules, fields)).toBe(true);
     });
 
     it(`resolves rules using the "AND" operator`, () => {
