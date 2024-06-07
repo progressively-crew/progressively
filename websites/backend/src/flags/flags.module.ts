@@ -1,4 +1,4 @@
-import { Inject, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Inject, Module, OnModuleInit } from '@nestjs/common';
 import { FlagsService } from './flags.service';
 import { FlagsController } from './flags.controller';
 import { WebsocketModule } from '../websocket/websocket.module';
