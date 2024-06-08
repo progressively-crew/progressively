@@ -31,7 +31,7 @@ export const TabContent = ({ children, value }: TabsValueProps) => (
 export const Tab = ({ children, value }: TabsValueProps) => (
   <RTabs.Trigger
     value={value}
-    className="px-3 py-1 text-sm hover:bg-gray-50 active:bg-white data-[state=active]:bg-white text-gray-800"
+    className="-outline-offset-2 px-3 py-1 text-sm hover:bg-gray-50 active:bg-white data-[state=active]:bg-white text-gray-800"
   >
     {children}
   </RTabs.Trigger>

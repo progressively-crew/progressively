@@ -8,7 +8,7 @@ export interface CodeblockProps {
 export const Codeblock = ({ html, rawCode }: CodeblockProps) => {
   return (
     <div className="relative bg-white group">
-      <div className="hidden absolute top-1 right-1 group-hover:block z-30">
+      <div className="hidden absolute top-0 right-0 group-hover:block z-30">
         <ButtonCopy
           size="S"
           toCopyAlternative="the code"
