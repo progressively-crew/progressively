@@ -19,7 +19,6 @@
     "@nivo/funnel": "^0.87.0",
     "@nivo/line": "^0.87.0",
     "@okta/okta-auth-js": "^7.7.0",
-    "@progressively/instructions": "workspace:*",
     "@progressively/react": "workspace:*",
     "@progressively/server-side": "workspace:*",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -38,6 +37,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
+    "shiki": "^1.1.6",
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {

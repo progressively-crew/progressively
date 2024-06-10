@@ -351,28 +351,6 @@ importers:
         specifier: 5.2.2
         version: 5.2.2
 
-  packages/instructions:
-    dependencies:
-      shiki:
-        specifier: ^1.1.6
-        version: 1.1.6
-    devDependencies:
-      '@types/react':
-        specifier: ^18.3.3
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18.3.0
-        version: 18.3.0
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-      typescript:
-        specifier: 5.1.6
-        version: 5.1.6
-
   packages/load-testing:
     dependencies:
       '@progressively/react':
@@ -858,9 +836,6 @@ importers:
       '@okta/okta-auth-js':
         specifier: ^7.7.0
         version: 7.7.0
-      '@progressively/instructions':
-        specifier: workspace:*
-        version: link:../../packages/instructions
       '@progressively/react':
         specifier: workspace:*
         version: link:../../packages/react
@@ -915,6 +890,9 @@ importers:
       react-icons:
         specifier: ^5.2.1
         version: 5.2.1(react@18.3.1)
+      shiki:
+        specifier: ^1.1.6
+        version: 1.1.6
       timeago.js:
         specifier: ^4.0.2
         version: 4.0.2

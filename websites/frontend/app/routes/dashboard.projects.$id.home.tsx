@@ -13,18 +13,18 @@ import { BiBook, BiCog } from "react-icons/bi";
 import { Tab, TabContent, TabList, Tabs } from "~/components/Tabs";
 import { Card, CardContent } from "~/components/Card";
 
-import {
-  setupFeatureFlagSample,
-  setupProviderSample,
-} from "@progressively/instructions/samples/getReactSample";
-import { setupAnalytics } from "@progressively/instructions/samples/getAnalyticsSample";
-import { setupSdkJs } from "@progressively/instructions/samples/getSdkJsSample";
-import { setupNode } from "@progressively/instructions/samples/getNodeSample";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { Codeblock } from "~/components/Codeblock";
 import { Typography } from "~/components/Typography";
 import { TbChartAreaLine } from "react-icons/tb";
+import { setupAnalytics } from "~/modules/instructions/samples/getAnalyticsSample";
+import { setupNode } from "~/modules/instructions/samples/getNodeSample";
+import {
+  setupFeatureFlagSample,
+  setupProviderSample,
+} from "~/modules/instructions/samples/getReactSample";
+import { setupSdkJs } from "~/modules/instructions/samples/getSdkJsSample";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
