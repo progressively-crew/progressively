@@ -5,7 +5,7 @@ export interface ProgressivelyProviderProps {
   clientKey: string;
   flags?: FlagDict;
   fields?: Fields;
-  apiUrl: string;
+  apiUrl?: string;
   websocketUrl?: string;
   children?: React.ReactNode;
 }

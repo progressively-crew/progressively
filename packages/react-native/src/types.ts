@@ -2,7 +2,7 @@ import { Fields, FlagDict } from "@progressively/types";
 
 export interface SDKOptions {
   fields?: Fields;
-  apiUrl: string;
+  apiUrl?: string;
   websocketUrl?: string;
   flags?: FlagDict;
   headers?: RequestInit["headers"];

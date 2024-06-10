@@ -5,7 +5,7 @@ export { Fields, FlagDict };
 export interface SDKOptions {
   clientKey?: string;
   secretKey: string;
-  apiUrl: string;
+  apiUrl?: string;
   websocketUrl?: string;
   flags?: FlagDict;
   shouldHit?: boolean;
@@ -62,7 +62,7 @@ export const Progressively = {
   init(options: SDKOptions) {
     return {
       loadFlags: () => {
-        const apiRoot = options.apiUrl;
+        const apiRoot = options.apiUrl || "https://api.progressively.app";
         const fields: Fields = options?.fields || {};
 
         const url = `${apiRoot}/sdk/${btoA(JSON.stringify(fields))}`;

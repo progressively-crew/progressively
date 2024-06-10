@@ -18,7 +18,7 @@ interface Status {
 export interface ProgressivelyProviderProps {
   clientKey: string;
   fields?: Fields;
-  apiUrl: string;
+  apiUrl?: string;
   websocketUrl?: string;
   children?: React.ReactNode;
 }
@@ -58,7 +58,8 @@ export const ProgressivelyProvider = ({
       };
     };
 
-    loadFlags(apiUrl, sdkParams).then((res) => {
+    const endpoint = apiUrl || "https://api.progressively.app";
+    loadFlags(endpoint, sdkParams).then((res) => {
       handleWsConnect(res.userId);
       handleLoadFlag(res);
     });

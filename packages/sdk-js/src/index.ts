@@ -20,7 +20,7 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
   let socket: WebSocket;
   let _callback: (data: FlagDict) => void;
 
-  const apiRoot = options.apiUrl;
+  const apiRoot = options?.apiUrl || "https://api.progressively.app";
   const wsRoot = options?.websocketUrl;
 
   function loadFlags() {
