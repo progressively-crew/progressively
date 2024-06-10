@@ -1,7 +1,7 @@
 {
   "name": "@progressively/react-native",
   "author": "mfrachet",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "types": "./src/index.ts",
   "main": "./src/index.ts",
   "private": false,
