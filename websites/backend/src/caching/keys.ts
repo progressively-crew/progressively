@@ -23,4 +23,12 @@ export const projectIdTimeframeEventOverTime = (
   projectId: string,
   timeframe: Timeframe,
   eventName: string,
-) => `project:${projectId}:analytics-over-time:${timeframe}:${eventName}:`;
+) => `project:${projectId}:analytics-over-time:${timeframe}:${eventName}`;
+
+export const flagEvaluationsKey = (flagId: string, timeframe: Timeframe) =>
+  `flag:${flagId}:insights:${timeframe}`;
+
+export const flagEvaluationsOverTimeKey = (
+  flagId: string,
+  timeframe: Timeframe,
+) => `flag-over-time:${flagId}:insights:${timeframe}`;
