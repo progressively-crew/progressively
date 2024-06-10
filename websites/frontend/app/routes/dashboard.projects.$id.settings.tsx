@@ -96,6 +96,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
         environment: process.env.NODE_ENV!,
         email: user.email,
       },
+      shouldHit: true,
     });
 
     const { data } = await sdk.loadFlags();
