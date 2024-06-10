@@ -5,11 +5,17 @@ import { FunnelEntry } from '@progressively/database';
 import { QueuedEventHit } from '../sdk/types';
 import { Timeframe } from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { ICachingService } from '../caching/types';
+import {
+  projectIdTimeframeEvent,
+  projectIdTimeframeEventOverTime,
+} from '../caching/keys';
 
 @Injectable()
 export class EventsService {
   constructor(
     @Inject('ClickhouseService') private readonly clickhouse: ClickHouseClient,
+    @Inject('CachingService') private readonly cachingService: ICachingService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
@@ -98,6 +104,16 @@ export class EventsService {
     timeframe: Timeframe,
     showPrevious?: boolean,
   ) {
+    const cachingKey = projectIdTimeframeEvent(
+      projectId,
+      timeframe,
+      'page-views',
+      showPrevious,
+    );
+
+    const cachedData = await this.cachingService.get<Number>(cachingKey);
+    if (cachedData) return cachedData;
+
     const whereClause = showPrevious
       ? `WHERE date >= now() - INTERVAL ${timeframe * 2} DAY
         AND date <= now() - INTERVAL ${timeframe} DAY`
@@ -117,7 +133,12 @@ export class EventsService {
       return Number(dataset[0].pageViews);
     }
 
-    return 0;
+    const pageViewsCount =
+      dataset.length === 1 ? Number(dataset[0].pageViews) : 0;
+
+    await this.cachingService.set(cachingKey, pageViewsCount, 'HalfAnHour');
+
+    return pageViewsCount;
   }
 
   async getUniqueVisitors(
@@ -125,6 +146,16 @@ export class EventsService {
     timeframe: Timeframe,
     showPrevious?: boolean,
   ) {
+    const cachingKey = projectIdTimeframeEvent(
+      projectId,
+      timeframe,
+      'unique-visitor',
+      showPrevious,
+    );
+
+    const cachedData = await this.cachingService.get<Number>(cachingKey);
+    if (cachedData) return cachedData;
+
     const whereClause = showPrevious
       ? `WHERE date >= now() - INTERVAL ${timeframe * 2} DAY
       AND date <= now() - INTERVAL ${timeframe} DAY`
@@ -140,11 +171,12 @@ export class EventsService {
 
     const dataset: Array<{ uniqueVisitors: string }> = await resultSet.json();
 
-    if (dataset.length === 1) {
-      return Number(dataset[0].uniqueVisitors);
-    }
+    const uniqueVisitors =
+      dataset.length === 1 ? Number(dataset[0].uniqueVisitors) : 0;
 
-    return 0;
+    await this.cachingService.set(cachingKey, uniqueVisitors, 'HalfAnHour');
+
+    return uniqueVisitors;
   }
 
   async getByField(
@@ -152,6 +184,15 @@ export class EventsService {
     timeframe: Timeframe,
     field: 'browser' | 'os' | 'referer' | 'url',
   ) {
+    const cachingKey = projectIdTimeframeEvent(projectId, timeframe, field);
+
+    const cachedData = await this.cachingService.get<{
+      pageViews: string;
+      [key: string]: string;
+    }>(cachingKey);
+
+    if (cachedData) return cachedData;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT ${field}, CAST(count() AS Int32) AS pageViews
       FROM events
@@ -167,10 +208,26 @@ export class EventsService {
     const dataset: Array<{ pageViews: string; [key: string]: string }> =
       await resultSet.json();
 
+    await this.cachingService.set(cachingKey, dataset, 'HalfAnHour');
+
     return dataset;
   }
 
   async getByViewport(projectId: string, timeframe: Timeframe) {
+    const cachingKey = projectIdTimeframeEvent(
+      projectId,
+      timeframe,
+      'viewport',
+    );
+
+    const cachedData = await this.cachingService.get<{
+      pageViews: string;
+      viewportWidth: number;
+      viewportHeight: number;
+    }>(cachingKey);
+
+    if (cachedData) return cachedData;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT
         viewportWidth,
@@ -195,10 +252,25 @@ export class EventsService {
       viewportHeight: number;
     }> = await resultSet.json();
 
+    await this.cachingService.set(cachingKey, dataset, 'HalfAnHour');
+
     return dataset;
   }
 
   async getPageViewsGroupedByDate(projectId: string, timeframe: Timeframe) {
+    const cachingKey = projectIdTimeframeEventOverTime(
+      projectId,
+      timeframe,
+      'page-views',
+    );
+
+    const cachedData = await this.cachingService.get<{
+      date: string;
+      count: number;
+    }>(cachingKey);
+
+    if (cachedData) return cachedData;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT
         toDate(date) AS date,
@@ -217,10 +289,26 @@ export class EventsService {
       count: number;
     }> = await resultSet.json();
 
+    await this.cachingService.set(cachingKey, dataset, 'HalfAnHour');
+
     return dataset;
   }
 
   async getEventsGroupedByDate(projectId: string, timeframe: Timeframe) {
+    const cachingKey = projectIdTimeframeEventOverTime(
+      projectId,
+      timeframe,
+      'custom-events',
+    );
+
+    const cachedData = await this.cachingService.get<{
+      name: string;
+      date: string;
+      count: number;
+    }>(cachingKey);
+
+    if (cachedData) return cachedData;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT
           toDate(date) AS date,
@@ -244,6 +332,8 @@ export class EventsService {
       date: string;
       count: number;
     }> = await resultSet.json();
+
+    await this.cachingService.set(cachingKey, dataset, 'HalfAnHour');
 
     return dataset;
   }
@@ -312,6 +402,16 @@ export class EventsService {
     timeframe: Timeframe,
     showPrevious?: boolean,
   ) {
+    const cachingKey = projectIdTimeframeEvent(
+      projectId,
+      timeframe,
+      'bounce-rate',
+      showPrevious,
+    );
+
+    const cachedData = await this.cachingService.get<Number>(cachingKey);
+    if (cachedData) return cachedData;
+
     const whereClause = showPrevious
       ? `WHERE session_date >= now() - INTERVAL ${timeframe * 2} DAY
       AND date <= now() - INTERVAL ${timeframe} DAY`
@@ -352,11 +452,11 @@ export class EventsService {
       bounceRate: number;
     }> = await resultSet.json();
 
-    if (dataset.length === 1) {
-      return dataset[0].bounceRate || 0;
-    }
+    const bounceRate = dataset.length === 1 ? dataset[0].bounceRate || 0 : 0;
 
-    return 0;
+    await this.cachingService.set(cachingKey, bounceRate, 'HalfAnHour');
+
+    return bounceRate;
   }
 
   async deleteForProject(projectId: string) {

@@ -7,11 +7,17 @@ import camelcase from 'camelcase';
 import { FlagAlreadyExists } from '../projects/errors';
 import { ClickHouseClient } from '@progressively/database';
 import { Timeframe } from '../events/types';
+import {
+  flagEvaluationsKey,
+  flagEvaluationsOverTimeKey,
+} from '../caching/keys';
+import { ICachingService } from '../caching/types';
 
 @Injectable()
 export class FlagsService {
   constructor(
     private prisma: PrismaService,
+    @Inject('CachingService') private readonly cachingService: ICachingService,
     @Inject('ClickhouseService') private readonly clickhouse: ClickHouseClient,
   ) {}
 
@@ -96,6 +102,15 @@ export class FlagsService {
   }
 
   async flagEvaluations(flagId: string, timeframe: Timeframe) {
+    const cachingKey = flagEvaluationsKey(flagId, timeframe);
+
+    const cachedData = await this.cachingService.get<{
+      valueResolved: string;
+      count: number;
+    }>(cachingKey);
+
+    if (cachedData) return cachedData;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT
       valueResolved,
@@ -115,10 +130,22 @@ export class FlagsService {
       count: number;
     }> = await resultSet.json();
 
+    await this.cachingService.set(cachingKey, dataset, 'HalfAnHour');
+
     return dataset;
   }
 
   async getFlagEvaluationsGroupedByDate(flagId: string, timeframe: Timeframe) {
+    const cachingKey = flagEvaluationsOverTimeKey(flagId, timeframe);
+
+    const cachedData = await this.cachingService.get<{
+      valueResolved: string;
+      date: string;
+      count: number;
+    }>(cachingKey);
+
+    if (cachedData) return cachedData;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT
           toDate(date) AS date,
@@ -143,6 +170,8 @@ export class FlagsService {
       date: string;
       count: number;
     }> = await resultSet.json();
+
+    await this.cachingService.set(cachingKey, dataset, 'HalfAnHour');
 
     return dataset;
   }
