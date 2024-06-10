@@ -1,5 +1,7 @@
+import { TimeType } from './constants';
+
 export interface ICachingService {
-  set: (k: string, v: any, timeInS?: number) => Promise<void>;
-  get: (k: string) => Promise<string | null>;
+  set: (k: string, v: any, timeInS?: TimeType) => Promise<void>;
+  get: <T>(k: string) => Promise<T | null>;
   teardown: () => Promise<void>;
 }

@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { CreateFunnelEntryDTO } from './funnels.dto';
 import { Timeframe } from '../events/types';
 import { EventsService } from '../events/events.service';
 import { Funnel, FunnelEntry } from '@progressively/database';
+import { ICachingService } from '../caching/types';
+import { projectIdFunnelsKey } from '../caching/keys';
 
 type FunnelsData = {
   uuid: string;
@@ -16,6 +18,7 @@ export class FunnelsService {
   constructor(
     private prisma: PrismaService,
     private eventService: EventsService,
+    @Inject('CachingService') private readonly cachingService: ICachingService,
   ) {}
 
   async resolveFunnel(
@@ -53,6 +56,10 @@ export class FunnelsService {
   }
 
   async resolveFunnels(projectId: string, timeframe: Timeframe) {
+    const cachingKey = projectIdFunnelsKey(projectId, timeframe);
+    const cachedData = await this.cachingService.get<FunnelsData>(cachingKey);
+    if (cachedData) return cachedData;
+
     const funnels = await this.prisma.funnel.findMany({
       where: {
         projectUuid: projectId,
@@ -67,6 +74,9 @@ export class FunnelsService {
     );
 
     const funnelsData: Array<FunnelsData> = await Promise.all(promises);
+
+    await this.cachingService.set(cachingKey, funnelsData, 'HalfAnHour');
+
     return funnelsData;
   }
 
