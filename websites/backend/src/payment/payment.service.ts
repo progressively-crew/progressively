@@ -1,15 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
 import { getEnv } from './getEnv';
 import { PrismaService } from '../database/prisma.service';
 import { EventsPerCredits } from './constants';
+import { ICachingService } from '../caching/types';
+import { projectCreditsKey } from '../caching/keys';
+import { EventUsage, Project } from '@progressively/database';
 
 @Injectable()
 export class PaymentService {
   private stripe: Stripe;
   private env: Record<string, string>;
 
-  constructor(private readonly prisma: PrismaService) {
+  constructor(
+    private readonly prisma: PrismaService,
+    @Inject('CachingService') private readonly cachingService: ICachingService,
+  ) {
     this.env = getEnv();
     this.stripe = new Stripe(this.env.PrivateStripeKey);
   }
@@ -147,6 +153,48 @@ export class PaymentService {
 
         break;
       }
+    }
+  }
+
+  async getProjectsCredit(projectUuid: string) {
+    const cachingKey = projectCreditsKey(projectUuid);
+    const eventsCount = await this.cachingService.get<number>(cachingKey);
+
+    if (eventsCount) {
+      return eventsCount;
+    }
+
+    const eventUsageDb = await this.prisma.eventUsage.findUnique({
+      where: {
+        projectUuid,
+      },
+    });
+
+    if (eventUsageDb) {
+      await this.cachingService.set(cachingKey, eventUsageDb.eventsCount);
+      return eventUsageDb.eventsCount;
+    }
+
+    return undefined;
+  }
+
+  async decreaseAvailableCredits(projectUuid: string) {
+    const cachingKey = projectCreditsKey(projectUuid);
+
+    const updated = await this.prisma.eventUsage.update({
+      where: {
+        projectUuid,
+        eventsCount: {
+          gt: 0,
+        },
+      },
+      data: {
+        eventsCount: { decrement: 1 },
+      },
+    });
+
+    if (updated) {
+      await this.cachingService.set(cachingKey, updated.eventsCount);
     }
   }
 }
