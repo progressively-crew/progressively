@@ -16,40 +16,44 @@ export interface FlagMenuProps {
 export const FlagMenu = ({ projectId, flag }: FlagMenuProps) => {
   return (
     <HorizontalNav label={`Navigate in the flag`}>
-      <NavItem
-        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/audience`}
-        icon={<TbTargetArrow />}
-      >
-        Audience
-      </NavItem>
+      <ul className="flex flex-row items-center">
+        <NavItem
+          to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/audience`}
+          icon={<TbTargetArrow />}
+        >
+          Audience
+        </NavItem>
 
-      <NavItem
-        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/insights`}
-        icon={<TbChartAreaLine />}
-      >
-        Insights
-      </NavItem>
+        <NavItem
+          to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/insights`}
+          icon={<TbChartAreaLine />}
+        >
+          Insights
+        </NavItem>
 
-      <NavItem
-        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/webhooks`}
-        icon={<TbWebhook />}
-      >
-        Webhooks
-      </NavItem>
+        <NavItem
+          to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/webhooks`}
+          icon={<TbWebhook />}
+        >
+          Webhooks
+        </NavItem>
+      </ul>
 
-      <NavItem
-        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/activity`}
-        icon={<TbActivity />}
-      >
-        Activity
-      </NavItem>
+      <ul className="flex flex-row items-center">
+        <NavItem
+          to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/activity`}
+          icon={<TbActivity />}
+        >
+          Activity
+        </NavItem>
 
-      <NavItem
-        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/settings`}
-        icon={<SettingsIcon />}
-      >
-        Settings
-      </NavItem>
+        <NavItem
+          to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/settings`}
+          icon={<SettingsIcon />}
+        >
+          Settings
+        </NavItem>
+      </ul>
     </HorizontalNav>
   );
 };

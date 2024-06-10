@@ -29,7 +29,7 @@ describe("/dashboard/projects/all", () => {
         cy.get("main").within(() => {
           cy.findByRole("link", { name: "Project from seeding" })
             .should("be.visible")
-            .and("have.attr", "href", "/dashboard/projects/1/flags/all");
+            .and("have.attr", "href", "/dashboard/projects/1/home");
         });
 
         cy.findByRole("link", { name: "Create a project" }).should(

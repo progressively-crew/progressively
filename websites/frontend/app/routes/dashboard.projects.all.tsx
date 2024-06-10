@@ -21,6 +21,7 @@ export const meta: MetaFunction = () => {
 
 interface LoaderData {
   projects: Array<UserProject>;
+  html: string;
 }
 
 export const loader: LoaderFunction = async ({

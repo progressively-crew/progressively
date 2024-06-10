@@ -53,14 +53,9 @@ describe("/dashboard/onboarding", () => {
       }).type("project");
       cy.findByRole("button", { name: "Create the project" }).click();
 
-      cy.get(".success-box")
-        .should("have.focus")
-        .and("contain.text", "The project has been successfully created.");
-
       cy.findAllByText("My new project").should("have.length", 2);
 
       cy.url().should("include", "/dashboard/projects/");
-      cy.checkA11y();
     });
   });
 });

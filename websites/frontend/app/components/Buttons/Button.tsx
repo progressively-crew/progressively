@@ -21,6 +21,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   form?: string;
   name?: string;
   value?: string;
+  target?: "_blank";
 }
 
 const classCombination = {
@@ -58,6 +59,7 @@ export const Button = forwardRef(
       variant,
       className,
       size = "M",
+      target,
       ...props
     }: ButtonProps,
     ref: any
@@ -79,6 +81,7 @@ export const Button = forwardRef(
           ref={ref}
           to={href ? undefined : to}
           href={href}
+          target={target}
           className={
             sharedButtonClass +
             " " +

@@ -1,0 +1,21 @@
+{
+  "name": "@progressively/instructions",
+  "author": "mfrachet",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {},
+  "peerDependencies": {
+    "react": ">= 18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "5.1.6"
+  },
+  "dependencies": {
+    "shiki": "^1.1.6"
+  }
+}
