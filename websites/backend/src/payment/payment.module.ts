@@ -22,11 +22,12 @@ export class PaymentModule implements OnModuleInit {
 
   async onModuleInit() {
     await this.queuingService.consume<QueuedPayingHit>(
-      KafkaTopics.AnalyticsHits,
+      KafkaTopics.PayingHits,
       'progressively-paying-hits-group',
       async (queuedEvent) => {
-        await this.paymentService.decreaseAvailableCredits(
+        await this.paymentService.decreaseAvailableCreditsById(
           queuedEvent.projectUuid,
+          queuedEvent.reduceBy,
         );
       },
     );

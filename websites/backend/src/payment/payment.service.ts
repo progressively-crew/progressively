@@ -5,7 +5,6 @@ import { PrismaService } from '../database/prisma.service';
 import { EventsPerCredits } from './constants';
 import { ICachingService } from '../caching/types';
 import { projectCreditsKey } from '../caching/keys';
-import { EventUsage, Project } from '@progressively/database';
 
 @Injectable()
 export class PaymentService {
@@ -178,7 +177,7 @@ export class PaymentService {
     return undefined;
   }
 
-  async decreaseAvailableCredits(projectUuid: string) {
+  async decreaseAvailableCreditsById(projectUuid: string, reduceBy: number) {
     const cachingKey = projectCreditsKey(projectUuid);
 
     const updated = await this.prisma.eventUsage.update({
@@ -189,7 +188,7 @@ export class PaymentService {
         },
       },
       data: {
-        eventsCount: { decrement: 1 },
+        eventsCount: { decrement: reduceBy },
       },
     });
 

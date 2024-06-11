@@ -111,7 +111,7 @@ export class EventsService {
       showPrevious,
     );
 
-    const cachedData = await this.cachingService.get<Number>(cachingKey);
+    const cachedData = await this.cachingService.get<number>(cachingKey);
     if (cachedData) return cachedData;
 
     const whereClause = showPrevious
@@ -153,7 +153,7 @@ export class EventsService {
       showPrevious,
     );
 
-    const cachedData = await this.cachingService.get<Number>(cachingKey);
+    const cachedData = await this.cachingService.get<number>(cachingKey);
     if (cachedData) return cachedData;
 
     const whereClause = showPrevious
@@ -409,7 +409,7 @@ export class EventsService {
       showPrevious,
     );
 
-    const cachedData = await this.cachingService.get<Number>(cachingKey);
+    const cachedData = await this.cachingService.get<number>(cachingKey);
     if (cachedData) return cachedData;
 
     const whereClause = showPrevious
