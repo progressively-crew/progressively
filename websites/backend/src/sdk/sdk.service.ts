@@ -143,11 +143,7 @@ export class SdkService {
       return false;
     }
 
-    if (requestOrigin.includes(projectDomain)) {
-      return false;
-    }
-
-    return true;
+    return !requestOrigin.includes(projectDomain);
   }
 
   async computeFlag(
