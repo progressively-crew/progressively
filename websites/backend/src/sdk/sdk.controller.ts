@@ -3,7 +3,6 @@ import {
   Get,
   Param,
   Req,
-  Headers,
   UseGuards,
   Post,
   Body,
@@ -31,15 +30,25 @@ export class SdkController {
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
   ) {}
 
-  async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
+  _getRequestMetadata(request: Request) {
+    const userAgent = request.headers['user-agent'] || '';
+    const ip = request.ip;
+    const domain = request.headers['origin'] || '';
     const secretKey = request.headers['x-api-key'] as string | undefined;
+    const shouldSkipHit = request.headers['x-progressively-hit'] === 'skip';
+
+    return { userAgent, ip, domain, secretKey, shouldSkipHit };
+  }
+
+  async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
+    const { secretKey, domain } = this._getRequestMetadata(request);
 
     if (!secretKey && !fields.clientKey) {
       throw new UnauthorizedException();
     }
 
     const concernedProject = await this.sdkService.getProjectByKeys(
-      fields.clientKey ? String(fields.clientKey) : undefined,
+      fields.clientKey,
       secretKey,
     );
 
@@ -47,14 +56,13 @@ export class SdkController {
       throw new UnauthorizedException();
     }
 
-    const domain = request.headers['origin'] || '';
-
     if (
-      !secretKey &&
-      fields.clientKey &&
-      (!concernedProject.domain ||
-        (concernedProject.domain !== '**' &&
-          !domain.includes(concernedProject.domain)))
+      this.sdkService.isInvalidDomain(
+        domain,
+        concernedProject.domain,
+        secretKey,
+        fields.clientKey,
+      )
     ) {
       throw new UnauthorizedException();
     }
@@ -69,29 +77,25 @@ export class SdkController {
   async getByClientKey(
     @Param('params') base64Params: string,
     @Req() request: Request,
-    @Headers() headers,
   ) {
     const fields = parseBase64Params(base64Params);
-    const userAgent = request.headers['user-agent'] || '';
-    const ip = request.ip;
-    const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
+    const { userAgent, ip, shouldSkipHit } = this._getRequestMetadata(request);
 
     fields.id = resolveUserId(fields, userAgent, ip);
 
     const concernedProject = await this._guardSdkEndpoint(request, fields);
 
     return await this.sdkService.computeFlags(
-      base64Params,
       concernedProject,
       fields,
-      shouldSkipHits,
+      shouldSkipHit,
     );
   }
 
   @Get('/types/gen')
   @UseGuards(JwtAuthGuard)
   async getTypesDefinitions(@Req() request: Request) {
-    const secretKey = request.headers['x-api-key'] as string | undefined;
+    const { secretKey } = this._getRequestMetadata(request);
 
     if (!secretKey) {
       throw new UnauthorizedException();
@@ -111,15 +115,12 @@ export class SdkController {
       throw new BadRequestException();
     }
 
+    const { userAgent, ip, secretKey, domain } =
+      this._getRequestMetadata(request);
+
     const fields = parseBase64Params(base64Params);
-    const userAgent = request.headers['user-agent'] || '';
-    const ip = request.ip;
 
     fields.id = resolveUserId(fields, userAgent, ip);
-
-    const secretKey = request.headers['x-api-key'] as string | undefined;
-    const clientKey = fields.clientKey;
-    const domain = request.headers['origin'] || '';
 
     const deviceInfo = getDeviceInfo(request);
 
@@ -129,7 +130,7 @@ export class SdkController {
         name: ev.name,
         os: deviceInfo.os,
         browser: deviceInfo.browser,
-        clientKey: clientKey ? String(clientKey) : undefined,
+        clientKey: fields.clientKey ? String(fields.clientKey) : undefined,
         secretKey,
         domain,
         referer: ev.referer,

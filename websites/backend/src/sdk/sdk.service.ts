@@ -126,6 +126,30 @@ export class SdkService {
     };
   }
 
+  isInvalidDomain(
+    requestOrigin?: string,
+    projectDomain?: string,
+    secretKey?: string,
+    clientKey?: string | boolean | number,
+  ) {
+    const isBrowserCall = Boolean(!secretKey && clientKey);
+    if (!isBrowserCall) return false;
+
+    if (!projectDomain) {
+      return true;
+    }
+
+    if (projectDomain === '**') {
+      return false;
+    }
+
+    if (requestOrigin.includes(projectDomain)) {
+      return false;
+    }
+
+    return true;
+  }
+
   async computeFlag(
     flag: PopulatedFlag,
     fields: FieldRecord,
@@ -154,21 +178,16 @@ export class SdkService {
     await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
   }
 
-  getProjectByKeys(clientKey?: string, secretKey?: string) {
+  getProjectByKeys(clientKey?: string | number | boolean, secretKey?: string) {
     return this.prisma.project.findFirst({
       where: {
-        clientKey,
+        clientKey: clientKey ? String(clientKey) : undefined,
         secretKey,
       },
     });
   }
 
-  async computeFlags(
-    b64: string,
-    project: Project,
-    fields: FieldRecord,
-    skipHit: boolean,
-  ) {
+  async computeFlags(project: Project, fields: FieldRecord, skipHit: boolean) {
     const flags = await this.flagService.getPopulatedFlags(project.uuid);
 
     const resolveFlags = {};
