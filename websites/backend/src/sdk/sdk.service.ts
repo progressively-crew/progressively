@@ -281,6 +281,13 @@ export class SdkService {
     queuedEvent.sessionUuid = session.uuid;
     queuedEvent.projectUuid = concernedProject.uuid;
 
+    const queuedPayingHit: QueuedPayingHit = {
+      projectUuid: concernedProject.uuid,
+      reduceBy: 1,
+    };
+
+    await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
+
     return queuedEvent;
   }
 
