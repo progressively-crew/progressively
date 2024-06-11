@@ -50,11 +50,11 @@ export class PaymentService {
     });
   }
 
-  orderSucceeded(session: Stripe.Checkout.Session) {
+  async orderSucceeded(session: Stripe.Checkout.Session) {
     const quantity = Number(session.metadata.quantity);
     const projectUuid = session.metadata.projectId;
 
-    return this.prisma.$transaction([
+    const [stripeOrder, project, eventUsage] = await this.prisma.$transaction([
       this.prisma.stripeOrder.updateMany({
         data: {
           status: 'paid',
@@ -82,6 +82,11 @@ export class PaymentService {
         },
       }),
     ]);
+
+    const cachingKey = projectCreditsKey(projectUuid);
+    await this.cachingService.set(cachingKey, eventUsage.eventsCount);
+
+    return [stripeOrder, project, eventUsage];
   }
 
   orderFailed(session: Stripe.Checkout.Session) {

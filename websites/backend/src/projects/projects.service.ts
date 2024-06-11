@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { v4 as uuidv4 } from 'uuid';
 import { UserRoles } from '../users/roles';
@@ -7,6 +7,8 @@ import { FlagAlreadyExists } from './errors';
 import { EventsService } from '../events/events.service';
 import { FlagsService } from '../flags/flags.service';
 import { EventsPerCredits, InitialCreditCount } from '../payment/constants';
+import { ICachingService } from '../caching/types';
+import { projectCreditsKey } from '../caching/keys';
 
 @Injectable()
 export class ProjectsService {
@@ -14,6 +16,7 @@ export class ProjectsService {
     private prisma: PrismaService,
     private eventService: EventsService,
     private flagService: FlagsService,
+    @Inject('CachingService') private readonly cachingService: ICachingService,
   ) {}
 
   flagsByProject(projectId: string) {
@@ -74,6 +77,9 @@ export class ProjectsService {
         eventsCount: EventsPerCredits,
       },
     });
+
+    const cachingKey = projectCreditsKey(project.uuid);
+    await this.cachingService.set(cachingKey, EventsPerCredits);
 
     return project;
   }
