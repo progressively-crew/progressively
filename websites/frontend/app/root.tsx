@@ -26,6 +26,7 @@ export const links: LinksFunction = () => {
       href: "https://rsms.me/inter/inter.css",
       rel: "preload",
     },
+    { rel: "icon", href: "/favicon.png", sizes: "32x32" },
   ];
 };
 

@@ -32,3 +32,6 @@ export const flagEvaluationsOverTimeKey = (
   flagId: string,
   timeframe: Timeframe,
 ) => `flag-over-time:${flagId}:insights:${timeframe}`;
+
+export const projectCreditsKey = (projectUuid: string) =>
+  `project:${projectUuid}:credits`;

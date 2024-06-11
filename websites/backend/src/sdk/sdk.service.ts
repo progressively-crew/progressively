@@ -25,6 +25,7 @@ import { FlagsService } from '../flags/flags.service';
 import { Project } from '@progressively/database';
 import { StrategyService } from '../strategy/strategy.service';
 import { EventsService } from '../events/events.service';
+import { QueuedPayingHit } from 'src/payment/types';
 
 @Injectable()
 export class SdkService {
@@ -112,7 +113,13 @@ export class SdkService {
       valueResolved: String(flagStatusRecord),
     };
 
+    const queuedPayingHit: QueuedPayingHit = {
+      projectUuid: flag.Project.uuid,
+      reduceBy: 1,
+    };
+
     await this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
+    await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
 
     return {
       [flag.key]: flagStatusRecord,
@@ -138,6 +145,13 @@ export class SdkService {
 
       await this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
     }
+
+    const queuedPayingHit: QueuedPayingHit = {
+      projectUuid: flag.Project.uuid,
+      reduceBy: 1,
+    };
+
+    await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
   }
 
   getProjectByKeys(clientKey?: string, secretKey?: string) {
@@ -266,6 +280,13 @@ export class SdkService {
 
     queuedEvent.sessionUuid = session.uuid;
     queuedEvent.projectUuid = concernedProject.uuid;
+
+    const queuedPayingHit: QueuedPayingHit = {
+      projectUuid: concernedProject.uuid,
+      reduceBy: 1,
+    };
+
+    await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
 
     return queuedEvent;
   }
