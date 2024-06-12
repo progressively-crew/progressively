@@ -217,6 +217,8 @@ export class SdkService {
         this.cachingService.set(projectByIdKey(dbProject.uuid), dbProject),
       ]);
     }
+
+    return dbProject;
   }
 
   async computeFlags(project: Project, fields: FieldRecord, skipHit: boolean) {
