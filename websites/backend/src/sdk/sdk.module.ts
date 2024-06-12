@@ -15,6 +15,7 @@ import { QueuingModule } from '../queuing/queuing.module';
 import { StrategyModule } from '../strategy/strategy.module';
 import { EventsModule } from '../events/events.module';
 import { CachingModule } from '../caching/caching.module';
+import { EventsService } from '../events/events.service';
 
 @Module({
   controllers: [SdkController],
@@ -37,6 +38,7 @@ export class SdkModule implements OnModuleInit {
   constructor(
     private readonly wsGateway: WebsocketGateway,
     private readonly sdkService: SdkService,
+    private readonly eventService: EventsService,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
   ) {}
 
@@ -51,7 +53,7 @@ export class SdkModule implements OnModuleInit {
       KafkaTopics.AnalyticsHits,
       'progressively-analytics-group',
       async (queuedEvents) => {
-        await this.sdkService.resolveQueuedHits(queuedEvents);
+        await this.eventService.bulkAddEvents(queuedEvents);
       },
     );
   }

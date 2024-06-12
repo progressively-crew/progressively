@@ -56,23 +56,20 @@ export class SdkController {
       throw new UnauthorizedException();
     }
 
-    if (
-      this.sdkService.isInvalidDomain(
-        domain,
-        concernedProject.domain,
-        secretKey,
-        fields.clientKey,
-      )
-    ) {
+    const isDomainInvalid = this.sdkService.isInvalidDomain(
+      domain,
+      concernedProject.domain,
+      secretKey,
+      fields.clientKey,
+    );
+
+    if (isDomainInvalid) {
       throw new UnauthorizedException();
     }
 
     return concernedProject;
   }
 
-  /**
-   * Get the flag values by client sdk key
-   */
   @Get('/:params')
   async getByClientKey(
     @Param('params') base64Params: string,
@@ -80,28 +77,15 @@ export class SdkController {
   ) {
     const fields = parseBase64Params(base64Params);
     const { userAgent, ip, shouldSkipHit } = this._getRequestMetadata(request);
+    const concernedProject = await this._guardSdkEndpoint(request, fields);
 
     fields.id = resolveUserId(fields, userAgent, ip);
 
-    const concernedProject = await this._guardSdkEndpoint(request, fields);
-
-    return await this.sdkService.computeFlags(
+    return this.sdkService.computeFlags(
       concernedProject,
       fields,
       shouldSkipHit,
     );
-  }
-
-  @Get('/types/gen')
-  @UseGuards(JwtAuthGuard)
-  async getTypesDefinitions(@Req() request: Request) {
-    const { secretKey } = this._getRequestMetadata(request);
-
-    if (!secretKey) {
-      throw new UnauthorizedException();
-    }
-
-    return this.sdkService.generateTypescriptTypes(secretKey);
   }
 
   @Post('/:params')
@@ -115,12 +99,21 @@ export class SdkController {
       throw new BadRequestException();
     }
 
+    const fields = parseBase64Params(base64Params);
+
     const { userAgent, ip, secretKey, domain } =
       this._getRequestMetadata(request);
 
-    const fields = parseBase64Params(base64Params);
+    const visitorId = resolveUserId(fields, userAgent, ip);
 
-    fields.id = resolveUserId(fields, userAgent, ip);
+    fields.id = visitorId;
+
+    const concernedProject = await this._guardSdkEndpoint(request, fields);
+
+    const session = await this.sdkService.getOrCreateSession(
+      visitorId,
+      concernedProject.uuid,
+    );
 
     const deviceInfo = getDeviceInfo(request);
 
@@ -135,16 +128,30 @@ export class SdkController {
         domain,
         referer: ev.referer,
         url: parseUrl(ev.url).toString(),
-        visitorId: String(fields?.id || ''),
+        visitorId,
         data: ev.data,
         viewportHeight: ev.viewportHeight,
         viewportWidth: ev.viewportWidth,
         posX: ev.posX,
         posY: ev.posY,
+        projectUuid: concernedProject.uuid,
+        sessionUuid: session.uuid,
       }));
 
     await this.queuingService.send(KafkaTopics.AnalyticsHits, queuedEvents);
 
     return {};
+  }
+
+  @Get('/types/gen')
+  @UseGuards(JwtAuthGuard)
+  async getTypesDefinitions(@Req() request: Request) {
+    const { secretKey } = this._getRequestMetadata(request);
+
+    if (!secretKey) {
+      throw new UnauthorizedException();
+    }
+
+    return this.sdkService.generateTypescriptTypes(secretKey);
   }
 }

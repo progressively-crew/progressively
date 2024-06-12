@@ -16,15 +16,12 @@ import {
   isInBucket,
 } from './utils';
 import { ValueToServe } from '../strategy/types';
-import { QueuedEventHit } from './types';
 import { RuleService } from '../rule/rule.service';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { IQueuingService } from '../queuing/types';
 import { KafkaTopics } from '../queuing/topics';
 import { FlagsService } from '../flags/flags.service';
 import { Project } from '@progressively/database';
 import { StrategyService } from '../strategy/strategy.service';
-import { EventsService } from '../events/events.service';
 import { QueuedPayingHit } from 'src/payment/types';
 
 @Injectable()
@@ -34,8 +31,6 @@ export class SdkService {
     private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
     private readonly strategyService: StrategyService,
-    private readonly eventService: EventsService,
-    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
   ) {}
 
@@ -239,80 +234,5 @@ export class SdkService {
         projectUuid: projectId,
       },
     });
-  }
-
-  async validateQueuedEvent(queuedEvent: QueuedEventHit) {
-    if (!queuedEvent.secretKey && !queuedEvent.clientKey) {
-      this.logger.error({
-        error: 'Invalid secret key or client key provided',
-        level: 'error',
-        context: 'Queued hit',
-        payload: queuedEvent,
-      });
-
-      return null;
-    }
-
-    const concernedProject = await this.getProjectByKeys(
-      queuedEvent.clientKey,
-      queuedEvent.secretKey,
-    );
-
-    if (!concernedProject) {
-      this.logger.error({
-        error: 'The client key does not match any project',
-        level: 'error',
-        context: 'Queued hit',
-        payload: queuedEvent,
-      });
-
-      return null;
-    }
-
-    const domain = queuedEvent.domain;
-
-    if (
-      !queuedEvent.secretKey &&
-      queuedEvent.clientKey &&
-      (!concernedProject.domain ||
-        (concernedProject.domain !== '**' &&
-          !domain.includes(concernedProject.domain)))
-    ) {
-      this.logger.error({
-        error: `The client key does not match the authorized domains. Project: "${concernedProject.domain}", received: "${domain}"`,
-        level: 'error',
-        context: 'Queued hit',
-        payload: queuedEvent,
-      });
-
-      return null;
-    }
-
-    const session = await this.getOrCreateSession(
-      queuedEvent.visitorId,
-      concernedProject.uuid,
-    );
-
-    queuedEvent.sessionUuid = session.uuid;
-    queuedEvent.projectUuid = concernedProject.uuid;
-
-    const queuedPayingHit: QueuedPayingHit = {
-      projectUuid: concernedProject.uuid,
-      reduceBy: 1,
-    };
-
-    await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
-
-    return queuedEvent;
-  }
-
-  async resolveQueuedHits(queuedEvents: Array<QueuedEventHit>) {
-    const promises = queuedEvents.map((queuedEvent) =>
-      this.validateQueuedEvent(queuedEvent),
-    );
-
-    const validatedQueuedEvents = (await Promise.all(promises)).filter(Boolean);
-
-    return this.eventService.bulkAddEvents(validatedQueuedEvents);
   }
 }
