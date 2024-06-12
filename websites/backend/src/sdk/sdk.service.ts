@@ -211,10 +211,12 @@ export class SdkService {
       },
     });
 
-    await Promise.all([
-      this.cachingService.set(cachingKey, dbProject.uuid),
-      this.cachingService.set(projectByIdKey(dbProject.uuid), dbProject),
-    ]);
+    if (dbProject) {
+      await Promise.all([
+        this.cachingService.set(cachingKey, dbProject.uuid),
+        this.cachingService.set(projectByIdKey(dbProject.uuid), dbProject),
+      ]);
+    }
   }
 
   async computeFlags(project: Project, fields: FieldRecord, skipHit: boolean) {
