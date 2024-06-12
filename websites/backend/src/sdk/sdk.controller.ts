@@ -47,10 +47,10 @@ export class SdkController {
       throw new UnauthorizedException();
     }
 
-    const concernedProject = await this.sdkService.getProjectByKeys(
-      fields.clientKey,
+    const concernedProject = await this.sdkService.getProjectByKeys({
+      clientKey: fields.clientKey as string | undefined,
       secretKey,
-    );
+    });
 
     if (!concernedProject) {
       throw new UnauthorizedException();

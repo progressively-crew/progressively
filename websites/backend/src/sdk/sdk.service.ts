@@ -22,7 +22,23 @@ import { KafkaTopics } from '../queuing/topics';
 import { FlagsService } from '../flags/flags.service';
 import { Project } from '@progressively/database';
 import { StrategyService } from '../strategy/strategy.service';
-import { QueuedPayingHit } from 'src/payment/types';
+import { QueuedPayingHit } from '../payment/types';
+import { ICachingService } from '../caching/types';
+import {
+  projectByIdKey,
+  projectClientKeyToId,
+  projectSecretKeyToId,
+} from '../caching/keys';
+
+type GetProjectByKeysArgs =
+  | {
+      clientKey: string;
+      secretKey?: string;
+    }
+  | {
+      clientKey?: string;
+      secretKey: string;
+    };
 
 @Injectable()
 export class SdkService {
@@ -32,6 +48,7 @@ export class SdkService {
     private readonly ruleService: RuleService,
     private readonly strategyService: StrategyService,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
+    @Inject('CachingService') private readonly cachingService: ICachingService,
   ) {}
 
   resolveFlagStatus(flag: PopulatedFlag, fields: FieldRecord) {
@@ -113,8 +130,10 @@ export class SdkService {
       reduceBy: 1,
     };
 
-    await this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
-    await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
+    await Promise.all([
+      this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit),
+      this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit),
+    ]);
 
     return {
       [flag.key]: flagStatusRecord,
@@ -169,13 +188,35 @@ export class SdkService {
     await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
   }
 
-  getProjectByKeys(clientKey?: string | number | boolean, secretKey?: string) {
-    return this.prisma.project.findFirst({
+  async getProjectByKeys({ clientKey, secretKey }: GetProjectByKeysArgs) {
+    const cachingKey = clientKey
+      ? projectClientKeyToId(clientKey)
+      : projectSecretKeyToId(secretKey);
+
+    const projectId = await this.cachingService.get<string>(cachingKey);
+
+    if (projectId) {
+      const projectCachingKey = projectByIdKey(projectId);
+      const project = await this.cachingService.get<Project>(projectCachingKey);
+
+      if (project) {
+        return project;
+      }
+    }
+
+    const dbProject = await this.prisma.project.findFirst({
       where: {
         clientKey: clientKey ? String(clientKey) : undefined,
         secretKey,
       },
     });
+
+    await Promise.all([
+      this.cachingService.set(cachingKey, dbProject.uuid),
+      this.cachingService.set(projectByIdKey(dbProject.uuid), dbProject),
+    ]);
+
+    return;
   }
 
   async computeFlags(project: Project, fields: FieldRecord, skipHit: boolean) {
