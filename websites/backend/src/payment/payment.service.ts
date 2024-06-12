@@ -164,7 +164,7 @@ export class PaymentService {
     const cachingKey = projectCreditsKey(projectUuid);
     const eventsCount = await this.cachingService.get<number>(cachingKey);
 
-    if (eventsCount) {
+    if (eventsCount !== null) {
       return eventsCount;
     }
 
@@ -183,22 +183,27 @@ export class PaymentService {
   }
 
   async decreaseAvailableCreditsById(projectUuid: string, reduceBy: number) {
-    const cachingKey = projectCreditsKey(projectUuid);
-
-    const updated = await this.prisma.eventUsage.update({
-      where: {
-        projectUuid,
-        eventsCount: {
-          gt: 0,
+    try {
+      const updated = await this.prisma.eventUsage.update({
+        where: {
+          projectUuid,
+          eventsCount: {
+            gt: 0,
+          },
         },
-      },
-      data: {
-        eventsCount: { decrement: reduceBy },
-      },
-    });
+        data: {
+          eventsCount: { decrement: reduceBy },
+        },
+      });
 
-    if (updated) {
-      await this.cachingService.set(cachingKey, updated.eventsCount);
+      if (updated) {
+        const cachingKey = projectCreditsKey(projectUuid);
+        await this.cachingService.set(cachingKey, updated.eventsCount);
+      }
+    } catch {
+      // Risky silent fail but it's acceptable as a starting point
+      // otherwise calling prisma.update throws when it does not find the entry
+      // to update
     }
   }
 }

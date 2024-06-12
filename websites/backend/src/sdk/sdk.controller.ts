@@ -10,6 +10,7 @@ import {
   UnauthorizedException,
   Inject,
   UsePipes,
+  Logger,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { SdkService } from './sdk.service';
@@ -22,12 +23,16 @@ import { KafkaTopics } from '../queuing/topics';
 import { IQueuingService } from '../queuing/types';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { SdkHitAnalyticsSchema } from './sdk.dto';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { PaymentService } from '../payment/payment.service';
 
 @Controller('sdk')
 export class SdkController {
   constructor(
     private readonly sdkService: SdkService,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    private readonly paymentService: PaymentService,
   ) {}
 
   _getRequestMetadata(request: Request) {
@@ -38,6 +43,24 @@ export class SdkController {
     const shouldSkipHit = request.headers['x-progressively-hit'] === 'skip';
 
     return { userAgent, ip, domain, secretKey, shouldSkipHit };
+  }
+
+  async _guardCreditsAvailable(projectId: string) {
+    const creditsAvailable =
+      await this.paymentService.getProjectsCredit(projectId);
+
+    const isCreditEligible = creditsAvailable > 0;
+
+    if (!isCreditEligible) {
+      this.logger.log({
+        level: 'info',
+        context: 'Payments',
+        eventsCount: creditsAvailable,
+        projectId,
+      });
+    }
+
+    return isCreditEligible;
   }
 
   async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
@@ -79,6 +102,14 @@ export class SdkController {
     const { userAgent, ip, shouldSkipHit } = this._getRequestMetadata(request);
     const concernedProject = await this._guardSdkEndpoint(request, fields);
 
+    const isCreditValid = await this._guardCreditsAvailable(
+      concernedProject.uuid,
+    );
+
+    if (!isCreditValid) {
+      return {};
+    }
+
     fields.id = resolveUserId(fields, userAgent, ip);
 
     return this.sdkService.computeFlags(
@@ -100,15 +131,21 @@ export class SdkController {
     }
 
     const fields = parseBase64Params(base64Params);
-
     const { userAgent, ip, secretKey, domain } =
       this._getRequestMetadata(request);
 
     const visitorId = resolveUserId(fields, userAgent, ip);
-
     fields.id = visitorId;
 
     const concernedProject = await this._guardSdkEndpoint(request, fields);
+
+    const isCreditValid = await this._guardCreditsAvailable(
+      concernedProject.uuid,
+    );
+
+    if (!isCreditValid) {
+      return {};
+    }
 
     const session = await this.sdkService.getOrCreateSession(
       visitorId,

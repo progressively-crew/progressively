@@ -13,6 +13,7 @@ import { QueuingModule } from '../queuing/queuing.module';
   imports: [DatabaseModule, ProjectsModule, CachingModule, QueuingModule],
   providers: [PaymentService],
   controllers: [PaymentController],
+  exports: [PaymentService],
 })
 export class PaymentModule implements OnModuleInit {
   constructor(

@@ -16,6 +16,7 @@ import { StrategyModule } from '../strategy/strategy.module';
 import { EventsModule } from '../events/events.module';
 import { CachingModule } from '../caching/caching.module';
 import { EventsService } from '../events/events.service';
+import { PaymentModule } from '../payment/payment.module';
 
 @Module({
   controllers: [SdkController],
@@ -30,6 +31,7 @@ import { EventsService } from '../events/events.service';
     StrategyModule,
     EventsModule,
     CachingModule,
+    PaymentModule,
   ],
   providers: [SdkService],
   exports: [SdkService],
