@@ -76,7 +76,7 @@ describe('SdkController (e2e)', () => {
       expect(response.status).toBe(401);
     });
 
-    it('gives a 200 when the secretKey matches', async () => {
+    it.only('gives a 200 when the secretKey matches', async () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)

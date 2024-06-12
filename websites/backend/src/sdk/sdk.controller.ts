@@ -37,6 +37,8 @@ export class SdkController {
     const secretKey = request.headers['x-api-key'] as string | undefined;
     const shouldSkipHit = request.headers['x-progressively-hit'] === 'skip';
 
+    console.log('Tell me the truth', secretKey);
+
     return { userAgent, ip, domain, secretKey, shouldSkipHit };
   }
 
