@@ -196,14 +196,14 @@ describe('SdkController (e2e)', () => {
         .expect(400);
     });
 
-    it('gives a 201 when there s no env associated to the clientkey (just queued but not handled)', () => {
+    it('gives a 401 when there s no env associated to the clientkey', () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-kefey' }));
 
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send([{ name: 'hello', url: 'http://localhost:300/' }])
         .set('origin', 'hello-world')
-        .expect(201);
+        .expect(401);
     });
 
     it('gives a 201 when the hit is valid', () => {
@@ -252,17 +252,17 @@ describe('SdkController (e2e)', () => {
         .expect(201);
     });
 
-    it('gives a 201 when the secretKey dont match (handled in a queue)', async () => {
+    it('gives a 401 when the secretKey dont match', async () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send([{ name: 'hello', url: 'http://localhost:300/' }])
         .set('x-api-key', 'secret-key-23');
 
-      expect(response.status).toBe(201);
+      expect(response.status).toBe(401);
     });
 
-    it('gives a 201 when the secretKey and client key are not passed (handled in a queue)', async () => {
+    it('gives a 401 when the secretKey and client key are not passed', async () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
@@ -274,7 +274,7 @@ describe('SdkController (e2e)', () => {
           },
         ]);
 
-      expect(response.status).toBe(201);
+      expect(response.status).toBe(401);
     });
 
     it('gives a 200 when the secretKey matches', async () => {

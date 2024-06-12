@@ -16,4 +16,8 @@ export class InMemoryService implements ICachingService {
   async set(k: string, v: any) {
     this.dict[k] = v;
   }
+
+  async del(k: string) {
+    this.dict[k] = undefined;
+  }
 }

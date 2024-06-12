@@ -266,6 +266,9 @@ export class FlagsService {
       where: {
         flagUuid: flagId,
       },
+      orderBy: {
+        value: 'asc',
+      },
     });
   }
 

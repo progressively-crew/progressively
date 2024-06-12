@@ -23,7 +23,11 @@ export class RedisService implements ICachingService {
         await this.redis.set(k, JSON.stringify(v), 'EX', time);
       }
     } else {
-      this.redis.set(k, v);
+      if (typeof v === 'string') {
+        await this.redis.set(k, v);
+      } else {
+        await this.redis.set(k, JSON.stringify(v));
+      }
     }
   }
 
@@ -39,5 +43,9 @@ export class RedisService implements ICachingService {
         return data as T;
       }
     }
+  }
+
+  async del(k: string) {
+    await this.redis.del(k);
   }
 }

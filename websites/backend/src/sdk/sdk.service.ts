@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   PopulatedFlag,
   PopulatedStrategy,
@@ -16,16 +16,29 @@ import {
   isInBucket,
 } from './utils';
 import { ValueToServe } from '../strategy/types';
-import { QueuedEventHit } from './types';
 import { RuleService } from '../rule/rule.service';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { IQueuingService } from '../queuing/types';
 import { KafkaTopics } from '../queuing/topics';
 import { FlagsService } from '../flags/flags.service';
 import { Project } from '@progressively/database';
 import { StrategyService } from '../strategy/strategy.service';
-import { EventsService } from '../events/events.service';
-import { QueuedPayingHit } from 'src/payment/types';
+import { QueuedPayingHit } from '../payment/types';
+import { ICachingService } from '../caching/types';
+import {
+  projectByIdKey,
+  projectClientKeyToId,
+  projectSecretKeyToId,
+} from '../caching/keys';
+
+type GetProjectByKeysArgs =
+  | {
+      clientKey: string;
+      secretKey?: string;
+    }
+  | {
+      clientKey?: string;
+      secretKey: string;
+    };
 
 @Injectable()
 export class SdkService {
@@ -34,9 +47,8 @@ export class SdkService {
     private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
     private readonly strategyService: StrategyService,
-    private readonly eventService: EventsService,
-    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
+    @Inject('CachingService') private readonly cachingService: ICachingService,
   ) {}
 
   resolveFlagStatus(flag: PopulatedFlag, fields: FieldRecord) {
@@ -118,12 +130,34 @@ export class SdkService {
       reduceBy: 1,
     };
 
-    await this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
-    await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
+    await Promise.all([
+      this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit),
+      this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit),
+    ]);
 
     return {
       [flag.key]: flagStatusRecord,
     };
+  }
+
+  isInvalidDomain(
+    requestOrigin?: string,
+    projectDomain?: string,
+    secretKey?: string,
+    clientKey?: string | boolean | number,
+  ) {
+    const isBrowserCall = Boolean(!secretKey && clientKey);
+    if (!isBrowserCall) return false;
+
+    if (!projectDomain) {
+      return true;
+    }
+
+    if (projectDomain === '**') {
+      return false;
+    }
+
+    return !requestOrigin.includes(projectDomain);
   }
 
   async computeFlag(
@@ -154,21 +188,40 @@ export class SdkService {
     await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
   }
 
-  getProjectByKeys(clientKey?: string, secretKey?: string) {
-    return this.prisma.project.findFirst({
+  async getProjectByKeys({ clientKey, secretKey }: GetProjectByKeysArgs) {
+    const cachingKey = clientKey
+      ? projectClientKeyToId(clientKey)
+      : projectSecretKeyToId(secretKey);
+
+    const projectId = await this.cachingService.get<string>(cachingKey);
+
+    if (projectId) {
+      const projectCachingKey = projectByIdKey(projectId);
+      const project = await this.cachingService.get<Project>(projectCachingKey);
+
+      if (project) {
+        return project;
+      }
+    }
+
+    const dbProject = await this.prisma.project.findFirst({
       where: {
-        clientKey,
+        clientKey: clientKey ? String(clientKey) : undefined,
         secretKey,
       },
     });
+
+    if (dbProject) {
+      await Promise.all([
+        this.cachingService.set(cachingKey, dbProject.uuid),
+        this.cachingService.set(projectByIdKey(dbProject.uuid), dbProject),
+      ]);
+    }
+
+    return dbProject;
   }
 
-  async computeFlags(
-    b64: string,
-    project: Project,
-    fields: FieldRecord,
-    skipHit: boolean,
-  ) {
+  async computeFlags(project: Project, fields: FieldRecord, skipHit: boolean) {
     const flags = await this.flagService.getPopulatedFlags(project.uuid);
 
     const resolveFlags = {};
@@ -224,80 +277,5 @@ export class SdkService {
         projectUuid: projectId,
       },
     });
-  }
-
-  async validateQueuedEvent(queuedEvent: QueuedEventHit) {
-    if (!queuedEvent.secretKey && !queuedEvent.clientKey) {
-      this.logger.error({
-        error: 'Invalid secret key or client key provided',
-        level: 'error',
-        context: 'Queued hit',
-        payload: queuedEvent,
-      });
-
-      return null;
-    }
-
-    const concernedProject = await this.getProjectByKeys(
-      queuedEvent.clientKey,
-      queuedEvent.secretKey,
-    );
-
-    if (!concernedProject) {
-      this.logger.error({
-        error: 'The client key does not match any project',
-        level: 'error',
-        context: 'Queued hit',
-        payload: queuedEvent,
-      });
-
-      return null;
-    }
-
-    const domain = queuedEvent.domain;
-
-    if (
-      !queuedEvent.secretKey &&
-      queuedEvent.clientKey &&
-      (!concernedProject.domain ||
-        (concernedProject.domain !== '**' &&
-          !domain.includes(concernedProject.domain)))
-    ) {
-      this.logger.error({
-        error: `The client key does not match the authorized domains. Project: "${concernedProject.domain}", received: "${domain}"`,
-        level: 'error',
-        context: 'Queued hit',
-        payload: queuedEvent,
-      });
-
-      return null;
-    }
-
-    const session = await this.getOrCreateSession(
-      queuedEvent.visitorId,
-      concernedProject.uuid,
-    );
-
-    queuedEvent.sessionUuid = session.uuid;
-    queuedEvent.projectUuid = concernedProject.uuid;
-
-    const queuedPayingHit: QueuedPayingHit = {
-      projectUuid: concernedProject.uuid,
-      reduceBy: 1,
-    };
-
-    await this.queuingService.send(KafkaTopics.PayingHits, queuedPayingHit);
-
-    return queuedEvent;
-  }
-
-  async resolveQueuedHits(queuedEvents: Array<QueuedEventHit>) {
-    const promises = queuedEvents.map((queuedEvent) =>
-      this.validateQueuedEvent(queuedEvent),
-    );
-
-    const validatedQueuedEvents = (await Promise.all(promises)).filter(Boolean);
-
-    return this.eventService.bulkAddEvents(validatedQueuedEvents);
   }
 }

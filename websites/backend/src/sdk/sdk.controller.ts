@@ -3,7 +3,6 @@ import {
   Get,
   Param,
   Req,
-  Headers,
   UseGuards,
   Post,
   Body,
@@ -11,6 +10,7 @@ import {
   UnauthorizedException,
   Inject,
   UsePipes,
+  Logger,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { SdkService } from './sdk.service';
@@ -23,81 +23,100 @@ import { KafkaTopics } from '../queuing/topics';
 import { IQueuingService } from '../queuing/types';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { SdkHitAnalyticsSchema } from './sdk.dto';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { PaymentService } from '../payment/payment.service';
 
 @Controller('sdk')
 export class SdkController {
   constructor(
     private readonly sdkService: SdkService,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    private readonly paymentService: PaymentService,
   ) {}
 
-  async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
+  _getRequestMetadata(request: Request) {
+    const userAgent = request.headers['user-agent'] || '';
+    const ip = request.ip;
+    const domain = request.headers['origin'] || '';
     const secretKey = request.headers['x-api-key'] as string | undefined;
+    const shouldSkipHit = request.headers['x-progressively-hit'] === 'skip';
+
+    return { userAgent, ip, domain, secretKey, shouldSkipHit };
+  }
+
+  async _guardCreditsAvailable(projectId: string) {
+    const creditsAvailable =
+      await this.paymentService.getProjectsCredit(projectId);
+
+    const isCreditEligible = creditsAvailable > 0;
+
+    if (!isCreditEligible) {
+      this.logger.log({
+        level: 'info',
+        context: 'Payments',
+        eventsCount: creditsAvailable,
+        projectId,
+      });
+    }
+
+    return isCreditEligible;
+  }
+
+  async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
+    const { secretKey, domain } = this._getRequestMetadata(request);
 
     if (!secretKey && !fields.clientKey) {
       throw new UnauthorizedException();
     }
 
-    const concernedProject = await this.sdkService.getProjectByKeys(
-      fields.clientKey ? String(fields.clientKey) : undefined,
+    const concernedProject = await this.sdkService.getProjectByKeys({
+      clientKey: fields.clientKey as string | undefined,
       secretKey,
-    );
+    });
 
     if (!concernedProject) {
       throw new UnauthorizedException();
     }
 
-    const domain = request.headers['origin'] || '';
+    const isDomainInvalid = this.sdkService.isInvalidDomain(
+      domain,
+      concernedProject.domain,
+      secretKey,
+      fields.clientKey,
+    );
 
-    if (
-      !secretKey &&
-      fields.clientKey &&
-      (!concernedProject.domain ||
-        (concernedProject.domain !== '**' &&
-          !domain.includes(concernedProject.domain)))
-    ) {
+    if (isDomainInvalid) {
       throw new UnauthorizedException();
     }
 
     return concernedProject;
   }
 
-  /**
-   * Get the flag values by client sdk key
-   */
   @Get('/:params')
   async getByClientKey(
     @Param('params') base64Params: string,
     @Req() request: Request,
-    @Headers() headers,
   ) {
     const fields = parseBase64Params(base64Params);
-    const userAgent = request.headers['user-agent'] || '';
-    const ip = request.ip;
-    const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
+    const { userAgent, ip, shouldSkipHit } = this._getRequestMetadata(request);
+    const concernedProject = await this._guardSdkEndpoint(request, fields);
+
+    const isCreditValid = await this._guardCreditsAvailable(
+      concernedProject.uuid,
+    );
+
+    if (!isCreditValid) {
+      return {};
+    }
 
     fields.id = resolveUserId(fields, userAgent, ip);
 
-    const concernedProject = await this._guardSdkEndpoint(request, fields);
-
-    return await this.sdkService.computeFlags(
-      base64Params,
+    return this.sdkService.computeFlags(
       concernedProject,
       fields,
-      shouldSkipHits,
+      shouldSkipHit,
     );
-  }
-
-  @Get('/types/gen')
-  @UseGuards(JwtAuthGuard)
-  async getTypesDefinitions(@Req() request: Request) {
-    const secretKey = request.headers['x-api-key'] as string | undefined;
-
-    if (!secretKey) {
-      throw new UnauthorizedException();
-    }
-
-    return this.sdkService.generateTypescriptTypes(secretKey);
   }
 
   @Post('/:params')
@@ -112,14 +131,26 @@ export class SdkController {
     }
 
     const fields = parseBase64Params(base64Params);
-    const userAgent = request.headers['user-agent'] || '';
-    const ip = request.ip;
+    const { userAgent, ip, secretKey, domain } =
+      this._getRequestMetadata(request);
 
-    fields.id = resolveUserId(fields, userAgent, ip);
+    const visitorId = resolveUserId(fields, userAgent, ip);
+    fields.id = visitorId;
 
-    const secretKey = request.headers['x-api-key'] as string | undefined;
-    const clientKey = fields.clientKey;
-    const domain = request.headers['origin'] || '';
+    const concernedProject = await this._guardSdkEndpoint(request, fields);
+
+    const isCreditValid = await this._guardCreditsAvailable(
+      concernedProject.uuid,
+    );
+
+    if (!isCreditValid) {
+      return {};
+    }
+
+    const session = await this.sdkService.getOrCreateSession(
+      visitorId,
+      concernedProject.uuid,
+    );
 
     const deviceInfo = getDeviceInfo(request);
 
@@ -129,21 +160,35 @@ export class SdkController {
         name: ev.name,
         os: deviceInfo.os,
         browser: deviceInfo.browser,
-        clientKey: clientKey ? String(clientKey) : undefined,
+        clientKey: fields.clientKey ? String(fields.clientKey) : undefined,
         secretKey,
         domain,
         referer: ev.referer,
         url: parseUrl(ev.url).toString(),
-        visitorId: String(fields?.id || ''),
+        visitorId,
         data: ev.data,
         viewportHeight: ev.viewportHeight,
         viewportWidth: ev.viewportWidth,
         posX: ev.posX,
         posY: ev.posY,
+        projectUuid: concernedProject.uuid,
+        sessionUuid: session.uuid,
       }));
 
     await this.queuingService.send(KafkaTopics.AnalyticsHits, queuedEvents);
 
     return {};
+  }
+
+  @Get('/types/gen')
+  @UseGuards(JwtAuthGuard)
+  async getTypesDefinitions(@Req() request: Request) {
+    const { secretKey } = this._getRequestMetadata(request);
+
+    if (!secretKey) {
+      throw new UnauthorizedException();
+    }
+
+    return this.sdkService.generateTypescriptTypes(secretKey);
   }
 }

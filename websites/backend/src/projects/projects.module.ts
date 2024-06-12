@@ -7,6 +7,7 @@ import { DatabaseModule } from '../database/database.module';
 import { FunnelsModule } from '../funnels/funnels.module';
 import { EventsModule } from '../events/events.module';
 import { FlagsModule } from '../flags/flags.module';
+import { CachingModule } from '../caching/caching.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { FlagsModule } from '../flags/flags.module';
     FunnelsModule,
     EventsModule,
     FlagsModule,
+    CachingModule,
   ],
   controllers: [ProjectsController],
   providers: [ProjectsService],

@@ -1,11 +1,6 @@
 import { Timeframe } from '../events/types';
 
-export const projectEpochKey = (projectId: string) =>
-  `project:${projectId}:epoch`;
-
-export const sdkB64EpochToEntryKey = (b64: string, epoch: string) =>
-  `sdk:${b64}:epoch:${epoch}`;
-
+// Analytics keys
 export const projectIdFunnelsKey = (projectId: string, timeframe: Timeframe) =>
   `project:${projectId}:funnels:${timeframe}`;
 
@@ -32,6 +27,20 @@ export const flagEvaluationsOverTimeKey = (
   flagId: string,
   timeframe: Timeframe,
 ) => `flag-over-time:${flagId}:insights:${timeframe}`;
+// End of Analytics keys
 
+// Payment related keys
 export const projectCreditsKey = (projectUuid: string) =>
   `project:${projectUuid}:credits`;
+// End of payment related keys
+
+// Project optimization related keys
+export const projectClientKeyToId = (clientKey: string) =>
+  `project:clientKey:${clientKey}:id`;
+
+export const projectSecretKeyToId = (secretKey: string) =>
+  `project:clientKey:${secretKey}:id`;
+
+export const projectByIdKey = (projectId: string) =>
+  `project:${projectId}:data`;
+// End of Project optimization related keys

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { v4 as uuidv4 } from 'uuid';
 import { UserRoles } from '../users/roles';
@@ -7,6 +7,14 @@ import { FlagAlreadyExists } from './errors';
 import { EventsService } from '../events/events.service';
 import { FlagsService } from '../flags/flags.service';
 import { EventsPerCredits, InitialCreditCount } from '../payment/constants';
+import { ICachingService } from '../caching/types';
+import {
+  projectByIdKey,
+  projectClientKeyToId,
+  projectCreditsKey,
+  projectSecretKeyToId,
+} from '../caching/keys';
+import { Project } from '@progressively/database';
 
 @Injectable()
 export class ProjectsService {
@@ -14,6 +22,7 @@ export class ProjectsService {
     private prisma: PrismaService,
     private eventService: EventsService,
     private flagService: FlagsService,
+    @Inject('CachingService') private readonly cachingService: ICachingService,
   ) {}
 
   flagsByProject(projectId: string) {
@@ -30,8 +39,8 @@ export class ProjectsService {
     });
   }
 
-  rotateSecretKey(uuid: string) {
-    return this.prisma.project.updateMany({
+  async rotateSecretKey(uuid: string) {
+    const updatedProject = await this.prisma.project.update({
       where: {
         uuid,
       },
@@ -39,10 +48,26 @@ export class ProjectsService {
         secretKey: uuidv4(),
       },
     });
+
+    await this._resetProjectCaching(updatedProject);
+
+    return updatedProject;
   }
 
-  updateProject(projectId: string, name: string, prodDomain: string) {
-    return this.prisma.project.updateMany({
+  async _resetProjectCaching(project: Project) {
+    const projectSecretCachingKey = projectSecretKeyToId(project.secretKey);
+    const projectClientCachingKey = projectClientKeyToId(project.clientKey);
+    const projectCachingKey = projectByIdKey(project.uuid);
+
+    await Promise.all([
+      this.cachingService.set(projectSecretCachingKey, project.uuid),
+      this.cachingService.set(projectClientCachingKey, project.uuid),
+      this.cachingService.set(projectCachingKey, project),
+    ]);
+  }
+
+  async updateProject(projectId: string, name: string, prodDomain: string) {
+    const updatedProject = await this.prisma.project.update({
       data: {
         name,
         domain: prodDomain,
@@ -51,6 +76,10 @@ export class ProjectsService {
         uuid: projectId,
       },
     });
+
+    await this._resetProjectCaching(updatedProject);
+
+    return updatedProject;
   }
 
   async createProject(name: string, userId: string, prodDomain: string) {
@@ -74,6 +103,10 @@ export class ProjectsService {
         eventsCount: EventsPerCredits,
       },
     });
+
+    const creditCachingKey = projectCreditsKey(project.uuid);
+    await this.cachingService.set(creditCachingKey, EventsPerCredits);
+    await this._resetProjectCaching(project);
 
     return project;
   }
@@ -241,6 +274,21 @@ export class ProjectsService {
     const result = await this.prisma.$transaction(deleteQueries);
     await this.eventService.deleteForProject(projectId);
     await this.flagService.deleteFlagHitsOfProject(projectId);
+
+    const projectCachingKey = projectByIdKey(projectId);
+    const project = await this.cachingService.get<Project>(projectCachingKey);
+
+    if (project) {
+      const projectSecretCachingKey = projectSecretKeyToId(project.secretKey);
+      const projectClientCachingKey = projectClientKeyToId(project.clientKey);
+
+      await Promise.all([
+        this.cachingService.del(projectCachingKey),
+        this.cachingService.del(projectSecretCachingKey),
+        this.cachingService.del(projectClientCachingKey),
+      ]);
+    }
+
     return result[result.length - 1];
   }
 
