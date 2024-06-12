@@ -39,8 +39,8 @@ export class ProjectsService {
     });
   }
 
-  rotateSecretKey(uuid: string) {
-    return this.prisma.project.updateMany({
+  async rotateSecretKey(uuid: string) {
+    const updatedProject = await this.prisma.project.update({
       where: {
         uuid,
       },
@@ -48,6 +48,10 @@ export class ProjectsService {
         secretKey: uuidv4(),
       },
     });
+
+    await this._resetProjectCaching(updatedProject);
+
+    return updatedProject;
   }
 
   async _resetProjectCaching(project: Project) {
