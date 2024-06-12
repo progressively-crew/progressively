@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   PopulatedFlag,
   PopulatedStrategy,
@@ -215,8 +215,6 @@ export class SdkService {
       this.cachingService.set(cachingKey, dbProject.uuid),
       this.cachingService.set(projectByIdKey(dbProject.uuid), dbProject),
     ]);
-
-    return;
   }
 
   async computeFlags(project: Project, fields: FieldRecord, skipHit: boolean) {
