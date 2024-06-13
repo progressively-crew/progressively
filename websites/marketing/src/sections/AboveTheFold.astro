@@ -6,9 +6,7 @@ import { AnimatedImage } from "../components/AnimatedImage";
 import Banner from "../components/Banner.astro";
 ---
 
-<div
-  class="relativeflex flex-col justify-center bg-gradient-to-b from-gray-700 to-gray-950"
->
+<div class="relativeflex flex-col justify-center hero-bg">
   <header>
     <Banner>
       Thanks for your support on{" "}
@@ -24,26 +22,19 @@ import Banner from "../components/Banner.astro";
   <Navbar />
   <div class="max-w-screen-xl mx-auto relative z-10 px-4 pt-32 md:pb-20">
     <div class="flex flex-col gap-3 items-center pb-16">
-      <Title tag="h1" size="XXL" theme="dark" className="text-center">
+      <Title tag="h1" size="XXL" className="text-center font-normal">
         The Product Control Tower
       </Title>
+      <p class="text-gray-800 text-2xl py-4">
+        An all in one toolbox to help you building a product with an impact.
+      </p>
 
       <div class="flex flex-col md:flex-row gap-4 items-center pt-4 md:pb-24">
         <Button
           href="https://dashboard.progressively.app"
-          id="demo-cta"
-          size="L"
-          variant="primary"
-          target="_blank"
-        >
-          Show demo
-        </Button>
-
-        <Button
-          href="https://docs.progressively.app"
           id="above-the-fold-cta"
           size="L"
-          variant="secondary-inverse"
+          variant="secondary"
           target="_blank"
         >
           Get started

@@ -1,24 +1,34 @@
 ---
+import Button from "./Button.astro";
+
 const navLinkStyles =
-  "px-2 md:px-6 py-2 text-sm text-gray-200 hover:text-white active:text-gray-300 rounded-xl block transition-all";
+  "px-2 md:px-6 py-2 text-gray-800 hover:text-gray-700 active:text-gray-600 rounded-xl block transition-all hover:underline";
 ---
 
 <nav class="pt-4 md:pt-12">
   <div
     class="px-4 max-w-screen-xl w-full mx-auto flex flex-row justify-between items-center overflow-auto"
   >
-    <div class="flex flex-row gap-2 items-center shrink-0">
-      <img
-        src="/favicon.svg"
-        alt="Progressively"
-        class="w-8 h-8 block rounded-full p-1 bg-gray-900"
-      />
-      <div class="font-bold text-lg hidden md:block text-white">
-        Progressively
-      </div>
-    </div>
+    <ul class="flex flex-row gap-4 items-center shrink-0">
+      <li class="flex flex-row gap-2 items-center shrink-0">
+        <img
+          src="/favicon.svg"
+          alt="Progressively"
+          class="w-8 h-8 block rounded-full p-1 bg-gray-900"
+        />
+        <div class="font-bold text-lg hidden md:block text-gray-800">
+          Progressively
+        </div>
+      </li>
 
-    <ul class="flex flex-row justify-end gap-4 items-center shrink-0">
+      <li class="shrink-0">
+        <a
+          href="https://docs.progressively.app/"
+          id="nav-docs"
+          class={navLinkStyles}>Documentation</a
+        >
+      </li>
+
       <li class="shrink-0">
         <a
           class={navLinkStyles}
@@ -27,19 +37,19 @@ const navLinkStyles =
           Github
         </a>
       </li>
+    </ul>
 
+    <ul class="flex flex-row justify-end gap-4 items-center shrink-0">
       <li class="shrink-0">
         <a class={navLinkStyles} href="https://app.cal.com/mfrachet/30min">
-          Schedule a call
+          Contact us
         </a>
       </li>
 
       <li class="shrink-0">
-        <a
-          href="https://docs.progressively.app/"
-          id="nav-docs"
-          class={navLinkStyles}>Docs</a
-        >
+        <Button href="https://docs.progressively.app/" id="nav-docs" size="M">
+          Go to app
+        </Button>
       </li>
     </ul>
   </div>

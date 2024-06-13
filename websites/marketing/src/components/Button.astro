@@ -37,9 +37,9 @@ const variantStyles = {
 };
 
 const sharedStyles = "text-center rounded-full";
-const styles = `${sharedStyles} ${variantStyles[variant || "primary"]} ${
-  sizeStyles[size || "L"]
-}`;
+const styles = `transition-all ${sharedStyles} ${
+  variantStyles[variant || "primary"]
+} ${sizeStyles[size || "L"]}`;
 
 const El = href ? "a" : "button";
 ---

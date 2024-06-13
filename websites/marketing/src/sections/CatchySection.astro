@@ -1,41 +1,42 @@
 ---
 import Title from "../components/Title.astro";
 import Text from "../components/Text.astro";
-import Button from "../components/Button.astro";
 ---
 
-<section class="bg-gradient-to-b from-gray-700 to-gray-950 py-24">
+<section class="bg-white py-24">
   <div
-    class="max-w-screen-2xl w-full mx-auto px-4 md:px-12 flex flex-col gap-4"
+    class="max-w-screen-2xl w-full mx-auto px-4 md:px-12 flex flex-col gap-4 justify-center items-center"
   >
-    <Title theme="dark" size="XL" tag="h2">Interested to know more?</Title>
+    <Title size="XXL" tag="h2" className="text-center pb-2">
+      Pricing Tailored to Your Needs
+    </Title>
 
-    <Text size="XL" theme="dark" className="max-w-4xl text-gray-200">
-      Ready to elevate your project management and optimize user experiences?
-      Schedule a call with us today to explore how Progressively can transform
-      your workflow and bring your vision to life.
+    <Text size="XL" className="max-w-4xl text-gray-200 text-center pb-4">
+      At Progressively, we understand the frustration of unpredictable
+      pay-as-you-go pricing. That's why we've created a straightforward pricing
+      model designed to make you feel secure, ensuring you only pay for what you
+      need. <strong class="font-bold">And it starts at 1 euro</strong>.
     </Text>
 
-    <div class="pt-4 flex flex-col md:flex-row gap-4">
-      <Button
-        target="_blank"
-        href="https://app.cal.com/mfrachet/30min"
-        id="schedule-call"
-        size="L"
-        variant="secondary-inverse"
-      >
-        Schedule a call
-      </Button>
+    <div class="border border-gray-300 rounded-xl p-8 max-w-sm">
+      <h2 class="font-bold text-xl">The only plan</h2>
+      <p class="max-w-xs text-gray-700 text-sm leading-6">
+        For anybody that want to improve their product building & delivery
+        processes
+      </p>
 
-      <Button
-        target="_blank"
-        href="https://docs.progressively.app/"
-        size="L"
-        id="get-started-interested-to-know"
-        variant="tertiary-inverse"
-      >
-        Get started now
-      </Button>
+      <div class="py-4 flex flex-row items-center">
+        <div class="flex flex-row items-end gap-4">
+          <p class="text-black text-6xl font-extrabold shrink-0">1€</p>
+          <p class="text-gray-500 shrink-0 text-lg">for</p>
+          <p class="text-black text-6xl font-extrabold shrink-0">500</p>
+          <p class="text-gray-500 shrink-0 text-lg">events*</p>
+        </div>
+      </div>
+
+      <p class="text-gray-500 shrink-0 text-xs">
+        * An event corresponds to 1 flag eval. or 1 analytics hit.
+      </p>
     </div>
   </div>
 </section>
