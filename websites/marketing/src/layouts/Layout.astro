@@ -1,7 +1,4 @@
 ---
-import Navbar from "../components/Navbar.astro";
-import Banner from "../components/Banner.astro";
-
 interface Props {
   title: string;
   description: string;
@@ -153,23 +150,17 @@ const scriptSrc = "/progressively.min.js";
     websocketUrl: "wss://api.progressively.app",
   });
 
-  [
-    "nav-docs",
-    "nav-getstarted",
-    "above-the-fold-cta",
-    "above-the-fold-get-in-touch",
-    "demo-cta",
-    "schedule-call",
-    "get-started-interested-to-know",
-  ].forEach((id) => {
-    const el = document.getElementById(id);
+  ["nav-docs", "above-the-fold-cta", "schedule-call", "go-to-app"].forEach(
+    (id) => {
+      const el = document.getElementById(id);
 
-    if (el) {
-      el.addEventListener("click", (e) => {
-        (window as any)?.track(id);
-      });
+      if (el) {
+        el.addEventListener("click", (e) => {
+          (window as any)?.track(id);
+        });
+      }
     }
-  });
+  );
 
   const banner = document.getElementById("banner");
 
