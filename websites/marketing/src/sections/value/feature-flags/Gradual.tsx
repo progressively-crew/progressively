@@ -16,7 +16,7 @@ export const Gradual = () => {
         />
       </div>
 
-      <div className="w-full h-10 flex items-center justify-center">
+      <div className="w-[200px] relative">
         <PercentageField
           value={percentage}
           label={"Change percentage"}
