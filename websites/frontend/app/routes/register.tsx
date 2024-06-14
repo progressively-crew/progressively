@@ -31,11 +31,12 @@ export const action: ActionFunction = ({
 };
 
 export const loader: LoaderFunction = () => {
-  if (process.env.ALLOW_REGISTRATION === "true") {
-    return null;
-  }
+  // if (String(process.env.ALLOW_REGISTRATION) === "true") {
+  //   return null;
+  // }
 
-  return redirect("/signin");
+  // return redirect("/signin");
+  return null;
 };
 
 export default function CreateAccountPage() {

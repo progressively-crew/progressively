@@ -4,7 +4,6 @@ import { Spinner } from "../Spinner";
 
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   to?: string;
-  href?: string;
   children?: React.ReactNode;
   isLoading?: boolean;
   loadingText?: string;
@@ -49,7 +48,6 @@ export const Button = forwardRef(
   (
     {
       to,
-      href,
       children,
       type,
       icon,
@@ -72,15 +70,13 @@ export const Button = forwardRef(
     const combinedClassName = classCombination[actuelScheme + actualVariant];
     const sizeClass = sizeClasses[size];
 
-    if (to || href) {
+    if (to) {
       const linkProps = props as HTMLAttributes<HTMLAnchorElement>;
-      const Component = href ? "a" : Link;
 
       return (
-        <Component
+        <Link
           ref={ref}
-          to={href ? undefined : to}
-          href={href}
+          to={to}
           target={target}
           className={
             sharedButtonClass +
@@ -95,7 +91,7 @@ export const Button = forwardRef(
         >
           {icon && <span>{icon}</span>}
           {children}
-        </Component>
+        </Link>
       );
     }
 

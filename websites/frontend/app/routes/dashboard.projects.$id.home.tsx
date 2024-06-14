@@ -93,7 +93,7 @@ export default function SettingsPage() {
               size="S"
               icon={<FlagIcon />}
               variant="secondary"
-              href="./flags/all/create"
+              to="../flags/all/create"
             >
               Create a feature flag
             </Button>
@@ -101,7 +101,7 @@ export default function SettingsPage() {
               size="S"
               icon={<BiBook />}
               variant="secondary"
-              href="https://docs.progressively.app/concepts/features-flags/"
+              to="https://docs.progressively.app/concepts/features-flags/"
               target="_blank"
             >
               What are feature flags?
@@ -124,7 +124,7 @@ export default function SettingsPage() {
                   size="S"
                   icon={<BiCog />}
                   variant="secondary"
-                  href="https://github.com/progressively-crew/progressively/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=[SDK]:%20Request%20SDK%20support"
+                  to="https://github.com/progressively-crew/progressively/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=[SDK]:%20Request%20SDK%20support"
                   target="_blank"
                 >
                   Request a SDK support
@@ -254,8 +254,7 @@ export default function SettingsPage() {
                   size="S"
                   icon={<TbChartAreaLine />}
                   variant="secondary"
-                  href="./analytics"
-                  target="_blank"
+                  to="../analytics"
                 >
                   Analytics dashboard
                 </Button>
