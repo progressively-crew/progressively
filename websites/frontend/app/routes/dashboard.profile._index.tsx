@@ -1,4 +1,4 @@
-import { ActionFunction, MetaFunction, redirect } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
