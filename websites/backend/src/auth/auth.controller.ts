@@ -128,15 +128,11 @@ export class AuthController {
 
     // Don't send activation email for the first user created
     if (alreadyHasUsers) {
-      try {
-        await this.mailService.sendRegistrationMail(
-          userDto.fullname,
-          userDto.email,
-          toB64(rawToken),
-        );
-      } catch (err: any) {
-        console.log('-----', err, '------');
-      }
+      await this.mailService.sendRegistrationMail(
+        userDto.fullname,
+        userDto.email,
+        toB64(rawToken),
+      );
     }
 
     return {
