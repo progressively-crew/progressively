@@ -113,7 +113,11 @@ export default function ResetPasswordPage() {
           </SuccessBox>
         ) : null
       }
-      backLink={<BackLink to="/signin">Back to signin</BackLink>}
+      backLink={
+        <BackLink colorScheme="dark" to="/signin">
+          Back to signin
+        </BackLink>
+      }
     >
       <Typography
         as="h1"

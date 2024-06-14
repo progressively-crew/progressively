@@ -81,7 +81,11 @@ export default function ForgotPasswordPage() {
           </SuccessBox>
         ) : null
       }
-      backLink={<BackLink to="/signin">Back to signin</BackLink>}
+      backLink={
+        <BackLink colorScheme="dark" to="/signin">
+          Back to signin
+        </BackLink>
+      }
     >
       <div className="motion-safe:animate-fade-enter-top">
         <Typography

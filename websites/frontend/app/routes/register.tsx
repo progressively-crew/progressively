@@ -1,20 +1,15 @@
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import {
   RegisterForm,
-  registerAction,
   RegisterActionData,
 } from "~/modules/user/components/RegisterForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import {
-  ActionFunction,
-  LoaderFunction,
-  redirect,
-  MetaFunction,
-} from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { Typography } from "~/components/Typography";
 import { BackLink } from "~/components/BackLink";
+import { registerAction } from "~/modules/user/actions/registerFormAction";
 
 export const meta: MetaFunction = () => {
   return [
@@ -24,19 +19,8 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const action: ActionFunction = ({
-  request,
-}): Promise<RegisterActionData> => {
-  return registerAction({ request });
-};
-
-export const loader: LoaderFunction = () => {
-  // if (String(process.env.ALLOW_REGISTRATION) === "true") {
-  //   return null;
-  // }
-
-  // return redirect("/signin");
-  return null;
+export const action: ActionFunction = async ({ request }): Promise<any> => {
+  return await registerAction({ request });
 };
 
 export default function CreateAccountPage() {
@@ -56,7 +40,11 @@ export default function CreateAccountPage() {
           </SuccessBox>
         ) : null
       }
-      backLink={<BackLink to="/signin">Back to signin</BackLink>}
+      backLink={
+        <BackLink colorScheme="dark" to="/signin">
+          Back to signin
+        </BackLink>
+      }
     >
       <Typography
         as="h1"
