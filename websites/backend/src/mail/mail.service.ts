@@ -10,16 +10,14 @@ export class MailService {
   private transporter: any;
 
   constructor() {
+    const smtp = Smtp();
     this.transporter = nodemailer.createTransport({
-      host: Smtp.host,
-      port: Smtp.port,
-      secure: false,
+      host: smtp.host,
+      port: smtp.port,
+      secure: true,
       auth: {
-        user: Smtp.user,
-        pass: Smtp.password,
-      },
-      tls: {
-        ciphers: 'SSLv3',
+        user: smtp.user,
+        pass: smtp.password,
       },
     });
   }

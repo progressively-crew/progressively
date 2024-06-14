@@ -40,12 +40,6 @@ interface ActionData {
 export const action: ActionFunction = async ({
   request,
 }): Promise<ActionData> => {
-  const isDemoInstance = process.env.IS_DEMO_INSTANCE === "true";
-
-  if (isDemoInstance) {
-    throw redirect("/dashboard");
-  }
-
   const formData = await request.formData();
 
   const password = formData.get("password")?.toString();

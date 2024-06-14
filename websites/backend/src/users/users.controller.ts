@@ -77,12 +77,6 @@ export class UsersController {
 
   @Post('/forgot-password')
   async forgotPassword(@Body() body: ForgotPasswordDTO) {
-    const isDemoInstance = process.env.IS_DEMO_INSTANCE === 'true';
-
-    if (isDemoInstance) {
-      return { success: true };
-    }
-
     // Mitigate brute force
     await sleep();
 

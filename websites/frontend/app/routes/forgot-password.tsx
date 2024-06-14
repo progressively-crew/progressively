@@ -27,12 +27,6 @@ interface ActionData {
 export const action: ActionFunction = async ({
   request,
 }): Promise<ActionData> => {
-  const isDemoInstance = process.env.IS_DEMO_INSTANCE === "true";
-
-  if (isDemoInstance) {
-    throw redirect("/signin");
-  }
-
   const formData = await request.formData();
   const email = formData.get("email")?.toString();
 
