@@ -90,15 +90,13 @@ export const action: ActionFunction = async ({
 
 export const loader: LoaderFunction = () => {
   return {
-    isDemoInstance: process.env.IS_DEMO_INSTANCE === "true",
     showRegister: process.env.ALLOW_REGISTRATION === "true",
     oktaConfig: getOktaConfig(),
   };
 };
 
 export default function Signin() {
-  const { showRegister, oktaConfig, isDemoInstance } =
-    useLoaderData<typeof loader>();
+  const { showRegister, oktaConfig } = useLoaderData<typeof loader>();
   const okta = useOkta(oktaConfig);
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
@@ -147,7 +145,6 @@ export default function Signin() {
             label="Email"
             placeholder="e.g: james.bond@mi6.com"
             autoComplete="username"
-            defaultValue={isDemoInstance ? "demo@progressively.app" : undefined}
           />
         </div>
 
@@ -163,9 +160,6 @@ export default function Signin() {
               type="password"
               placeholder="************"
               autoComplete="current-password"
-              defaultValue={
-                isDemoInstance ? "demo@progressively.app" : undefined
-              }
             />
           </div>
 

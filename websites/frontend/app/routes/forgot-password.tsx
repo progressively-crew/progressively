@@ -1,4 +1,4 @@
-import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -27,12 +27,6 @@ interface ActionData {
 export const action: ActionFunction = async ({
   request,
 }): Promise<ActionData> => {
-  const isDemoInstance = process.env.IS_DEMO_INSTANCE === "true";
-
-  if (isDemoInstance) {
-    throw redirect("/signin");
-  }
-
   const formData = await request.formData();
   const email = formData.get("email")?.toString();
 
@@ -81,7 +75,11 @@ export default function ForgotPasswordPage() {
           </SuccessBox>
         ) : null
       }
-      backLink={<BackLink to="/signin">Back to signin</BackLink>}
+      backLink={
+        <BackLink colorScheme="dark" to="/signin">
+          Back to signin
+        </BackLink>
+      }
     >
       <div className="motion-safe:animate-fade-enter-top">
         <Typography

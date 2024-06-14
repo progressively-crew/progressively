@@ -4,10 +4,8 @@ import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
-import {
-  registerAction,
-  RegisterForm,
-} from "~/modules/user/components/RegisterForm";
+import { registerAction } from "~/modules/user/actions/registerFormAction";
+import { RegisterForm } from "~/modules/user/components/RegisterForm";
 
 export const meta: MetaFunction = () => {
   return [
