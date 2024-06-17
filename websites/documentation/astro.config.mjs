@@ -5,61 +5,95 @@ import starlight from "@astrojs/starlight";
 export default defineConfig({
   integrations: [
     starlight({
-      title: "Progressively",
+      title: "My Docs",
       social: {
-        github: "https://github.com/progressively-crew/progressively",
+        github: "https://github.com/withastro/starlight",
       },
       sidebar: [
         {
-          label: "Start here",
+          label: "Overview",
           items: [
-            { label: "Getting started", link: "/" },
-            { label: "Roadmap", link: "/roadmap" },
+            {
+              label: "What is Progressively?",
+              link: "/overview/what-is-progressively",
+            },
+            { label: "Quick start", link: "/overview/quick-start" },
+            {
+              label: "Progressively architecture",
+              link: "/overview/architecture",
+            },
           ],
         },
         {
           label: "Core concepts",
           items: [
             {
-              label: "Anonymity",
-              link: "/concepts/anonymity",
+              label: "What are feature flags?",
+              link: "/core-concepts/what-are-feature-flags",
             },
             {
-              label: "Analytics",
-              link: "/concepts/analytics",
+              label: "Use cases and benefits",
+              link: "/core-concepts/use-case-and-benefits",
             },
-            { label: "Feature flags", link: "/concepts/features-flags" },
+          ],
+        },
+        {
+          label: "Configuration",
+          items: [
+            {
+              label: "Creating a feature flag",
+              link: "/configuration/creating-a-feature-flag",
+            },
+            {
+              label: "Targeting rules",
+              link: "/configuration/targeting-rules",
+            },
+            {
+              label: "Percentage rollout",
+              link: "/configuration/percentage-rollout",
+            },
+            {
+              label: "Environment management",
+              link: "/configuration/environments-management",
+            },
+          ],
+        },
+        {
+          label: "Observability",
+          items: [
+            {
+              label: "Feature flags evaluations",
+              link: "/observability/feature-flags-evaluations",
+            },
+            {
+              label: "Web analytcs",
+              link: "/observability/web-analytics",
+            },
             {
               label: "Funnels",
-              link: "/concepts/funnels",
+              link: "/observability/funnels",
             },
           ],
         },
         {
-          label: "Deployments",
-          autogenerate: { directory: "deployments" },
-        },
-        {
-          label: "Using the libraries",
+          label: "SDKs",
           items: [
-            {
-              label: "Feature flags",
-              autogenerate: { directory: "sdks/feature-flags" },
-            },
             {
               label: "Analytics",
-              autogenerate: { directory: "sdks/analytics" },
+              link: "/sdks/analytics/quantitative-analytics",
             },
-          ],
-        },
-        {
-          label: "Guides",
-          items: [
             {
-              label: "Using the CLI",
-              autogenerate: { directory: "guides/cli" },
+              label: "SDK JS",
+              link: "/sdks/feature-flags/sdk-js",
             },
-            { label: "Development setup", link: "/guides/development-setup" },
+            {
+              label: "SDK React",
+              link: "/sdks/feature-flags/sdk-react",
+            },
+            {
+              label: "SDK Server Side",
+              link: "/sdks/feature-flags/sdk-server-side",
+            },
           ],
         },
       ],

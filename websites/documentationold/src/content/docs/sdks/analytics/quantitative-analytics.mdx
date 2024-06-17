@@ -1,0 +1,22 @@
+---
+title: Web analytics script
+description: A page documentation the web analytics library
+---
+
+Incorporating quantitative analytics into your web pages is as straightforward as embedding a specific script tag within your pages. This seamless integration enables the immediate visualization of tracking hits on your dashboard, offering a direct window into user engagement and activity metrics.
+
+```jsx
+<script
+  src="https://progressively.app/progressively.min.js"
+  data-progressively-endpoint="YOUR INSTANCE API URL"
+  data-progressively-client-key="YOUR CLIENT KEY MATCHING THE DOMAIN"
+
+  {/**
+    (Optional) Activate the qualitative tracking meaning that clicks will be registered and logs.
+    It unlocks the heatmap section of your analytics dashbaord
+  */}
+  data-progressively-qualitative-tracking="true"
+></script>
+```
+
+You're now ready to get data.
