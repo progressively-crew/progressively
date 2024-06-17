@@ -2,3 +2,47 @@
 title: What are feature flags?
 description: Explanation of what feature flags are
 ---
+
+Feature flags, also known as feature toggles, are a powerful technique in software development that allows teams to enable or disable features in an application without deploying new code.
+This is achieved by encapsulating feature-related code within conditional statements that check the status of a feature flag.
+
+## How Feature Flags Work
+
+**1. Definition**
+
+A feature flag is a boolean variable (or a variable that contains one single value) that determines whether a particular feature is enabled or disabled.
+
+**2. Control**
+
+Feature flags can be controlled dynamically through a management interface or programmatically via an API.
+
+**3. Evaluation**
+
+The application code evaluates the status of the feature flag at runtime and adjusts its behavior accordingly.
+
+For example:
+
+```javascript
+if (featureFlag.isFeatureActivated) {
+    // Execute code for the new feature
+} else {
+    // Execute code for the existing functionality
+}
+```
+## Types of Feature Flags
+
+**1. Release Flags**
+
+Control the release of new features, allowing teams to deploy code to production without immediately exposing the new functionality to users.
+
+**2. Experiment Flags**
+
+Used for A/B testing and experimentation, enabling different experiences for different user segments.
+
+**3. Ops Flags**
+
+Provide operational control over features, allowing for quick rollbacks or disabling of features in response to issues.
+
+**4. Permission Flags**
+
+Control access to features based on user roles or permissions.

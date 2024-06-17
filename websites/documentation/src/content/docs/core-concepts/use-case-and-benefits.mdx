@@ -1,4 +1,74 @@
 ---
-title: Use case and benefit
+title: Use cases and benefit
 description: Why feature flags are so awesome?
 ---
+
+## Use cases
+
+### Gradual Rollouts
+
+Release new features to a small percentage of users to monitor performance and gather feedback before a full-scale launch.
+
+_Example: A new user interface is rolled out to 10% of users to ensure it functions correctly and is well-received before making it available to everyone_
+
+### A/B Testing
+
+Run experiments by exposing different user segments to different variations of a feature to determine which version performs better.
+
+_Example: Testing two versions of a signup form to see which one results in higher conversion rates._
+
+### Canary Releases
+
+Deploy new features to a specific subset of users or environments to identify potential issues before broader deployment.
+
+_Example: Rolling out a new payment gateway to internal users for testing before releasing it to all customers._
+
+### Instant Rollbacks
+
+Quickly disable a feature if issues are detected in production without requiring a new deployment.
+
+_Example: Disabling a newly released feature that causes unexpected errors or performance degradation._
+
+### Operational Control
+
+Allow operations teams to manage feature availability in response to system health and performance.
+
+_Example: Temporarily disabling a resource-intensive feature during peak traffic periods to maintain system stability._
+
+### User Segmentation
+
+Enable or disable features for specific user groups based on demographics, behavior, or other criteria.
+
+_Example: Enabling a beta feature for users who have opted into a beta testing program._
+
+## Benefits of Using Feature Flags
+
+### Continuous Delivery
+
+Feature flags enable continuous delivery by decoupling feature deployment from code releases. This allows teams to deploy code to production more frequently and safely.
+
+_Example: Deploying code with new features hidden behind flags, which can be turned on when ready for user exposure._
+
+### Reduced Risk
+
+Gradual rollouts and instant rollbacks help mitigate the risk associated with deploying new features. Teams can identify and resolve issues before they impact all users.
+ 
+_Example: Rolling out a new feature to 5% of users to monitor for any critical bugs before a wider release._
+
+### Increased Agility
+
+Feature flags allow for more flexible and rapid iteration on features. Teams can test and adjust features based on real user feedback without waiting for the next release cycle.
+
+_Example: Quickly tweaking a new feature based on feedback from beta testers, then enabling it for a larger audience._
+
+### Improved Collaboration
+
+Different teams (e.g., development, QA, product management) can work independently yet cohesively. Developers can deploy new code while QA and product teams control the visibility of new features.
+
+_Example: Developers deploy a new feature controlled by a flag, and QA toggles the flag to test it in a staging environment without needing a new deployment._
+
+### Better User Experience
+
+By rolling out features gradually and gathering feedback, teams can ensure a higher quality user experience. Issues can be addressed quickly, and features can be optimized based on user data.
+
+_Example: Gradually rolling out a new search feature and using user feedback to refine its functionality before a full release._
