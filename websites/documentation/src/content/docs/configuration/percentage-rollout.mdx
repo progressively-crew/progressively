@@ -2,3 +2,59 @@
 title: Percentage rollout
 description: How to use percentage rollout to customize the user experience?
 ---
+
+## What are Percentage Rollouts?
+Percentage rollouts allow you to gradually enable a feature for a certain percentage of your user base. This approach helps in minimizing risk by slowly rolling out changes and monitoring their impact before a full-scale release. It is particularly useful for new feature deployments, performance testing, and A/B testing.
+
+
+## How to Implement Percentage Rollouts
+
+
+**1. Define the Percentage**
+
+Decide on the initial percentage of users who will receive the new feature. For example, start with 10%.
+
+
+**2. Set Up the Rollout in the Dashboard**
+
+Navigate to the feature flag you want to control and add a new strategy using the according button. Then, set the rollout percentage using the slider provided.
+
+
+**3. Evaluate the Feature impact**
+
+Use real-time analytics and user feedback to monitor the performance and impact of the feature on the initial percentage of users.
+
+
+**4.Adjust the Rollout**
+
+Gradually increase the percentage based on the results of your evaluation. For example, move from 10% to 25%, then to 50%, and so on.
+
+
+## Example of a Percentage Rollout
+
+1. **Initial Rollout**: Set the rollout percentage to 10% in the Progressively Dashboard.
+2. **Evaluate the feature flags** thanks to SDKs
+
+```javascript
+if (flags.newFeature) {
+    // Execute code for the new feature
+} else {
+    // Execute code for the existing functionality
+}
+```
+3. **Monitoring**: Collect data on user interactions, performance metrics, and any potential issues.
+4. **Increasing the Rollout**: Based on positive feedback and stable performance, increase the rollout percentage incrementally.
+
+## Best Practices for Percentage Rollouts
+
+1. **Start Small**: Begin with a small percentage to limit the impact of any potential issues.
+2. **Monitor Continuously**: Use monitoring tools and feedback mechanisms to track the performance and user experience.
+3. **Communicate Clearly**: Inform your team and, if necessary, your users about the phased rollout approach.
+4. **Be Ready to Rollback**: Have a plan in place to quickly disable the feature if critical issues arise.
+
+## Benefits of Percentage Rollouts
+
+1. **Risk Mitigation**: Reduce the risk of widespread issues by limiting initial exposure.
+2. **Controlled Testing**: Validate feature performance and gather user feedback in a controlled manner.
+3. **Data-Driven Decisions**: Make informed decisions about scaling up based on real-world data.
+4. **Flexibility**: Adjust the rollout speed and criteria based on the observed impact and feedback.

@@ -41,10 +41,6 @@ export default defineConfig({
           label: "Configuration",
           items: [
             {
-              label: "Creating a feature flag",
-              link: "/configuration/creating-a-feature-flag",
-            },
-            {
               label: "Targeting rules",
               link: "/configuration/targeting-rules",
             },
