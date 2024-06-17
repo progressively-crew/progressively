@@ -2,3 +2,45 @@
 title: Architecture
 description: The overall architecture of Progressively
 ---
+
+
+Progressively is designed to be a robust and scalable feature flags management platform. Here’s a high-level overview of its architecture:
+
+## Core pieces
+
+**1. Dashboard**
+
+The web-based dashboard where users create, manage, and monitor feature flags.
+
+**2. APIs and backend services**
+
+The backend service that handles requests from the dashboard, processes them, and updates the database accordingly.
+
+**3. SDKs**
+
+Available for various programming languages and frameworks, these libraries interact with the API server to check feature flag statuses and handle targeting rules within your application.
+
+**4. Databases**
+
+Stores projects, feature flag configurations, user segments, and targeting rules etc.
+
+## High level overview
+
+### How Progressively Evaluates Feature Flags
+
+Progressively evaluates feature flags on the server. This means that your SDK will make an HTTP request to the server to receive the actual values of the feature flags.
+
+### Benefits of Server-Side Evaluation
+
+This server-side approach helps to reduce the size of your client-side bundles. For instance, **the React SDK for Progressively is only 1.3kB**, whereas **some other tools can be as large as 40kB**, potentially impacting your application’s performance.
+
+### Efficiency and Performance
+
+Given the need for server round-trips and server-side calculations, Progressively is designed to be highly efficient at the server level. Here’s how it achieves this:
+
+- **Kafka Integration**: Progressively leverages Kafka to offload as much computation as possible for later processing, ensuring only the necessary calculations are performed immediately.
+- **Redis Caching**: Progressively aggressively uses Redis to cache feature flag evaluations and billing details, minimizing any noticeable delays.
+
+## Fun fact
+
+With Redis and asynchronous computations handling your remaining credits, you will always have the exact number of events you purchased, plus an extra set of events (1-10 more than what you bought).
