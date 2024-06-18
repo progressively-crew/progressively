@@ -1,6 +1,5 @@
 <div align="center">
- <p><strong>All in one toolbox for feature flags <br/>& analytics
-Anonymous, Open Source & Self-hosted</strong></p>
+ <p><strong>The Product Control Tower</strong></p>
  <img src="https://github.com/progressively-crew/progressively/assets/3874873/d3c331b1-25b2-41e9-a622-084b9e23fa7b" alt="Progressively"/>
 </div>
 
