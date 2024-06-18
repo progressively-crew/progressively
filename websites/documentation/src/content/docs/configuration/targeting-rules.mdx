@@ -2,3 +2,68 @@
 title: Targeting rules
 description: How to use targeting rules to customize the user experience?
 ---
+
+## Understanding Targeting Rules
+
+Targeting rules in Progressively allow you to control which users see specific features based on various criteria. By defining strategies, you can segment your user base and enable or disable features for specific groups of users. This fine-grained control is crucial for A/B testing, gradual rollouts, and personalized user experiences.
+
+The targeting rule system is composed of 2 units: **strategies** and **rules**.
+
+
+1. **Strategies**
+
+You can create has many strategies as you want for a given feature flag and each of these strategies can have multiple rules attached.
+
+When a user wants to evaluate a feature flag from an application, the first strategy that matches the user's criteria will be executed. It means that strategies are computed as an "OR"
+
+Example: Does the user matches strategy 1 OR strategy 2?
+
+2. **Rules**
+
+A strategy is composed of multiple rules. A rule is mostly about criteria matching such as email, geo location, id etc.
+
+Inside of a strategy, the rules are computed as "AND". It means that to be valid for the given strategy, a user should match all the defined rulesCategories.
+
+
+
+## How to Define a strategy?
+
+
+- In your project, select the feature flags menu button
+- Select the concerned feature flag
+- In the feature flag page, select the "Audience" menu button
+- Create your first strategy by selecting the "Add strategy button"
+- Inside the strategy, selecting the "Add a rule" button
+
+
+>Note: if you don't have any strategies nor rules defined and that you toggle on the feature flag, 100% of your audience will receive the true/false variation.
+
+
+### User Attributes
+
+User attributes such as user ID, email, location, or custom properties to define a strategy that are provided **when initializing the SDK in your application**
+
+For instance, using the React SDK, it would look like:
+
+```jsx
+const YourPage = () => {
+  return (
+    <ProgressivelyProvider
+      clientKey="YOUR_CLIENT_KEY"
+      fields={{
+        email: "marvin.frachet@gmail.com",
+        // put your attributes here
+      }}
+    >
+      <FlaggedComponent />
+    </ProgressivelyProvider>
+  );
+};
+
+```
+
+## Best Practices for Targeting Rules
+
+1. **Start Simple**: Begin with simple targeting rules and gradually add complexity as needed.
+2. **Test Thoroughly**: Before rolling out to a large audience, test your targeting rules with smaller, controlled segments.
+3. **Monitor and Adjust**: Continuously monitor the performance and impact of your targeting rules and adjust them based on user feedback and data.
