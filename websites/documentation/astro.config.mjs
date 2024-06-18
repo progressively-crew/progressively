@@ -58,11 +58,7 @@ export default defineConfig({
           label: "Observability",
           items: [
             {
-              label: "Feature flags evaluations",
-              link: "/observability/feature-flags-evaluations",
-            },
-            {
-              label: "Web analytcs",
+              label: "Web analytics",
               link: "/observability/web-analytics",
             },
             {
