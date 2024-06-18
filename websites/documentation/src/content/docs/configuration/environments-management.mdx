@@ -2,3 +2,33 @@
 title: Environments management
 description: How to deal with different environments with Progressively?
 ---
+
+## What is environment management?
+
+When working on an application, it's conveniant to be able to use a given feature in an environment that is not production, mostly for testing stuff and experiment.
+
+## How to do that with Progressively?
+
+In Progressively, environment management is made through [Targeting Rules](./targeting-rules).
+
+For instance, using the React SDK, it would look like:
+
+```jsx
+const YourPage = () => {
+  return (
+    <ProgressivelyProvider
+      clientKey="YOUR_CLIENT_KEY"
+      fields={{
+        environment: process.env.NODE_ENV
+        // put your attributes here
+      }}
+    >
+      <FlaggedComponent />
+    </ProgressivelyProvider>
+  );
+};
+
+```
+
+You can now use the `environment` attribute when defining rules and strategies in the dashboard.
+
