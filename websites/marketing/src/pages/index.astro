@@ -4,6 +4,7 @@ import AboveTheFold from "../sections/AboveTheFold.astro";
 import CatchySection from "../sections/CatchySection.astro";
 import Value from "../sections/Value.astro";
 import Conclusion from "../sections/Conclusion.astro";
+import { Intercom } from "../support/components/Intercom";
 ---
 
 <Layout
@@ -16,5 +17,6 @@ import Conclusion from "../sections/Conclusion.astro";
     <Value />
     <CatchySection />
     <Conclusion />
+    <Intercom client:load />
   </main>
 </Layout>

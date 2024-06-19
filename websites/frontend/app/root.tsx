@@ -6,6 +6,7 @@ import {
   ScrollRestoration,
   isRouteErrorResponse,
   useRouteError,
+  useRouteLoaderData,
 } from "@remix-run/react";
 import { Typography } from "./components/Typography";
 import UnauthorizedPage from "./routes/401";
@@ -17,7 +18,8 @@ import { Spacer } from "./components/Spacer";
 
 import "./app.css";
 import "./tailwind.css";
-import { LinksFunction } from "@remix-run/node";
+import { LinksFunction, LoaderFunction } from "@remix-run/node";
+import { Intercom } from "./modules/support/components/Intercom";
 
 export const links: LinksFunction = () => {
   return [
@@ -30,7 +32,15 @@ export const links: LinksFunction = () => {
   ];
 };
 
+export const loader: LoaderFunction = async () => {
+  return {
+    showIntercom: process.env.INTERCOM === "true",
+  };
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useRouteLoaderData("root");
+
   return (
     <html lang="en" className="min-h-full h-full">
       <head>
@@ -41,6 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="h-full">
         <div className="flex flex-col min-h-full">{children}</div>
+        {data.showIntercom && <Intercom />}
         <ScrollRestoration />
         <Scripts />
         <script

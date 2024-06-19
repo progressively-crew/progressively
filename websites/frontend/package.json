@@ -37,6 +37,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
+    "react-use-intercom": "^5.4.1",
     "shiki": "^1.1.6",
     "timeago.js": "^4.0.2"
   },
