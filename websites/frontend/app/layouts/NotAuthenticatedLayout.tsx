@@ -1,4 +1,5 @@
 import { Background } from "~/components/Background";
+import { Intercom } from "~/modules/support/components/Intercom";
 
 export interface NotAuthenticatedLayoutProps {
   children: React.ReactNode;
@@ -14,6 +15,8 @@ export const NotAuthenticatedLayout = ({
   return (
     <Background>
       <main className="h-full flex-1 flex flex-col items-center justify-center">
+        <Intercom />
+
         {backLink && (
           <div className="p-4 absolute top-1 left-0">{backLink}</div>
         )}
