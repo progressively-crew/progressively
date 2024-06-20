@@ -44,21 +44,15 @@ describe("/dashboard/projects/[id]/analytics", () => {
           cy.findByRole("heading", { name: "Page views over time." }).should(
             "be.visible"
           );
-          cy.findByRole("heading", { name: "Page views / browser" }).should(
-            "be.visible"
-          );
-          cy.findByRole("heading", { name: "Page views / Os" }).should(
+          cy.findByRole("heading", { name: "Browsers" }).should("be.visible");
+          cy.findByRole("heading", { name: "Operating systems" }).should(
             "be.visible"
           );
           cy.findByRole("heading", {
-            name: "Page views / Viewport (Width x Height)",
+            name: "Viewport (w x h)",
           }).should("be.visible");
-          cy.findByRole("heading", { name: "Page views / referer" }).should(
-            "be.visible"
-          );
-          cy.findByRole("heading", { name: "Page views / URL" }).should(
-            "be.visible"
-          );
+          cy.findByRole("heading", { name: "Referrers" }).should("be.visible");
+          cy.findByRole("heading", { name: "Pages" }).should("be.visible");
 
           cy.findByRole("heading", { name: "Other metrics over time." }).should(
             "be.visible"
