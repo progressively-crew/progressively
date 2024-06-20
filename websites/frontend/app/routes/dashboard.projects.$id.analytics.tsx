@@ -10,7 +10,6 @@ import { EmptyState } from "~/components/EmptyState";
 import { BigStat } from "~/components/BigStat";
 import { getEventsForFields } from "~/modules/projects/services/getEventsForFields";
 import { getSession } from "~/sessions";
-import { CountTable } from "~/modules/projects/components/CountTable";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
@@ -21,6 +20,7 @@ import { IconButton } from "~/components/Buttons/IconButton";
 import { calculateGrowthRate } from "~/modules/misc/utils/calculateGrowthRate";
 import { LineChart } from "~/components/LineChart/LineChart";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
+import { SearchableCountTable } from "~/modules/analytics/components/SearchableCountTable";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -153,6 +153,7 @@ export default function ProjectInsights() {
               unit={"%"}
               icon={<div />}
               evolution={bounceRateEvolution}
+              inverse
             />
           </div>
         </Section>
@@ -178,90 +179,69 @@ export default function ProjectInsights() {
 
         <div className="grid md:grid-cols-2 gap-6">
           <Section>
-            <Card>
-              <CardContent>
-                <SectionHeader title="Page views / browser" />
-              </CardContent>
-              <CountTable
-                data={eventsForFields.browser}
-                caption="Page views / browser"
-                cellName={"Browser"}
-                cellKey="browser"
-                renderLabel={(d) => String(d.browser)}
-              />
-            </Card>
+            <SearchableCountTable
+              title="Pages"
+              shouldLink
+              data={eventsForFields.url}
+              caption="Page views / URL"
+              cellName={"Page URL"}
+              cellKey="url"
+              renderLabel={(d) => String(d.url)}
+              renderActions={(d) => (
+                <IconButton
+                  as={Link}
+                  to={`/dashboard/projects/${
+                    project.uuid
+                  }/analytics/viewports?url=${String(d.url)}`}
+                  icon={<LuInspect />}
+                  tooltip={"Open page details"}
+                />
+              )}
+            />
           </Section>
 
           <Section>
-            <Card>
-              <CardContent>
-                <SectionHeader title="Page views / Os" />
-              </CardContent>
-              <CountTable
-                data={eventsForFields.os}
-                caption="Page views / Os"
-                cellName={"Os"}
-                cellKey="os"
-                renderLabel={(d) => String(d.os)}
-              />
-            </Card>
+            <SearchableCountTable
+              title="Referrers"
+              data={eventsForFields.referer}
+              caption="Page views / referer"
+              cellName={"Referer"}
+              cellKey="referer"
+              renderLabel={(d) => String(d.referer)}
+            />
           </Section>
 
           <Section>
-            <Card>
-              <CardContent>
-                <SectionHeader title="Page views / Viewport (Width x Height)" />
-              </CardContent>
-              <CountTable
-                data={eventsForFields.viewport}
-                caption="Page views / Viewport (Width x Height)"
-                cellName={"Viewport"}
-                cellKey="viewport"
-                renderLabel={(d) => `${d.viewportWidth} / ${d.viewportHeight}`}
-              />
-            </Card>
+            <SearchableCountTable
+              title="Browsers"
+              data={eventsForFields.browser}
+              caption="Page views / browser"
+              cellName={"Browser"}
+              cellKey="browser"
+              renderLabel={(d) => String(d.browser)}
+            />
           </Section>
 
           <Section>
-            <Card>
-              <CardContent>
-                <SectionHeader title="Page views / referer" />
-              </CardContent>
-              <CountTable
-                data={eventsForFields.referer}
-                caption="Page views / referer"
-                cellName={"Referer"}
-                cellKey="referer"
-                renderLabel={(d) => String(d.referer)}
-              />
-            </Card>
+            <SearchableCountTable
+              title="Operating systems"
+              data={eventsForFields.os}
+              caption="Page views / Os"
+              cellName={"Os"}
+              cellKey="os"
+              renderLabel={(d) => String(d.os)}
+            />
           </Section>
 
           <Section>
-            <Card>
-              <CardContent>
-                <SectionHeader title="Page views / URL" />
-              </CardContent>
-
-              <CountTable
-                shouldLink
-                data={eventsForFields.url}
-                caption="Page views / URL"
-                cellName={"Page URL"}
-                cellKey="url"
-                renderLabel={(d) => String(d.url)}
-                renderActions={(d) => (
-                  <IconButton
-                    as={Link}
-                    to={`/dashboard/projects/${
-                      project.uuid
-                    }/analytics/viewports?url=${String(d.url)}`}
-                    icon={<LuInspect />}
-                    tooltip={"Open page details"}
-                  />
-                )}
-              />
-            </Card>
+            <SearchableCountTable
+              title="Viewport (w x h)"
+              data={eventsForFields.viewport}
+              caption="Page views / Viewport (Width x Height)"
+              cellName={"Viewport"}
+              cellKey="viewport"
+              renderLabel={(d) => `${d.viewportWidth} / ${d.viewportHeight}`}
+            />
           </Section>
         </div>
 
