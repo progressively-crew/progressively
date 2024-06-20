@@ -1,7 +1,7 @@
 {
   "name": "root",
   "private": true,
-  "packageManager": "^pnpm@9.1.4",
+  "packageManager": "pnpm@9.1.4",
   "devDependencies": {
     "wait-on": "^7.2.0"
   },
