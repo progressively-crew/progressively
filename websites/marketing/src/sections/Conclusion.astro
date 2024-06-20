@@ -4,15 +4,13 @@ import Text from "../components/Text.astro";
 import Title from "../components/Title.astro";
 ---
 
-<section class="bg-gradient-to-b from-gray-700 to-gray-950 py-24">
+<section class="bg-rose-100 py-12">
   <div
     class="max-w-screen-2xl w-full mx-auto px-4 md:px-12 flex flex-col gap-4"
   >
-    <Title theme="dark" size="XL" tag="h2">
-      You've reached the end of the page!
-    </Title>
+    <Title size="XL" tag="h2">You've reached the end of the page!</Title>
 
-    <Text size="XL" theme="dark" className="max-w-4xl text-gray-200">
+    <Text size="XL" className="max-w-4xl text-gray-700">
       And you've not clicked anywhere until here! If it is a mistake, here are a
       few links that you can still follow to get started. Otherwise, please,
       could you fill <a
@@ -28,7 +26,6 @@ import Title from "../components/Title.astro";
         href="https://app.cal.com/mfrachet/30min"
         id="schedule-call-conclusiono"
         size="L"
-        variant="secondary-inverse"
       >
         Schedule a call
       </Button>
@@ -38,7 +35,7 @@ import Title from "../components/Title.astro";
         href="https://dashboard.progressively.app/"
         size="L"
         id="get-started-conclusion"
-        variant="tertiary-inverse"
+        variant="secondary"
       >
         Get started
       </Button>

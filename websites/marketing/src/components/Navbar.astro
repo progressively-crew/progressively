@@ -2,25 +2,27 @@
 import Button from "./Button.astro";
 
 const navLinkStyles =
-  "px-2 md:px-6 py-2 text-gray-800 hover:text-gray-700 active:text-gray-600 rounded-xl block transition-all hover:underline";
+  "px-2 md:px-6 py-2 text-gray-800 hover:text-gray-700 active:text-gray-600 rounded-xl block transition-all hover:bg-rose-200 active:bg-rose-300 text-lg font-semibold";
 ---
 
 <nav class="pt-4 md:pt-12">
   <div
-    class="px-4 max-w-screen-xl w-full mx-auto flex flex-row justify-between items-center overflow-auto"
+    class="px-4 max-w-screen-xl w-full mx-auto flex flex-row justify-between items-center overflow-auto md:overflow-visible"
   >
     <ul class="flex flex-row gap-4 items-center shrink-0">
       <li class="flex flex-row gap-2 items-center shrink-0">
         <img
           src="/favicon.svg"
           alt="Progressively"
-          class="w-8 h-8 block rounded-full p-1 bg-gray-900"
+          class="w-10 h-10 block rounded-full p-1 bg-gray-900"
         />
-        <div class="font-bold text-lg hidden md:block text-gray-800">
+        <div class="font-bold text-xl hidden md:block text-gray-800">
           Progressively
         </div>
       </li>
+    </ul>
 
+    <ul class="flex flex-row justify-end gap-4 items-center shrink-0">
       <li class="shrink-0">
         <a
           href="https://docs.progressively.app/"
@@ -37,9 +39,7 @@ const navLinkStyles =
           Github
         </a>
       </li>
-    </ul>
 
-    <ul class="flex flex-row justify-end gap-4 items-center shrink-0">
       <li class="shrink-0">
         <a class={navLinkStyles} href="https://app.cal.com/mfrachet/30min">
           Contact us
@@ -50,7 +50,7 @@ const navLinkStyles =
         <Button
           href="https://dashboard.progressively.app/"
           id="go-to-app"
-          size="M"
+          size="L"
         >
           Go to app
         </Button>

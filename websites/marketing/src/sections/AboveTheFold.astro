@@ -6,7 +6,7 @@ import { AnimatedImage } from "../components/AnimatedImage";
 import Banner from "../components/Banner.astro";
 ---
 
-<div class="relativeflex flex-col justify-center hero-bg">
+<div class="relativeflex flex-col justify-center bg-rose-100">
   <header>
     <Banner>
       Thanks for your support on{" "}
@@ -21,19 +21,20 @@ import Banner from "../components/Banner.astro";
   </header>
   <Navbar />
   <div class="max-w-screen-xl mx-auto relative z-10 px-4 pt-32 md:pb-20">
-    <div class="flex flex-col gap-3 items-center pb-16">
-      <Title tag="h1" size="XXL" className="text-center font-normal">
-        The Product Control Tower
+    <div class="flex flex-col gap-3 pb-16">
+      <Title tag="h1" size="XXL" className="font-extrabold max-w-3xl">
+        Your all-in-one<br />product toolbox
       </Title>
-      <p class="text-gray-800 text-2xl py-4">
-        An all in one toolbox to help you building a product with an impact.
+      <p class="text-gray-600 text-2xl max-w-4xl">
+        The product control tower that helps you building a product with an
+        impact.
       </p>
 
-      <div class="flex flex-col md:flex-row gap-4 items-center pt-4 md:pb-24">
+      <div class="flex flex-col md:flex-row gap-4 items-center pt-4 md:pb-16">
         <Button
           href="https://dashboard.progressively.app"
           id="above-the-fold-cta"
-          size="L"
+          size="XL"
           variant="secondary"
           target="_blank"
         >
