@@ -33,6 +33,8 @@ model User {
   userProject         UserProject[]
   ActivityLog         ActivityLog[]
   StripeOrder         StripeOrder[]
+  createdAt           DateTime?             @default(now())
+  Segment             Segment[]
 }
 
 model Project {
@@ -59,6 +61,24 @@ model UserProject {
   user      User    @relation(fields: [userId], references: [uuid])
 
   @@id([userId, projectId])
+}
+
+model Segment {
+  uuid         String        @id @default(uuid())
+  name         String
+  createdAt    DateTime?     @default(now())
+  createdBy    User          @relation(fields: [userUuid], references: [uuid])
+  userUuid     String
+  segmentRules SegmentRule[]
+}
+
+model SegmentRule {
+  uuid            String   @id @default(uuid())
+  fieldName       String?
+  fieldComparator String?
+  fieldValue      String?
+  segment         Segment? @relation(fields: [segmentUuid], references: [uuid])
+  segmentUuid     String?
 }
 
 model RefreshToken {
