@@ -1,6 +1,6 @@
 import { Card, CardContent } from "./Card";
 import { NumberValue } from "./NumberValue";
-import { Tag } from "./Tag";
+import { Tag, TagProps } from "./Tag";
 import { Typography } from "./Typography";
 
 export interface BigStatProps {
@@ -10,7 +10,19 @@ export interface BigStatProps {
   icon: React.ReactNode;
   detail?: React.ReactNode;
   evolution?: number;
+  inverse?: boolean;
 }
+
+const getVariant = (
+  evolution: number,
+  inverse: boolean
+): TagProps["variant"] => {
+  if (inverse) {
+    return evolution > 0 ? "DANGER" : evolution < 0 ? "SUCCESS" : "DEFAULT";
+  }
+
+  return evolution > 0 ? "SUCCESS" : evolution < 0 ? "DANGER" : "DEFAULT";
+};
 
 export const BigStat = ({
   label,
@@ -19,7 +31,12 @@ export const BigStat = ({
   icon,
   detail,
   evolution,
+  inverse,
 }: BigStatProps) => {
+  const variant = evolution
+    ? getVariant(evolution, Boolean(inverse))
+    : "DEFAULT";
+
   return (
     <Card>
       <CardContent>
@@ -37,16 +54,7 @@ export const BigStat = ({
                 <span className="text-gray-500 text-xl">{unit}</span>
                 {evolution && evolution !== 0 ? (
                   <span className="text-xs ml-2">
-                    <Tag
-                      size="S"
-                      variant={
-                        evolution > 0
-                          ? "SUCCESS"
-                          : evolution < 0
-                          ? "DANGER"
-                          : "DEFAULT"
-                      }
-                    >
+                    <Tag size="S" variant={variant}>
                       {evolution}%
                     </Tag>
                   </span>

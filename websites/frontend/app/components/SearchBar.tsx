@@ -3,21 +3,34 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { Spacer } from "./Spacer";
 import { Typography } from "./Typography";
 import { VisuallyHidden } from "./VisuallyHidden";
+import { FormEvent } from "react";
 
 export interface SearchBarProps {
   placeholder: string;
   label: string;
   count?: number;
+  onSubmit?: (e: FormEvent) => void;
+  invisibleCount?: boolean;
 }
 
-export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
+export const SearchBar = ({
+  placeholder,
+  label,
+  count,
+  onSubmit,
+  invisibleCount,
+}: SearchBarProps) => {
   return (
     <div>
       <VisuallyHidden>
         <label htmlFor="search">{label}</label>
       </VisuallyHidden>
 
-      <Form role="search" className="flex flex-row gap-4 items-center relative">
+      <Form
+        role="search"
+        className="flex flex-row gap-4 items-center relative"
+        onSubmit={onSubmit}
+      >
         <input
           type="text"
           name="search"
@@ -35,9 +48,14 @@ export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
         </button>
       </Form>
 
-      {count === undefined ? null : <Spacer size={1} />}
+      {count === undefined ? null : invisibleCount ? null : <Spacer size={1} />}
 
-      <Typography aria-live="polite" aria-atomic="true" aria-relevant="all">
+      <Typography
+        aria-live="polite"
+        aria-atomic="true"
+        aria-relevant="all"
+        className={invisibleCount ? "sr-only" : undefined}
+      >
         {count === undefined ? null : `${count} results for this search`}
       </Typography>
     </div>

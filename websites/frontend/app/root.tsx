@@ -39,7 +39,7 @@ export const loader: LoaderFunction = async () => {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const data = useRouteLoaderData("root");
+  const data = useRouteLoaderData<{ showIntercom: boolean }>("root");
 
   return (
     <html lang="en" className="min-h-full h-full">
@@ -51,7 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="h-full">
         <div className="flex flex-col min-h-full">{children}</div>
-        {data.showIntercom && <Intercom />}
+        {data?.showIntercom && <Intercom />}
         <ScrollRestoration />
         <Scripts />
         <script
