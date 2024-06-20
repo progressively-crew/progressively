@@ -51,6 +51,7 @@ model Project {
   Session     Session[]
   StripeOrder StripeOrder[]
   EventUsage  EventUsage[]
+  segments    Segment[]
 }
 
 model UserProject {
@@ -70,6 +71,8 @@ model Segment {
   createdBy    User          @relation(fields: [userUuid], references: [uuid])
   userUuid     String
   segmentRules SegmentRule[]
+  project      Project?      @relation(fields: [projectUuid], references: [uuid])
+  projectUuid  String?
 }
 
 model SegmentRule {
