@@ -2,4 +2,4 @@ packages:
   - "packages/*"
   - "websites/*"
   - "example/*"
-  - "!example/reactnative"
+  - "!example/react-native"
