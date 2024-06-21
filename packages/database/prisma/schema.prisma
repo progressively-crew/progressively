@@ -76,12 +76,13 @@ model Segment {
 }
 
 model SegmentRule {
-  uuid            String   @id @default(uuid())
+  uuid            String    @id @default(uuid())
   fieldName       String?
   fieldComparator String?
   fieldValue      String?
-  segment         Segment? @relation(fields: [segmentUuid], references: [uuid])
+  segment         Segment?  @relation(fields: [segmentUuid], references: [uuid])
   segmentUuid     String?
+  createdAt       DateTime? @default(now())
 }
 
 model RefreshToken {

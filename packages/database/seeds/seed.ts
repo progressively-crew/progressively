@@ -56,6 +56,31 @@ export const seedDb = async (opts?: { eventsCount?: number }) => {
       }),
     ]);
 
+    await prismaClient.segment.create({
+      data: {
+        uuid: "1",
+        name: "Gmail and french",
+        userUuid: marvin.uuid,
+        projectUuid: projectFromSeeding.uuid,
+        segmentRules: {
+          createMany: {
+            data: [
+              {
+                fieldComparator: "contains",
+                fieldName: "email",
+                fieldValue: "@gmail.com",
+              },
+              {
+                fieldComparator: "eq",
+                fieldName: "country",
+                fieldValue: "france",
+              },
+            ],
+          },
+        },
+      },
+    });
+
     // Flag setup
     const [homePageFlag, footerFlag, asideFlag, multiVariate] = await seedFlags(
       prismaClient
