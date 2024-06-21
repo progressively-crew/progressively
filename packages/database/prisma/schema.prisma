@@ -173,7 +173,7 @@ model Strategy {
   createdAt         DateTime?         @default(now())
   Flag              Flag?             @relation(fields: [flagUuid], references: [uuid])
   flagUuid          String?
-  whenPredicate     String            @default("ALWAYS")
+  whenPredicate     WhenPredicate     @default(ALWAYS)
   whenTimestamp     DateTime?
 }
 
@@ -206,4 +206,10 @@ model EventUsage {
   project     Project @relation(fields: [projectUuid], references: [uuid])
   projectUuid String  @id
   eventsCount Int
+}
+
+enum WhenPredicate {
+  ALWAYS
+  AFTER_THE
+  UNTIL_THE
 }
