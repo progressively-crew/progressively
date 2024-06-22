@@ -129,7 +129,7 @@ describe('Segments (e2e)', () => {
         });
     });
 
-    it('gives a 200 when a user of the project deletes a strategy', async () => {
+    it('gives a 200 when a user of the project deletes a segment', async () => {
       const access_token = await authenticate(app);
 
       const result = await request(app.getHttpServer())
@@ -146,7 +146,7 @@ describe('Segments (e2e)', () => {
     });
   });
 
-  describe.only('/projects/:id/segments (PUT)', () => {
+  describe('/projects/:id/segments (PUT)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects/1/segments', 'put'));
 
@@ -190,7 +190,7 @@ describe('Segments (e2e)', () => {
         });
     });
 
-    it('creates a default strategy', async () => {
+    it('creates a default segment', async () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())
@@ -199,6 +199,35 @@ describe('Segments (e2e)', () => {
         .send([
           {
             name: 'Hello world',
+            segmentRules: [
+              {
+                fieldName: 'email',
+                fieldComparator: 'eq',
+                fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+              },
+            ],
+          },
+        ])
+        .expect(200);
+
+      expect(response.body[0].uuid).toBeDefined();
+      expect(response.body[0]).toMatchObject({
+        name: 'Hello world',
+        projectUuid: '1',
+        userUuid: '1',
+      });
+    });
+
+    it('updates an existing segment', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .put('/projects/1/segments')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send([
+          {
+            name: 'Hello world',
+            uuid: '1',
             segmentRules: [
               {
                 fieldName: 'email',

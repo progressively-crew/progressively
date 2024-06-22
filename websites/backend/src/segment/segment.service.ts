@@ -100,7 +100,7 @@ export class SegmentService {
         : undefined;
 
       if (segmentToUpdate) {
-        await Promise.all([
+        const [, updatedSegment] = await Promise.all([
           this.deleteSegmentRuleBySegmentId(segmentToUpdate.uuid),
           this.prisma.segment.update({
             where: {
@@ -111,6 +111,8 @@ export class SegmentService {
             },
           }),
         ]);
+
+        segmentToUpdate = updatedSegment;
       } else {
         segmentToUpdate = await this.prisma.segment.create({
           data: {
