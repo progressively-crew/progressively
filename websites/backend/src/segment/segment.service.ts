@@ -71,6 +71,23 @@ export class SegmentService {
     return result[result.length - 1] as Segment;
   }
 
+  getSegmentByIdAndProject(segmentId: string, projectId: string) {
+    return this.prisma.segment.findUnique({
+      where: {
+        uuid: segmentId,
+        projectUuid: projectId,
+      },
+    });
+  }
+
+  deleteSegmentRuleBySegmentId(segmentId: string) {
+    return this.prisma.segmentRule.deleteMany({
+      where: {
+        segmentUuid: segmentId,
+      },
+    });
+  }
+
   async upsertSegments(
     projectId: string,
     userId: string,
@@ -78,28 +95,33 @@ export class SegmentService {
   ) {
     const segments = [];
     for (const segmentDto of upsertSegments) {
-      const segmentToUpdate = await this.prisma.segment.upsert({
-        where: {
-          uuid: segmentDto.uuid,
-          projectUuid: projectId,
-        },
-        create: {
-          name: segmentDto.name,
-          projectUuid: projectId,
-          userUuid: userId,
-        },
-        update: {
-          name: segmentDto.name,
-        },
-      });
+      let segmentToUpdate = segmentDto.uuid
+        ? await this.getSegmentByIdAndProject(segmentDto.uuid, projectId)
+        : undefined;
+
+      if (segmentToUpdate) {
+        await Promise.all([
+          this.deleteSegmentRuleBySegmentId(segmentToUpdate.uuid),
+          this.prisma.segment.update({
+            where: {
+              uuid: segmentDto.uuid,
+            },
+            data: {
+              name: segmentDto.name,
+            },
+          }),
+        ]);
+      } else {
+        segmentToUpdate = await this.prisma.segment.create({
+          data: {
+            name: segmentDto.name,
+            projectUuid: projectId,
+            userUuid: userId,
+          },
+        });
+      }
 
       segments.push(segmentToUpdate);
-
-      await this.prisma.segmentRule.deleteMany({
-        where: {
-          segmentUuid: segmentToUpdate.uuid,
-        },
-      });
 
       await this.prisma.segmentRule.createMany({
         data: segmentDto.segmentRules.map((dto) => ({

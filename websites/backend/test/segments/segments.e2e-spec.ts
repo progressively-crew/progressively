@@ -93,7 +93,7 @@ describe('Segments (e2e)', () => {
     });
   });
 
-  describe.only('/segments/1 (DELETE)', () => {
+  describe('/segments/1 (DELETE)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/segments/1', 'delete'));
 
@@ -146,9 +146,9 @@ describe('Segments (e2e)', () => {
     });
   });
 
-  describe('/flags/:flagId/segments (POST)', () => {
+  describe.only('/projects/:id/segments (PUT)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/flags/1/segments', 'post'));
+      verifyAuthGuard(app, '/projects/1/segments', 'put'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
@@ -156,7 +156,7 @@ describe('Segments (e2e)', () => {
       const validRule: any = {};
 
       return request(app.getHttpServer())
-        .post('/flags/3/segments')
+        .put('/projects/3/segments')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validRule)
         .expect(403)
@@ -175,7 +175,7 @@ describe('Segments (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .post('/flags/1/segments')
+        .put('/projects/1/segments')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           fieldName: 'email',
@@ -194,14 +194,27 @@ describe('Segments (e2e)', () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())
-        .post('/flags/1/segments')
+        .put('/projects/1/segments')
         .set('Authorization', `Bearer ${access_token}`)
-        .expect(201);
+        .send([
+          {
+            name: 'Hello world',
+            segmentRules: [
+              {
+                fieldName: 'email',
+                fieldComparator: 'eq',
+                fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+              },
+            ],
+          },
+        ])
+        .expect(200);
 
-      expect(response.body.uuid).toBeDefined();
-      expect(response.body).toMatchObject({
-        flagUuid: '1',
-        rolloutPercentage: 100,
+      expect(response.body[0].uuid).toBeDefined();
+      expect(response.body[0]).toMatchObject({
+        name: 'Hello world',
+        projectUuid: '1',
+        userUuid: '1',
       });
     });
   });
