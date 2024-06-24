@@ -7,9 +7,9 @@ export const useDeleteSegment = (segment: Segment) => {
   const type = navigation?.formData?.get("_type");
   const deleteSegmentFormId = `delete-segment-${segment.uuid}`;
 
-  const isDeletingStrategy =
+  const isDeletingSegment =
     type === "delete-segment" &&
     navigation?.formData?.get("uuid")?.toString() === segment.uuid;
 
-  return { isDeletingStrategy, deleteSegmentFormId };
+  return { isDeletingSegment, deleteSegmentFormId };
 };

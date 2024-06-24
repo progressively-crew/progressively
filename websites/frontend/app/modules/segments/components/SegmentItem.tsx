@@ -5,28 +5,39 @@ import { IoMdClose } from "react-icons/io";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { Typography } from "~/components/Typography";
 import { useDeleteSegment } from "../hooks/useDeleteSegment";
+import { TextInput } from "~/components/Fields/TextInput";
 
 export interface SegmentItemProps {
   segment: Segment;
+  index: number;
 }
 
-export const SegmentItem = ({ segment }: SegmentItemProps) => {
+export const SegmentItem = ({ segment, index }: SegmentItemProps) => {
   const ruleList = segment.segmentRules;
-  const { isDeletingStrategy, deleteSegmentFormId } = useDeleteSegment(segment);
+  const { isDeletingSegment, deleteSegmentFormId } = useDeleteSegment(segment);
 
   return (
     <div className="bg-gray-100 p-4 rounded-xl" key={segment.uuid}>
       <div className="flex flex-row gap-4 justify-between items-center pb-4">
-        <Typography as="h2" className="font-semibold">
-          {segment.name}
-        </Typography>
+        <input
+          type="hidden"
+          name={`strategies[${index}][uuid]`}
+          value={segment.uuid}
+        />
+        <TextInput
+          name={`strategies[${index}][name]`}
+          hiddenLabel
+          label="Segment name"
+          defaultValue={segment.name}
+        />
+
         <IconButton
           form={deleteSegmentFormId}
           type="submit"
-          isLoading={isDeletingStrategy}
-          loadingText="Deleting a strategy..."
+          isLoading={isDeletingSegment}
+          loadingText="Deleting a segment..."
           icon={<IoMdClose className="text-xl" />}
-          tooltip="Delete strategy"
+          tooltip="Delete segment"
         />
       </div>
 
@@ -35,7 +46,7 @@ export const SegmentItem = ({ segment }: SegmentItemProps) => {
           <RuleList
             rules={ruleList}
             onRemoveRule={() => undefined}
-            index={0}
+            index={index}
             onAddRule={() => undefined}
           />
         </CardContent>
