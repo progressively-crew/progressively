@@ -81,5 +81,63 @@ describe('RuleService', () => {
 
       expect(service.isMatchingAllRules(rules, fields)).toBe(false);
     });
+
+    it(`resolves rules with a segment`, () => {
+      const rules: Array<Partial<RuleType>> = [
+        {
+          segment: {
+            uuid: '123',
+            name: 'Hello world',
+            segmentRules: [
+              {
+                uuid: '123',
+                fieldComparator: ComparatorEnum.Equals,
+                fieldName: 'id',
+                fieldValue: '1234',
+              },
+              {
+                uuid: '1233',
+                fieldComparator: ComparatorEnum.Contains,
+                fieldName: 'id',
+                fieldValue: '12',
+              },
+            ],
+          },
+        },
+      ];
+
+      const fields: FieldRecord = {
+        id: '1234',
+        email: 'marvin',
+      };
+
+      expect(service.isMatchingAllRules(rules, fields)).toBe(true);
+    });
+
+    it(`returns false when the  rules in the segment is not match`, () => {
+      const rules: Array<Partial<RuleType>> = [
+        {
+          segment: {
+            uuid: '123',
+            name: 'Hello world',
+            segmentRules: [
+              {
+                uuid: '123',
+                fieldComparator: ComparatorEnum.Equals,
+                fieldName: 'id',
+                fieldValue: '1234',
+              },
+            ],
+          },
+        },
+      ];
+
+      const fields: FieldRecord = {
+        id: '12344',
+        email: 'marvin',
+      };
+
+      expect(service.isMatchingAllRules(rules, fields)).toBe(false);
+    });
   });
 });
