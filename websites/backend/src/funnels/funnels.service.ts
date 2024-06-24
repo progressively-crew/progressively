@@ -33,15 +33,18 @@ export class FunnelsService {
     };
 
     let visitorIds: Array<{ visitorId: string }> = [];
+    let hasAlreadyMakeOneTurn = false;
 
     for (const funnelEntry of funnel.funnelEntries) {
       const funnelEntryVisitorIds =
-        await this.eventService.getFunnelEntryVisitorIds(
-          funnelEntry,
-          projectId,
-          visitorIds,
-          timeframe,
-        );
+        visitorIds.length === 0 && hasAlreadyMakeOneTurn
+          ? []
+          : await this.eventService.getFunnelEntryVisitorIds(
+              funnelEntry,
+              projectId,
+              visitorIds,
+              timeframe,
+            );
 
       visitorIds = funnelEntryVisitorIds;
 
@@ -50,6 +53,8 @@ export class FunnelsService {
         name: funnelEntry.flagVariant || funnelEntry.eventName,
         count: visitorIds.length,
       });
+
+      hasAlreadyMakeOneTurn = true;
     }
 
     return funnelData;

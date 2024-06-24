@@ -82,6 +82,7 @@ export class EventsService {
     const sqlFormattedIds = visitorIds
       .map((v) => `'${v.visitorId}'`)
       .join(', ');
+
     const visitorClause =
       visitorIds.length > 0 ? `AND visitorId IN (${sqlFormattedIds});` : ``;
 
