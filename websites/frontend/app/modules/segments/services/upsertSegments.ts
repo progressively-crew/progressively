@@ -18,7 +18,6 @@ export const upsertSegments = (
       throw new Error("Woops! Something went wrong in the server.");
     }
 
-    console.log("lol", res.status);
     return res.json();
   });
 };

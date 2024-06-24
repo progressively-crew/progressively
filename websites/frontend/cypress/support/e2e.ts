@@ -81,3 +81,15 @@ Cypress.on("uncaught:exception", (err) => {
     return false;
   }
 });
+
+beforeEach(() => {
+  cy.intercept("POST", "https://api.progressively.app/*", {
+    statusCode: 201,
+    body: {},
+  });
+
+  cy.intercept("GET", "https://api.progressively.app/*", {
+    statusCode: 200,
+    body: {},
+  });
+});

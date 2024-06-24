@@ -47,7 +47,6 @@ export const editSegmentAction = async (
       successSegmentEdited: true,
     };
   } catch (error: unknown) {
-    console.log("fzfaaz", error);
     return {
       errors: {
         message: (error as Error).message,

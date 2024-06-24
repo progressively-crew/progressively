@@ -6,7 +6,7 @@ import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
 import qs from "qs";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { getSession } from "~/sessions";
 import { getSegments } from "~/modules/segments/services/getSegments";
 import { Segment } from "~/modules/segments/types";
@@ -16,6 +16,7 @@ import { upsertSegments } from "~/modules/segments/services/upsertSegments";
 import { deleteSegment } from "~/modules/segments/services/deleteSegment";
 import { editSegmentAction } from "~/modules/segments/form-actions/editSegmentAction";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -35,7 +36,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return { segments };
 };
 
-export const action: ActionFunction = async ({ request, params }) => {
+type ActionData = {
+  successSegmentEdited?: boolean;
+  successSegmentDeleted?: boolean;
+  error?: { message: string };
+} | null;
+
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
@@ -55,6 +65,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const uuid = formData.get("uuid")?.toString();
     if (uuid) {
       await deleteSegment(uuid, authCookie);
+      return { successSegmentDeleted: true };
     }
   }
 
@@ -68,14 +79,29 @@ export const action: ActionFunction = async ({ request, params }) => {
   return null;
 };
 
-export default function FunnelsPage() {
+export default function SegmentsPage() {
   const { project } = useProject();
+  const actionData = useActionData<ActionData>();
   const { segments } = useLoaderData<{ segments: Array<Segment> }>();
 
   return (
-    <DashboardLayout subNav={<ProjectNavBar project={project} />}>
+    <DashboardLayout
+      subNav={<ProjectNavBar project={project} />}
+      status={
+        actionData?.successSegmentEdited ? (
+          <SuccessBox id={"segment-edited"} key={Math.random()}>
+            The segments have been successfully edited.
+          </SuccessBox>
+        ) : actionData?.successSegmentDeleted ? (
+          <SuccessBox id="segment-deleted">
+            The segment has been removed.
+          </SuccessBox>
+        ) : null
+      }
+    >
       <PageTitle
         value="Segments"
+        description="Segments refer to groups of users who share specific characteristics allowing for targeted analysis and insights."
         action={
           segments.length > 0 && (
             <SubmitButton type="submit" form="save-segments">
@@ -99,7 +125,7 @@ export default function FunnelsPage() {
 
         <Form method="post" id="save-segments">
           <input type="hidden" name="_type" value="update-segment" />
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             {segments.map((segment, index: number) => (
               <SegmentItem key={segment.uuid} segment={segment} index={index} />
             ))}
