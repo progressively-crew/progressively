@@ -1,22 +1,18 @@
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { TagInput } from "~/components/Fields/TagInput";
 import { TextInput } from "~/components/Fields/TextInput";
-import { ComparatorEnum } from "~/modules/rules/types";
+import { ComparatorEnum, Rule } from "~/modules/rules/types";
 import { TargetEntity } from "../types";
 import { useState } from "react";
 
 export interface StrategyRuleFormFieldProps {
-  initialFieldName: string;
-  initialFieldComparator: string;
-  initialFieldValue: string;
+  rule: Rule;
   index: number;
   ruleIndex: number;
 }
 
 export const StrategyRuleFormField = ({
-  initialFieldName,
-  initialFieldComparator,
-  initialFieldValue,
+  rule,
   index,
   ruleIndex,
 }: StrategyRuleFormFieldProps) => {
@@ -29,18 +25,27 @@ export const StrategyRuleFormField = ({
     },
   ];
 
+  if (rule.segment) {
+    targetOptions.push({
+      value: TargetEntity.Segment,
+      label: "segment",
+    });
+  }
+
   return (
     <div className="flex flex-col md:flex-row gap-2 w-full">
       {targetOptions.length > 1 ? (
-        <SelectField
-          hiddenLabel
-          name={`strategies[${index}][rules][${ruleIndex}][target-entity]`}
-          label="Target entity"
-          defaultValue={targetEntity}
-          value={targetEntity}
-          options={targetOptions}
-          onValueChange={(str) => setTargetEntity(str as TargetEntity)}
-        />
+        <>
+          <SelectField
+            hiddenLabel
+            name={`strategies[${index}][rules][${ruleIndex}][target-entity]`}
+            label="Target entity"
+            defaultValue={targetEntity}
+            value={targetEntity}
+            options={targetOptions}
+            onValueChange={(str) => setTargetEntity(str as TargetEntity)}
+          />
+        </>
       ) : (
         <input
           type="hidden"
@@ -54,7 +59,7 @@ export const StrategyRuleFormField = ({
             hiddenLabel
             label="Field name"
             placeholder="e.g: email"
-            defaultValue={initialFieldName}
+            defaultValue={rule.fieldName}
             name={`strategies[${index}][rules][${ruleIndex}][field-name]`}
             className="w-full md:w-40"
           />
@@ -63,7 +68,7 @@ export const StrategyRuleFormField = ({
             hiddenLabel
             name={`strategies[${index}][rules][${ruleIndex}][field-comparator]`}
             label="Field comparator"
-            defaultValue={initialFieldComparator}
+            defaultValue={rule.fieldComparator}
             options={[
               {
                 value: ComparatorEnum.Equals,
@@ -93,7 +98,7 @@ export const StrategyRuleFormField = ({
 
       {targetEntity === TargetEntity.Field ? (
         <TagInput
-          defaultValue={initialFieldValue ? initialFieldValue.split("\n") : []}
+          defaultValue={rule.fieldValue ? rule.fieldValue.split("\n") : []}
           name={`strategies[${index}][rules][${ruleIndex}][field-value]`}
         />
       ) : (

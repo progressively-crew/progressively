@@ -7,6 +7,7 @@ export enum ValueToServe {
 
 export enum TargetEntity {
   Field = "Field",
+  Segment = "Segment",
 }
 
 export interface StrategyUpdateDto {

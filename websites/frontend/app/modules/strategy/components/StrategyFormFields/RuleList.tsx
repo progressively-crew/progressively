@@ -26,9 +26,7 @@ export const RuleList = ({
               className="flex flex-row gap-4 justify-between items-start"
             >
               <StrategyRuleFormField
-                initialFieldName={rule.fieldName}
-                initialFieldComparator={rule.fieldComparator}
-                initialFieldValue={rule.fieldValue}
+                rule={rule}
                 index={index}
                 ruleIndex={ruleIndex}
               />
