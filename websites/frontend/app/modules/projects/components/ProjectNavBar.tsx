@@ -5,6 +5,7 @@ import { TbChartAreaLine } from "react-icons/tb";
 import { IoFunnelOutline } from "react-icons/io5";
 import { SettingsIcon } from "~/components/Icons/SettingsIcon";
 import { HomeIcon } from "~/components/Icons/HomeIcon";
+import { BiGroup } from "react-icons/bi";
 
 export interface ProjectNavBarProps {
   project: Project;
@@ -25,6 +26,13 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
           icon={<FlagIcon />}
         >
           Feature flags
+        </NavItem>
+
+        <NavItem
+          to={`/dashboard/projects/${project.uuid}/segments`}
+          icon={<BiGroup />}
+        >
+          Segments
         </NavItem>
 
         <NavItem
