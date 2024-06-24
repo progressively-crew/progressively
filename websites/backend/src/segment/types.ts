@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { RuleType, RuleUpdateDto } from '../rule/types';
+import { RuleUpdateDto } from '../rule/types';
 import { ComparatorEnum } from '../rule/comparators/types';
 
 export const SegmentUpsertDTOSchema = Joi.array().items(
