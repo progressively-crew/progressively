@@ -127,7 +127,6 @@ export const seedDb = async (opts?: { eventsCount?: number }) => {
           rules: {
             create: [
               {
-                segmentUuid: null,
                 fieldName: "id",
                 fieldComparator: "eq",
                 fieldValue: "1::ffff:127.0.0.1",

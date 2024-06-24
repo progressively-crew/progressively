@@ -174,8 +174,8 @@ model Rule {
   Strategy        Strategy? @relation(fields: [strategyUuid], references: [uuid])
   strategyUuid    String?
   createdAt       DateTime? @default(now())
-  segment         Segment   @relation(fields: [segmentUuid], references: [uuid])
-  segmentUuid     String
+  segment         Segment?  @relation(fields: [segmentUuid], references: [uuid])
+  segmentUuid     String?
 }
 
 model ActivityLog {
