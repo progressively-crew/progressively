@@ -30,7 +30,13 @@ export class FlagsService {
         Project: true,
         strategies: {
           include: {
-            rules: true,
+            rules: {
+              include: {
+                segment: {
+                  include: { segmentRules: true },
+                },
+              },
+            },
             variants: {
               include: {
                 variant: true,
