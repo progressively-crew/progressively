@@ -404,6 +404,20 @@ describe('SdkService', () => {
               fieldName: 'email',
               fieldValue: 'marvin',
             },
+            {
+              segment: {
+                uuid: '1',
+                name: 'Hello',
+                segmentRules: [
+                  {
+                    uuid: '2',
+                    fieldComparator: ComparatorEnum.Contains,
+                    fieldName: 'email',
+                    fieldValue: 'marv',
+                  },
+                ],
+              },
+            },
           ];
 
           flag.strategies = [stratOne, stratTwo];
@@ -422,6 +436,31 @@ describe('SdkService', () => {
           const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
             email: 'marvinx',
+          });
+
+          expect(shouldActivate).toBe(false);
+        });
+
+        it('resolves false when the rollout percentage is 100%, rules are valid but not segment', () => {
+          flag.strategies = [stratOne, stratTwo];
+          stratOne.rules.push({
+            segment: {
+              uuid: '12',
+              name: 'Hello world',
+              segmentRules: [
+                {
+                  uuid: '3',
+                  fieldComparator: ComparatorEnum.Contains,
+                  fieldName: 'email',
+                  fieldValue: 'marvx',
+                },
+              ],
+            },
+          });
+
+          const shouldActivate = service.resolveFlagStatus(flag, {
+            id: 'user-id-123',
+            email: 'marvin',
           });
 
           expect(shouldActivate).toBe(false);
