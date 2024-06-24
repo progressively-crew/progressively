@@ -31,7 +31,7 @@ export const StrategyRuleFormField = ({
   if (segments.length > 0) {
     targetOptions.push({
       value: TargetEntity.Segment,
-      label: "segment",
+      label: "in segment",
     });
   }
 
