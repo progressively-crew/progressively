@@ -1,6 +1,8 @@
+import { ComparatorEnum } from "../rules/types";
+
 export interface SegmentRule {
   uuid: string;
-  fieldComparator: string;
+  fieldComparator: ComparatorEnum;
   fieldName: string;
   fieldValue: string;
   createdAt: string;

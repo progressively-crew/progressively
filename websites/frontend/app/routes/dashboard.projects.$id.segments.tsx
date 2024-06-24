@@ -12,6 +12,7 @@ import { getSession } from "~/sessions";
 import { EmptyState } from "~/components/EmptyState";
 import { getSegments } from "~/modules/segments/services/getSegments";
 import { Segment } from "~/modules/segments/types";
+import { SegmentItem } from "~/modules/segments/components/SegmentItem";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -39,7 +40,11 @@ export default function FunnelsPage() {
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
       <PageTitle value="Segments" />
 
-      <Section>Work in progress...</Section>
+      <Section>
+        {segments.map((segment) => (
+          <SegmentItem key={segment.uuid} segment={segment} />
+        ))}
+      </Section>
     </DashboardLayout>
   );
 }
