@@ -31,9 +31,7 @@ export class SegmentController {
   @UseGuards(HasSegmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   async deleteStrategy(@Param('segmentId') segmentId: string) {
-    const strategy = await this.segmentService.deleteSegment(segmentId);
-
-    return strategy;
+    return await this.segmentService.deleteSegment(segmentId);
   }
 
   @Put('/projects/:id/segments')

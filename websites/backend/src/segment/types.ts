@@ -23,3 +23,16 @@ export interface SegmentUpsertDTO {
   name: string;
   segmentRules: Array<RuleUpdateDto>;
 }
+
+export interface SegmentRuleType {
+  uuid: string;
+  fieldName: string;
+  fieldComparator: ComparatorEnum;
+  fieldValue: string;
+}
+
+export interface Segment {
+  uuid: string;
+  name: string;
+  segmentRules: Array<SegmentRuleType>;
+}

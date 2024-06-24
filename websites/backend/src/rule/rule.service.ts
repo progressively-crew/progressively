@@ -6,6 +6,10 @@ import { Rule } from './Rule';
 @Injectable()
 export class RuleService {
   isMatchingRule(rule: Partial<RuleType>, fields: FieldRecord) {
+    if (rule.segment) {
+      return this.isMatchingAllRules(rule.segment.segmentRules, fields);
+    }
+
     // Dealing with regular rules
     const clientFieldValue = fields[rule.fieldName] || '';
     const fieldValues = rule.fieldValue?.split('\n') || '';

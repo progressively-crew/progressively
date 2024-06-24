@@ -28,9 +28,17 @@ export class FlagsService {
       },
       include: {
         Project: true,
+        variants: true,
+        webhooks: true,
         strategies: {
           include: {
-            rules: true,
+            rules: {
+              include: {
+                segment: {
+                  include: { segmentRules: true },
+                },
+              },
+            },
             variants: {
               include: {
                 variant: true,
@@ -45,13 +53,10 @@ export class FlagsService {
     }) as unknown as Promise<Array<PopulatedFlag>>;
   }
 
-  async changeFlagStatus(flagId: string, status: FlagStatus) {
-    return await this.prisma.flag.update({
+  getPopulatedFlag(flagId: string) {
+    return this.prisma.flag.findUnique({
       where: {
         uuid: flagId,
-      },
-      data: {
-        status,
       },
       include: {
         Project: true,
@@ -59,7 +64,13 @@ export class FlagsService {
         webhooks: true,
         strategies: {
           include: {
-            rules: true,
+            rules: {
+              include: {
+                segment: {
+                  include: { segmentRules: true },
+                },
+              },
+            },
             variants: {
               include: {
                 variant: true,
@@ -72,6 +83,19 @@ export class FlagsService {
         },
       },
     });
+  }
+
+  async changeFlagStatus(flagId: string, status: FlagStatus) {
+    await this.prisma.flag.update({
+      where: {
+        uuid: flagId,
+      },
+      data: {
+        status,
+      },
+    });
+
+    return this.getPopulatedFlag(flagId);
   }
 
   getFlagById(flagId: string) {

@@ -116,6 +116,7 @@ export class StrategyService {
               fieldComparator: rule.fieldComparator,
               fieldName: rule.fieldName,
               fieldValue: rule.fieldValue,
+              segmentUuid: rule.segmentUuid,
             },
           }),
         );
