@@ -10,10 +10,12 @@ import { useDeleteStrategy } from "./useDeleteStrategy";
 import { useState } from "react";
 import { Rule } from "~/modules/rules/types";
 import { createEmptyRule } from "~/modules/rules/services/createEmptyRule";
+import { Segment } from "~/modules/segments/types";
 
 export interface StrategyItemProps {
   strategy: Strategy;
   variants: Array<Variant>;
+  segments: Array<Segment>;
   index: number;
 }
 
@@ -21,6 +23,7 @@ export const StrategyItem = ({
   strategy,
   variants,
   index,
+  segments,
 }: StrategyItemProps) => {
   const [ruleList, setRuleList] = useState<Array<Rule>>(strategy.rules || []);
   const { isDeletingStrategy, deleteStrategyFormId } =
@@ -103,6 +106,7 @@ export const StrategyItem = ({
                   onRemoveRule={removeRule}
                   index={index}
                   onAddRule={addRule}
+                  segments={segments}
                 />
               </CardContent>
             </Card>

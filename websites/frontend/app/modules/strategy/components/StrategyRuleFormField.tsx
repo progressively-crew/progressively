@@ -4,17 +4,20 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { ComparatorEnum, Rule } from "~/modules/rules/types";
 import { TargetEntity } from "../types";
 import { useState } from "react";
+import { Segment } from "~/modules/segments/types";
 
 export interface StrategyRuleFormFieldProps {
   rule: Rule;
   index: number;
   ruleIndex: number;
+  segments: Array<Segment>;
 }
 
 export const StrategyRuleFormField = ({
   rule,
   index,
   ruleIndex,
+  segments,
 }: StrategyRuleFormFieldProps) => {
   const [targetEntity, setTargetEntity] = useState(TargetEntity.Field);
 
@@ -25,7 +28,7 @@ export const StrategyRuleFormField = ({
     },
   ];
 
-  if (rule.segment) {
+  if (segments.length > 0) {
     targetOptions.push({
       value: TargetEntity.Segment,
       label: "segment",
