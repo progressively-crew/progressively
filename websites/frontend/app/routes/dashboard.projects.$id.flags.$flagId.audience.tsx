@@ -31,6 +31,7 @@ import { TipBox } from "~/components/Boxes/TipBox";
 import { FlagStatus } from "~/modules/flags/types";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { BigButton } from "~/components/BigButton";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -188,13 +189,7 @@ export default function FlagById() {
 
           <Form method="post" className="pt-4">
             <input type="hidden" name="_type" value="add-strategy" />
-            <button
-              aria-busy={isCreatingStrategy}
-              type="submit"
-              className="relative border border-dashed border-gray-300 w-full py-4 rounded-xl text-gray-600 hover:bg-gray-100 active:bg-gray-200"
-            >
-              Add a strategy
-            </button>
+            <BigButton isLoading={isCreatingStrategy}>Add a strategy</BigButton>
           </Form>
         </Section>
       </DashboardLayout>

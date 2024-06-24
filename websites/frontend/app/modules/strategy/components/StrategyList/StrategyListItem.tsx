@@ -102,17 +102,8 @@ export const StrategyItem = ({
                   rules={ruleList}
                   onRemoveRule={removeRule}
                   index={index}
+                  onAddRule={addRule}
                 />
-
-                <div className={ruleList.length === 0 ? "" : "pt-2"}>
-                  <button
-                    type="button"
-                    onClick={addRule}
-                    className="border border-dashed border-gray-300 w-full py-2 rounded-xl text-gray-600 text-xs hover:bg-gray-50 active:bg-gray-100"
-                  >
-                    Add a rule
-                  </button>
-                </div>
               </CardContent>
             </Card>
           </>

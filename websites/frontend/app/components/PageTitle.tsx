@@ -16,7 +16,7 @@ export const PageTitle = ({ value, action, description }: PageTitleProps) => {
               {value}
             </h1>
             {description && (
-              <div className="text-gray-700 pt-2 text-xl max-w-4xl">
+              <div className="text-gray-700 pt-2 text-xl max-w-3xl">
                 {description}
               </div>
             )}

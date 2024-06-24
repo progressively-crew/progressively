@@ -19,7 +19,7 @@ export const Label = ({
   return (
     <Component
       htmlFor={htmlFor}
-      className={`text-gray-500 ${className || ""}`}
+      className={`text-gray-700 ${className || ""}`}
       {...props}
     >
       {children}
