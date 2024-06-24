@@ -1,4 +1,4 @@
-import { ComparatorEnum } from "../rules/types";
+import { ComparatorEnum, RuleUpdateDto } from "../rules/types";
 
 export interface SegmentRule {
   uuid: string;
@@ -15,4 +15,10 @@ export interface Segment {
   projectUuid: string;
   userUuid: string;
   segmentRules: Array<SegmentRule>;
+}
+
+export interface SegmentUpsertDTO {
+  uuid?: string;
+  name: string;
+  segmentRules: Array<RuleUpdateDto>;
 }
