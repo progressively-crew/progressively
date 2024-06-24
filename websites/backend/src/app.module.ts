@@ -25,6 +25,7 @@ import { PubsubModule } from './pubsub/pubsub.module';
 import { EventsModule } from './events/events.module';
 import { PaymentModule } from './payment/payment.module';
 import { CachingModule } from './caching/caching.module';
+import { SegmentModule } from './segment/segment.module';
 import 'winston-daily-rotate-file';
 
 @Module({
@@ -77,6 +78,7 @@ import 'winston-daily-rotate-file';
     EventsModule,
     PaymentModule,
     CachingModule,
+    SegmentModule,
   ],
   providers: [AppService],
 })
