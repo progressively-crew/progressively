@@ -73,6 +73,7 @@ model Segment {
   segmentRules SegmentRule[]
   project      Project?      @relation(fields: [projectUuid], references: [uuid])
   projectUuid  String?
+  strategyRule Rule[]
 }
 
 model SegmentRule {
@@ -173,6 +174,8 @@ model Rule {
   Strategy        Strategy? @relation(fields: [strategyUuid], references: [uuid])
   strategyUuid    String?
   createdAt       DateTime? @default(now())
+  segment         Segment   @relation(fields: [segmentUuid], references: [uuid])
+  segmentUuid     String
 }
 
 model ActivityLog {

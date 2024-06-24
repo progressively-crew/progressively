@@ -10,6 +10,7 @@ export type RuleUpdateDto = {
   fieldName?: string;
   fieldComparator?: ComparatorEnum;
   fieldValue?: string;
+  segmentUuid?: string;
 };
 
 export type FieldRecord = Record<string, string | number | boolean>;
