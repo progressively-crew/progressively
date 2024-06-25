@@ -2,12 +2,14 @@ import { IconButton } from "~/components/Buttons/IconButton";
 import { Rule } from "~/modules/rules/types";
 import { StrategyRuleFormField } from "../StrategyRuleFormField";
 import { IoMdClose } from "react-icons/io";
+import { Segment } from "~/modules/segments/types";
 
 export interface RuleListProps {
   rules: Array<Rule>;
   onRemoveRule: (rule: Rule) => void;
   index: number;
   onAddRule: () => void;
+  segments?: Array<Segment>;
 }
 
 export const RuleList = ({
@@ -15,6 +17,7 @@ export const RuleList = ({
   onRemoveRule,
   index,
   onAddRule,
+  segments,
 }: RuleListProps) => {
   return (
     <div>
@@ -26,11 +29,10 @@ export const RuleList = ({
               className="flex flex-row gap-4 justify-between items-start"
             >
               <StrategyRuleFormField
-                initialFieldName={rule.fieldName}
-                initialFieldComparator={rule.fieldComparator}
-                initialFieldValue={rule.fieldValue}
+                rule={rule}
                 index={index}
                 ruleIndex={ruleIndex}
+                segments={segments}
               />
 
               <div className="pt-1">

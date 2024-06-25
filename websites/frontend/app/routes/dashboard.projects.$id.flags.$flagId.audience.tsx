@@ -32,6 +32,8 @@ import { FlagStatus } from "~/modules/flags/types";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { BigButton } from "~/components/BigButton";
+import { getSegments } from "~/modules/segments/services/getSegments";
+import { Segment } from "~/modules/segments/types";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -96,6 +98,7 @@ export const action: ActionFunction = async ({
 interface LoaderData {
   strategies: Array<Strategy>;
   variants: Array<Variant>;
+  segments: Array<Segment>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -105,17 +108,13 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const strategies: Array<Strategy> = await getStrategies(
-    params.flagId!,
-    authCookie
-  );
+  const [strategies, variants, segments] = await Promise.all([
+    getStrategies(params.flagId!, authCookie),
+    getVariants(params.flagId!, authCookie),
+    getSegments(params.id!, authCookie),
+  ]);
 
-  const variants: Array<Variant> = await getVariants(
-    params.flagId!,
-    authCookie
-  );
-
-  return { strategies, variants };
+  return { strategies, variants, segments };
 };
 
 export default function FlagById() {
@@ -123,7 +122,7 @@ export default function FlagById() {
   const [searchParams] = useSearchParams();
   const { project } = useProject();
   const { flag } = useFlag();
-  const { strategies, variants } = useLoaderData<LoaderData>();
+  const { strategies, variants, segments } = useLoaderData<LoaderData>();
   const navigation = useNavigation();
 
   const type = navigation?.formData?.get("_type");
@@ -184,7 +183,11 @@ export default function FlagById() {
 
         <Section id="rollout-target">
           {strategies.length > 0 ? (
-            <StrategyList items={strategies} variants={variants} />
+            <StrategyList
+              items={strategies}
+              variants={variants}
+              segments={segments}
+            />
           ) : null}
 
           <Form method="post" className="pt-4">

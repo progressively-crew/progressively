@@ -3,13 +3,19 @@ import { Variant } from "~/modules/variants/types";
 import { StrategyItem } from "./StrategyListItem";
 import { Form } from "@remix-run/react";
 import React from "react";
+import { Segment } from "~/modules/segments/types";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
   variants: Array<Variant>;
+  segments: Array<Segment>;
 }
 
-export const StrategyList = ({ items, variants }: StrategyListProps) => {
+export const StrategyList = ({
+  items,
+  variants,
+  segments,
+}: StrategyListProps) => {
   return (
     <div>
       {items.map((strategy) => {
@@ -41,6 +47,7 @@ export const StrategyList = ({ items, variants }: StrategyListProps) => {
                 <StrategyItem
                   strategy={strategy}
                   variants={variants}
+                  segments={segments}
                   index={index}
                 />
               </React.Fragment>

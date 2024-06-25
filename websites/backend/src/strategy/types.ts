@@ -44,6 +44,7 @@ export const StrategyUpdateDtoSchema = Joi.array().items(
           .allow('')
           .valid(ComparatorEnum.Contains, ComparatorEnum.Equals),
         fieldValue: Joi.string().allow(''),
+        segmentUuid: Joi.string().allow(''),
       }),
     ),
     whenPredicate: Joi.string()

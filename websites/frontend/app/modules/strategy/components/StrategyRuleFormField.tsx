@@ -1,26 +1,30 @@
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { TagInput } from "~/components/Fields/TagInput";
 import { TextInput } from "~/components/Fields/TextInput";
-import { ComparatorEnum } from "~/modules/rules/types";
+import { ComparatorEnum, Rule } from "~/modules/rules/types";
 import { TargetEntity } from "../types";
 import { useState } from "react";
+import { Segment } from "~/modules/segments/types";
 
 export interface StrategyRuleFormFieldProps {
-  initialFieldName: string;
-  initialFieldComparator: string;
-  initialFieldValue: string;
+  rule: Rule;
   index: number;
   ruleIndex: number;
+  segments?: Array<Segment>;
 }
 
 export const StrategyRuleFormField = ({
-  initialFieldName,
-  initialFieldComparator,
-  initialFieldValue,
+  rule,
   index,
   ruleIndex,
+  segments,
 }: StrategyRuleFormFieldProps) => {
-  const [targetEntity, setTargetEntity] = useState(TargetEntity.Field);
+  const isSegmentRelated = segments && segments.length > 0 && rule.segmentUuid;
+  const [targetEntity, setTargetEntity] = useState(
+    isSegmentRelated ? TargetEntity.Segment : TargetEntity.Field
+  );
+
+  const [segmentUuid, setSegmentUuid] = useState(rule.segmentUuid);
 
   const targetOptions = [
     {
@@ -29,18 +33,39 @@ export const StrategyRuleFormField = ({
     },
   ];
 
+  if (segments && segments.length > 0) {
+    targetOptions.push({
+      value: TargetEntity.Segment,
+      label: "in segment",
+    });
+  }
+
   return (
     <div className="flex flex-col md:flex-row gap-2 w-full">
       {targetOptions.length > 1 ? (
-        <SelectField
-          hiddenLabel
-          name={`strategies[${index}][rules][${ruleIndex}][target-entity]`}
-          label="Target entity"
-          defaultValue={targetEntity}
-          value={targetEntity}
-          options={targetOptions}
-          onValueChange={(str) => setTargetEntity(str as TargetEntity)}
-        />
+        <>
+          <SelectField
+            hiddenLabel
+            name={`strategies[${index}][rules][${ruleIndex}][target-entity]`}
+            label="Target entity"
+            defaultValue={targetEntity}
+            value={targetEntity}
+            options={targetOptions}
+            onValueChange={(str) => setTargetEntity(str as TargetEntity)}
+          />
+          {targetEntity === TargetEntity.Segment && (
+            <SelectField
+              hiddenLabel
+              name={`strategies[${index}][rules][${ruleIndex}][segmentUuid]`}
+              label="Segment"
+              value={segmentUuid}
+              options={
+                segments?.map((s) => ({ label: s.name, value: s.uuid })) || []
+              }
+              onValueChange={setSegmentUuid}
+            />
+          )}
+        </>
       ) : (
         <input
           type="hidden"
@@ -54,7 +79,7 @@ export const StrategyRuleFormField = ({
             hiddenLabel
             label="Field name"
             placeholder="e.g: email"
-            defaultValue={initialFieldName}
+            defaultValue={rule.fieldName}
             name={`strategies[${index}][rules][${ruleIndex}][field-name]`}
             className="w-full md:w-40"
           />
@@ -63,7 +88,7 @@ export const StrategyRuleFormField = ({
             hiddenLabel
             name={`strategies[${index}][rules][${ruleIndex}][field-comparator]`}
             label="Field comparator"
-            defaultValue={initialFieldComparator}
+            defaultValue={rule.fieldComparator}
             options={[
               {
                 value: ComparatorEnum.Equals,
@@ -93,7 +118,7 @@ export const StrategyRuleFormField = ({
 
       {targetEntity === TargetEntity.Field ? (
         <TagInput
-          defaultValue={initialFieldValue ? initialFieldValue.split("\n") : []}
+          defaultValue={rule.fieldValue ? rule.fieldValue.split("\n") : []}
           name={`strategies[${index}][rules][${ruleIndex}][field-value]`}
         />
       ) : (
