@@ -1,5 +1,10 @@
 import { ComparatorEnum, RuleUpdateDto } from "~/modules/rules/types";
-import { StrategyUpdateDto, StrategyVariant, ValueToServe } from "../types";
+import {
+  StrategyUpdateDto,
+  StrategyVariant,
+  TargetEntity,
+  ValueToServe,
+} from "../types";
 import { editStrategies } from "../services/editStrategies";
 
 const mapRawVariantToActualVariant = (rawVariant: any): StrategyVariant => {
@@ -10,10 +15,21 @@ const mapRawVariantToActualVariant = (rawVariant: any): StrategyVariant => {
 };
 
 const isValidRule = (rule: RuleUpdateDto) => {
-  return rule.fieldName && rule.fieldComparator && rule.fieldValue;
+  return (
+    (rule.fieldName && rule.fieldComparator && rule.fieldValue) ||
+    rule.segmentUuid
+  );
 };
 
 const mapRawRuleToActualRule = (rawRule: any): RuleUpdateDto => {
+  const targetEntity = rawRule["target-entity"] as TargetEntity;
+
+  if (targetEntity === TargetEntity.Segment && rawRule.segmentUuid) {
+    return {
+      segmentUuid: rawRule.segmentUuid,
+    };
+  }
+
   return {
     fieldName: rawRule["field-name"],
     fieldComparator:

@@ -10,7 +10,7 @@ export interface StrategyRuleFormFieldProps {
   rule: Rule;
   index: number;
   ruleIndex: number;
-  segments: Array<Segment>;
+  segments?: Array<Segment>;
 }
 
 export const StrategyRuleFormField = ({
@@ -19,7 +19,12 @@ export const StrategyRuleFormField = ({
   ruleIndex,
   segments,
 }: StrategyRuleFormFieldProps) => {
-  const [targetEntity, setTargetEntity] = useState(TargetEntity.Field);
+  const isSegmentRelated = segments && segments.length > 0 && rule.segmentUuid;
+  const [targetEntity, setTargetEntity] = useState(
+    isSegmentRelated ? TargetEntity.Segment : TargetEntity.Field
+  );
+
+  const [segmentUuid, setSegmentUuid] = useState(rule.segmentUuid);
 
   const targetOptions = [
     {
@@ -28,7 +33,7 @@ export const StrategyRuleFormField = ({
     },
   ];
 
-  if (segments.length > 0) {
+  if (segments && segments.length > 0) {
     targetOptions.push({
       value: TargetEntity.Segment,
       label: "in segment",
@@ -48,6 +53,18 @@ export const StrategyRuleFormField = ({
             options={targetOptions}
             onValueChange={(str) => setTargetEntity(str as TargetEntity)}
           />
+          {targetEntity === TargetEntity.Segment && (
+            <SelectField
+              hiddenLabel
+              name={`strategies[${index}][rules][${ruleIndex}][segmentUuid]`}
+              label="Segment"
+              value={segmentUuid}
+              options={
+                segments?.map((s) => ({ label: s.name, value: s.uuid })) || []
+              }
+              onValueChange={setSegmentUuid}
+            />
+          )}
         </>
       ) : (
         <input

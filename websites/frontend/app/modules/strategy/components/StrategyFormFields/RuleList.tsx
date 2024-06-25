@@ -9,7 +9,7 @@ export interface RuleListProps {
   onRemoveRule: (rule: Rule) => void;
   index: number;
   onAddRule: () => void;
-  segments: Array<Segment>;
+  segments?: Array<Segment>;
 }
 
 export const RuleList = ({

@@ -11,10 +11,15 @@ export enum ComparatorEnum {
   Contains = "contains",
 }
 
-export type Rule = RuleType & { uuid: string; segment?: Segment };
+export type Rule = RuleType & {
+  uuid: string;
+  segment?: Segment;
+  segmentUuid: string;
+};
 
 export type RuleUpdateDto = {
   fieldName?: string;
   fieldComparator?: ComparatorEnum;
   fieldValue?: string;
+  segmentUuid?: string;
 };
