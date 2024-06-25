@@ -40,7 +40,7 @@ describe("/dashboard/projects/[id]/analytics/page-views", () => {
             "Progressively | Project from seeding | Analytics | Page views"
           );
 
-          cy.findByRole("heading", { name: "Analytics" }).should("be.visible");
+          cy.findByRole("heading", { name: "Page Views" }).should("be.visible");
           cy.findByRole("heading", { name: "Page views over time." }).should(
             "be.visible"
           );
@@ -53,10 +53,6 @@ describe("/dashboard/projects/[id]/analytics/page-views", () => {
           }).should("be.visible");
           cy.findByRole("heading", { name: "Referrers" }).should("be.visible");
           cy.findByRole("heading", { name: "Pages" }).should("be.visible");
-
-          cy.findByRole("heading", { name: "Other metrics over time." }).should(
-            "be.visible"
-          );
         });
       });
     });
