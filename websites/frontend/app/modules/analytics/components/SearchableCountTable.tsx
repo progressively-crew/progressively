@@ -47,6 +47,7 @@ export const SearchableCountTable = ({
       <CardContent>
         <SectionHeader
           title={title}
+          className="!text-xl"
           action={
             <SearchBar
               onSubmit={handleSubmit}

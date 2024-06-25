@@ -13,7 +13,7 @@ export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
   value?: string;
   name?: string;
   variant?: "inverse" | "default";
-  size?: "M" | "L";
+  size?: "S" | "M" | "L";
   as?: ElementType;
   to?: string;
 }
@@ -26,6 +26,7 @@ const variantStyles = {
 const sizeStyles = {
   L: "px-4 h-10",
   M: "w-6 h-8",
+  S: "w-4 h-6",
 };
 
 export const IconButton = ({

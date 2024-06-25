@@ -39,6 +39,7 @@ export const SectionHeader = ({
   status,
   name,
   menu,
+  className,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
@@ -52,7 +53,10 @@ export const SectionHeader = ({
             <div className="flex-1">
               <HeadingComponent
                 as={titleAs}
-                className="text-2xl font-semibold tracking-tight font-title"
+                className={
+                  "text-2xl font-semibold tracking-tight font-title " +
+                  (className || "")
+                }
                 id={id}
                 name={name}
               >

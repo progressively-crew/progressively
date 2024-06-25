@@ -14,7 +14,6 @@ import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
 import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageViewsGroupedByDate";
-import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
 import { LuInspect } from "react-icons/lu";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { calculateGrowthRate } from "~/modules/misc/utils/calculateGrowthRate";
@@ -27,7 +26,7 @@ export const meta: MetaFunction = ({ matches }) => {
 
   return [
     {
-      title: `Progressively | ${projectName} | Analytics`,
+      title: `Progressively | ${projectName} | Analytics | Page views`,
     },
   ];
 };
@@ -47,35 +46,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const authCookie = session.get("auth-cookie");
 
-  const [
-    globalMetrics,
-    eventsForFields,
-    pagesViewsGroupedByDateData,
-    eventsGroupedByDateData,
-  ] = await Promise.all([
-    getGlobalMetric(projectId, day, authCookie),
-    getEventsForFields(projectId, day, authCookie),
-    getPageViewsGroupedByDate(projectId, day, authCookie),
-    getEventsGroupedByDate(projectId, day, authCookie),
-  ]);
-
-  const entriesDict: Record<any, any> = {};
-  let metricTotalCount: number = 0;
-
-  for (const ev of eventsGroupedByDateData) {
-    if (!entriesDict[ev.name]) {
-      entriesDict[ev.name] = { data: [] };
-    }
-
-    metricTotalCount += ev.count;
-    entriesDict[ev.name].data.push({ x: ev.date, y: ev.count });
-  }
-
-  const eventsGroupedByDate = Object.keys(entriesDict).map((valueResolved) => ({
-    id: valueResolved,
-    color: stringToColor(valueResolved),
-    ...entriesDict[valueResolved],
-  }));
+  const [globalMetrics, eventsForFields, pagesViewsGroupedByDateData] =
+    await Promise.all([
+      getGlobalMetric(projectId, day, authCookie),
+      getEventsForFields(projectId, day, authCookie),
+      getPageViewsGroupedByDate(projectId, day, authCookie),
+    ]);
 
   const pagesViewsGroupedByDate = [
     {
@@ -89,22 +65,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   ];
 
   return {
-    metricTotalCount,
     globalMetrics,
     eventsForFields,
     pagesViewsGroupedByDate,
-    eventsGroupedByDate,
   };
 };
 
 export default function ProjectInsights() {
-  const {
-    metricTotalCount,
-    globalMetrics,
-    eventsForFields,
-    pagesViewsGroupedByDate,
-    eventsGroupedByDate,
-  } = useLoaderData<typeof loader>();
+  const { globalMetrics, eventsForFields, pagesViewsGroupedByDate } =
+    useLoaderData<typeof loader>();
 
   const { project } = useProject();
 
@@ -126,7 +95,7 @@ export default function ProjectInsights() {
   return (
     <>
       <DashboardLayout subNav={<ProjectNavBar project={project} />}>
-        <PageTitle value="Analytics" action={<InsightsFilters />} />
+        <PageTitle value="Page Views" action={<InsightsFilters />} />
 
         <Section>
           <h2 className="sr-only">Global metrics</h2>
@@ -244,36 +213,6 @@ export default function ProjectInsights() {
             />
           </Section>
         </div>
-
-        <Section>
-          <div className="inline-flex flex-row gap-6">
-            <BigStat
-              label={"Total metric hits"}
-              value={metricTotalCount}
-              unit={"hits."}
-              icon={<div />}
-            />
-          </div>
-        </Section>
-
-        <Section id="other-metric-hits">
-          <Card>
-            <CardContent>
-              <SectionHeader title={"Other metrics over time."} />
-            </CardContent>
-
-            {eventsGroupedByDate.length > 0 ? (
-              <LineChart data={eventsGroupedByDate} />
-            ) : (
-              <CardContent>
-                <EmptyState
-                  title="No data"
-                  description={"There are no events hits for this period."}
-                />
-              </CardContent>
-            )}
-          </Card>
-        </Section>
       </DashboardLayout>
       <Outlet />
     </>
