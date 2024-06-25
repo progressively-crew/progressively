@@ -55,7 +55,7 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
               },
             ]}
             labelClassName={
-              "border-b-2 border-t-2 border-transparent -outline-offset-2 rounded-none hover:!bg-gray-100 active:bg-gray-200 " +
+              "border-b-2 border-t-2 border-transparent -outline-offset-2 !rounded-none hover:!bg-gray-100 active:bg-gray-200 " +
               (isAnalytics ? "border-b-gray-900 text-gray-900" : "")
             }
             label="Analytics"
