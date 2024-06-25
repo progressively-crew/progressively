@@ -1,11 +1,11 @@
-describe("/dashboard/projects/[id]/analytics", () => {
+describe("/dashboard/projects/[id]/analytics/page-views", () => {
   before(() => cy.seed({ eventCount: 90 }));
   after(cy.cleanupDb);
 
   describe("general verifications", () => {
     describe("not authenticated", () => {
       beforeEach(() => {
-        cy.visit("/dashboard/projects/1/analytics");
+        cy.visit("/dashboard/projects/1/analytics/page-views");
       });
 
       it("checks that the route is protected", () => {
@@ -17,7 +17,7 @@ describe("/dashboard/projects/[id]/analytics", () => {
       describe("user: Jane", () => {
         beforeEach(() => {
           cy.signIn("Jane");
-          cy.visit("/dashboard/projects/1/analytics", {
+          cy.visit("/dashboard/projects/1/analytics/page-views", {
             failOnStatusCode: false,
           });
         });
@@ -30,14 +30,14 @@ describe("/dashboard/projects/[id]/analytics", () => {
       describe("user: Marvin", () => {
         beforeEach(() => {
           cy.signIn("Marvin");
-          cy.visit("/dashboard/projects/1/analytics");
+          cy.visit("/dashboard/projects/1/analytics/page-views");
           cy.injectAxe();
         });
 
         it("shows the layout of the page", () => {
           cy.title().should(
             "eq",
-            "Progressively | Project from seeding | Analytics"
+            "Progressively | Project from seeding | Analytics | Page views"
           );
 
           cy.findByRole("heading", { name: "Analytics" }).should("be.visible");
@@ -68,7 +68,7 @@ describe("/dashboard/projects/[id]/analytics", () => {
     });
 
     it("shows the data for the 7 days period", () => {
-      cy.visit("/dashboard/projects/1/analytics?days=7");
+      cy.visit("/dashboard/projects/1/analytics/page-views?days=7");
 
       cy.get("dl")
         .first()
@@ -93,7 +93,7 @@ describe("/dashboard/projects/[id]/analytics", () => {
     });
 
     it("shows the data for the 30 days period", () => {
-      cy.visit("/dashboard/projects/1/analytics?days=30");
+      cy.visit("/dashboard/projects/1/analytics/page-views?days=30");
 
       cy.get("dl")
         .first()
@@ -118,7 +118,7 @@ describe("/dashboard/projects/[id]/analytics", () => {
     });
 
     it("shows the data for the 90 days period", () => {
-      cy.visit("/dashboard/projects/1/analytics?days=90");
+      cy.visit("/dashboard/projects/1/analytics/page-views?days=90");
 
       cy.get("dl")
         .first()

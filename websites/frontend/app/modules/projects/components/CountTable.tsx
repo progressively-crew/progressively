@@ -85,7 +85,7 @@ export const CountTable = ({
                   </div>
                 </Td>
 
-                {renderActions && <Td>{renderActions(d)}</Td>}
+                {renderActions && <Td className="!p-2">{renderActions(d)}</Td>}
                 <Td>
                   <div className="text-right font-bold">
                     <NumberValue value={d.pageViews} />

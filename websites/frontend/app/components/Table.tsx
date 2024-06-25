@@ -38,10 +38,13 @@ export const Th = ({ children, className }: TableProps) => {
 export const Td = ({
   children,
   style,
+  className,
 }: TableProps & HTMLAttributes<HTMLTableCellElement>) => {
   return (
     <td
-      className="border-t border-gray-200 p-4 pl-8 text-gray-500"
+      className={
+        "border-t border-gray-200 p-4 pl-8 text-gray-500 " + (className || "")
+      }
       style={style}
     >
       {children}

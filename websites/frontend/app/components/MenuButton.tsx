@@ -21,6 +21,7 @@ export interface MenuButtonProps {
   children?: React.ReactNode;
   icon?: React.ReactNode;
   variant?: "action" | "switch";
+  labelClassName?: string;
 }
 
 export const MenuButton = ({
@@ -29,9 +30,11 @@ export const MenuButton = ({
   children,
   variant = "switch",
   icon,
+  labelClassName,
 }: MenuButtonProps) => {
   let menuButtonClass =
-    "h-10 flex justify-center flex-row items-center hover:bg-gray-50 rounded-xl text-gray-700";
+    "h-10 flex justify-center flex-row items-center hover:bg-gray-50 rounded-xl text-gray-700 " +
+    (labelClassName || "");
 
   if (children) {
     menuButtonClass += " text-sm gap-2 px-3";
