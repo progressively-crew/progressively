@@ -99,7 +99,7 @@ export default function FlagInsights() {
       <PageTitle value="Insights" action={<InsightsFilters />} />
 
       <Section>
-        <div className="grid grid-cols-2 md:inline-flex flex-row gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <BigStat
             label={"Total Flag eval. count"}
             value={flagEvaluationsCount}
