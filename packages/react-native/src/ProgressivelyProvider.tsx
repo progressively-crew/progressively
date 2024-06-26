@@ -4,70 +4,58 @@ import { loadFlags } from "./loadFlags";
 import { ProgressivelyContext } from "./ProgressivelyContext";
 
 import {
-  FlagDict,
   LoadFlagsReturnType,
-  Fields,
+  ProgressivelyProviderProps,
   StateMachineConstants,
 } from "./types";
+import { FlagDict } from "@progressively/types";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Status {
   error?: Error;
   status: StateMachineConstants;
 }
 
-export interface ProgressivelyProviderProps {
-  clientKey: string;
-  fields?: Fields;
-  apiUrl?: string;
-  websocketUrl?: string;
-  children?: React.ReactNode;
-}
+const LocalStorageKey = "p-flags";
 
 export const ProgressivelyProvider = ({
   children,
   clientKey,
   apiUrl,
   websocketUrl,
-  fields: initialFields = {},
+  fields,
 }: ProgressivelyProviderProps) => {
-  const [fields] = useState({ ...initialFields, clientKey });
   const [state, setState] = useState<Status>({ status: "idle" });
   const [flags, setFlags] = useState<FlagDict>({});
 
   useEffect(() => {
-    const sdkParams = base64.encode(JSON.stringify(fields));
+    const flags: FlagDict = JSON.parse(
+      window.localStorage.getItem(LocalStorageKey) || "{}"
+    );
 
-    let ws: WebSocket;
+    setFlags(flags);
+  }, []);
+
+  useEffect(() => {
+    const base64Encoded = base64.encode(
+      JSON.stringify({ ...fields, clientKey })
+    );
+
+    const persistLocalFlags = async (flags: FlagDict) => {
+      await AsyncStorage.setItem(LocalStorageKey, JSON.stringify(flags));
+    };
 
     const handleLoadFlag = (res: LoadFlagsReturnType) => {
+      fields.id = res.userId;
+      persistLocalFlags(res.flags);
       setFlags(res.flags);
       setState({ status: res.error ? "failure" : "success", error: res.error });
     };
 
-    const handleWsConnect = (userId: string | null | undefined) => {
-      if (!websocketUrl) return;
-
-      const wsFields = { ...fields, id: userId };
-
-      ws = new WebSocket(
-        `${websocketUrl}?opts=${base64.encode(JSON.stringify(wsFields))}`
-      );
-
-      ws.onmessage = (event) => {
-        setFlags((s) => ({ ...s, ...JSON.parse(event.data).data }));
-      };
-    };
-
     const endpoint = apiUrl || "https://api.progressively.app";
-    loadFlags(endpoint, sdkParams).then((res) => {
-      handleWsConnect(res.userId);
-      handleLoadFlag(res);
-    });
-
-    return () => {
-      ws?.close();
-    };
-  }, [apiUrl, websocketUrl, fields]);
+    loadFlags(endpoint, base64Encoded).then(handleLoadFlag);
+  }, [apiUrl, websocketUrl, fields, clientKey]);
 
   const isLoading = state.status === "loading";
 

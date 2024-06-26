@@ -1,12 +1,18 @@
 import { Fields, FlagDict } from "@progressively/types";
+import React from "react";
 
-export interface SDKOptions {
+export interface ProgressivelyProviderProps {
+  clientKey: string;
   fields?: Fields;
   apiUrl?: string;
   websocketUrl?: string;
-  flags?: FlagDict;
-  headers?: RequestInit["headers"];
+  children?: React.ReactNode;
 }
+
+export type StateMachineConstants = "idle" | "loading" | "success" | "failure";
+
+export type SetFieldsType = (fields: Fields) => void;
+
 export type LoadFlagsReturnType = {
   flags: FlagDict;
   response?: Response;
@@ -15,5 +21,3 @@ export type LoadFlagsReturnType = {
 };
 
 export { Fields, FlagDict };
-
-export type StateMachineConstants = "idle" | "loading" | "success" | "failure";
