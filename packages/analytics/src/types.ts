@@ -1,6 +1,7 @@
 export interface TrackOpts {
   posX?: number;
   posY?: number;
+  selector?: string;
   data?: any;
 }
 

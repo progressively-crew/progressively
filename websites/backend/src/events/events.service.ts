@@ -50,6 +50,7 @@ export class EventsService {
       viewportWidth: ev.viewportWidth,
       posX: ev.posX,
       posY: ev.posY,
+      selector: ev.selector,
     }));
 
     return this.clickhouse.insert({
