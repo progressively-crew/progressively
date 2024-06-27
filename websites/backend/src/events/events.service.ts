@@ -481,6 +481,7 @@ export class EventsService {
               WHERE toDate(date) >= now() - INTERVAL ${timeframe} DAY
               AND projectUuid = '${projectId}'
               AND selector is not null
+              AND url = '${url}'
               GROUP BY
                   selector
       ORDER BY
