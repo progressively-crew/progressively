@@ -9,9 +9,6 @@ export default () => {
     output: {
       file: "dist/progressively.min.js",
       format: "iife",
-      globals: {
-        "css-selector-generator": "CssSelectorGenerator", // The global variable name for the external dependency
-      },
     },
     plugins: [resolve(), commonjs(), typescript(), terser()],
   };

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5", // For older browsers, use "es5"
+    "target": "es6", // For older browsers, use "es5"
     "module": "ESNext",
     "strict": true,
     "esModuleInterop": true,

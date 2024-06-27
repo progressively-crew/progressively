@@ -303,9 +303,6 @@ importers:
       '@progressively/types':
         specifier: ^1.0.0
         version: 1.0.0
-      css-selector-generator:
-        specifier: ^3.6.8
-        version: 3.6.8
     devDependencies:
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
@@ -8126,9 +8123,6 @@ packages:
 
   css-select@4.3.0:
     resolution: {integrity: sha512-wPpOYtnsVontu2mODhA19JrqWxNsfdatRKd64kmpRbQgh1KtItko5sTnEpPdpSaJszTOhEMlF/RPz28qj4HqhQ==}
-
-  css-selector-generator@3.6.8:
-    resolution: {integrity: sha512-LFWoA20j0rcwGUa38OD6qFaQGKLpFG1xBUzx+wJr/0++34aJ71/YIw2jj6qOaVxiaCEQNrj3HOSepVwiShvyhg==}
 
   css-selector-parser@3.0.3:
     resolution: {integrity: sha512-HAcgYSBFKo1jnglINdHeBPIscPOCOh8vCDCaOV5xkwMSlGPEnfdynxBuWkgZMwXltMKgFbDcr4EPmDpSWi34MA==}
@@ -26185,8 +26179,6 @@ snapshots:
       domhandler: 4.3.1
       domutils: 2.8.0
       nth-check: 2.1.1
-
-  css-selector-generator@3.6.8: {}
 
   css-selector-parser@3.0.3: {}
 
