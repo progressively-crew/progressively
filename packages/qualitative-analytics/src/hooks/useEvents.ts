@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAuthToken } from "../context/AuthTokenContext";
-import { getClusterPoints } from "../utils/getClusterPoints";
-import { ClusterPoint } from "../types";
+import { getEventsPerSelector } from "../utils/getEventsPerSelector";
+import { ProgressivelyEventSelector } from "../types";
 
-export const useClusterPoints = () => {
+export const useEvents = () => {
   const token = useAuthToken();
-  const [cluserPoints, setClusterPoints] = useState<Array<ClusterPoint>>([]);
+  const [events, setEvents] = useState<Array<ProgressivelyEventSelector>>([]);
 
   useEffect(() => {
     if (!token) return;
@@ -14,11 +14,11 @@ export const useClusterPoints = () => {
     const viewportWidth = search.get("viewportWidth");
 
     if (projectId && viewportWidth) {
-      getClusterPoints(projectId, 30, viewportWidth, token).then(
-        setClusterPoints
+      getEventsPerSelector(projectId, window.location.pathname, 30, token).then(
+        setEvents
       );
     }
   }, [token]);
 
-  return cluserPoints;
+  return events;
 };
