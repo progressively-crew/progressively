@@ -19,6 +19,7 @@ const flushEvents = () => {
     viewportHeight: document.documentElement.scrollHeight,
     posX: ev.opts?.posX,
     posY: ev.opts?.posY,
+    selector: ev.opts?.selector,
     data: ev.opts?.data
       ? typeof ev.opts.data === "string"
         ? ev.opts.data
