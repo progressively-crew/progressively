@@ -9,6 +9,7 @@ export interface EventHit {
   viewportHeight?: number;
   posX?: number;
   posY?: number;
+  selector?: string;
 }
 
 export interface QueuedEventHit extends EventHit, DeviceInfo {

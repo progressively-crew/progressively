@@ -15,6 +15,7 @@ CREATE TABLE events
     data Nullable(String),
     posX Nullable(UInt32),
     posY Nullable(UInt32),
+    selector Nullable(String),
     projectUuid Nullable(String),
     sessionUuid Nullable(String),
     viewportHeight Nullable(Int32),

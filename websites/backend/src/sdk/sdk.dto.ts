@@ -9,6 +9,7 @@ export const SdkHitAnalyticsSchema = Joi.array().items({
   viewportHeight: Joi.number(),
   posX: Joi.number(),
   posY: Joi.number(),
+  selector: Joi.string(),
   clientKey: Joi.string(),
   secretKey: Joi.string(),
   domain: Joi.string(),

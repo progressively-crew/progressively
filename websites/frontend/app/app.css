@@ -10,6 +10,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  -webkit-font-smoothing: antialiased; /* For Chrome, Safari, and other WebKit browsers */
+  -moz-osx-font-smoothing: grayscale; /* For Firefox on macOS */
+}
+
 *:focus {
   outline: none;
 }
