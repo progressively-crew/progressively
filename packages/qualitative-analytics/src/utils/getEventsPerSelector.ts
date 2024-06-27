@@ -1,17 +1,17 @@
-export const getClusterPoints = (
+export const getEventsPerSelector = (
   projectId: string,
+  actualUrl: string,
   timeframe: number,
-  viewportWidth: string,
   accessToken: string
 ) => {
   const url = new URL(
     `${
       (window as any).__progressivelyEndpoint
-    }/projects/${projectId}/events/clusters`
+    }/projects/${projectId}/events/selectors`
   );
 
   url.searchParams.set("timeframe", String(timeframe));
-  url.searchParams.set("viewportWidth", viewportWidth);
+  url.searchParams.set("url", actualUrl);
 
   return fetch(url, {
     headers: {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { AuthTokenProvider } from "./context/AuthTokenContext";
-import { GridPoints } from "./components/GridPoints";
+import { Events } from "./components/Events";
 
 export const App = () => {
   const [authToken, setAuthToken] = useState<string>();
@@ -18,7 +18,7 @@ export const App = () => {
 
   return (
     <AuthTokenProvider token={authToken}>
-      <GridPoints />
+      <Events />
     </AuthTokenProvider>
   );
 };

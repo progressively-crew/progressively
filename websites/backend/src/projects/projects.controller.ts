@@ -347,25 +347,26 @@ export class ProjectsController {
     return await this.eventService.getEventsGroupedByDate(id, tf);
   }
 
-  @Get(':id/events/clusters')
+  @Get(':id/events/selectors')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async getClusterPoints(
+  getEventsPerSelectors(
     @Param('id') id: string,
     @Query('timeframe') timeframe: string,
-    @Query('viewportWidth') viewportWidth: string,
+    @Query('url') url: string,
   ) {
     if (!Timeframes.includes(timeframe)) {
       throw new BadRequestException('timeframe is required.');
     }
 
-    if (!viewportWidth) {
-      throw new BadRequestException('viewportWidth should be provided');
+    if (!url) {
+      throw new BadRequestException('invalid url');
     }
 
     const tf = Number(timeframe) as Timeframe;
-    return await this.eventService.getClusterPoints(id, tf, viewportWidth);
+    return this.eventService.getEventsBySelector(id, url, tf);
   }
+
   @Get(':id/events/viewports')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)

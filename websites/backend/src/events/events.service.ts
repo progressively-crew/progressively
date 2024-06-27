@@ -467,25 +467,24 @@ export class EventsService {
     });
   }
 
-  async getClusterPoints(
+  async getEventsBySelector(
     projectId: string,
+    url: string,
     timeframe: Timeframe,
-    viewportWidth: string,
   ) {
-    const cellCount = 40;
     const resultSet = await this.clickhouse.query({
       query: `SELECT
-      floor(posX / (viewportWidth / ${cellCount})) as grid_x_percent, 
-      floor(posY / (viewportWidth / ${cellCount})) as grid_y_percent, 
-      CAST(COUNT(*) AS Int32) AS click_count
-    FROM events
-    WHERE toDate(date) >= now() - INTERVAL ${timeframe} DAY
-    AND projectUuid = '${projectId}'
-    AND posX IS NOT NULL
-    AND posY IS NOT NULL
-    AND viewportWidth = ${viewportWidth}
-    GROUP BY grid_x_percent, grid_y_percent, viewportWidth
-    ORDER BY click_count DESC;`,
+                  selector,
+                  COUNT(*) AS eventCount
+              FROM
+                  events
+              WHERE toDate(date) >= now() - INTERVAL ${timeframe} DAY
+              AND projectUuid = '${projectId}'
+              AND selector is not null
+              GROUP BY
+                  selector
+      ORDER BY
+          eventCount DESC;`,
       format: 'JSONEachRow',
     });
 
