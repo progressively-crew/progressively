@@ -11,16 +11,18 @@ export const useEvents = () => {
     if (!token) return;
     const search = new URLSearchParams(window.location.search);
     const projectId = search.get("__progressivelyProjectId");
-    const viewportWidth = search.get("viewportWidth");
 
-    if (projectId && viewportWidth) {
+    if (projectId) {
       getEventsPerSelector(projectId, window.location.pathname, 30, token).then(
         setEvents
       );
     }
   }, [token]);
 
-  const totalEvents = events.reduce((acc, curr) => acc + curr.eventCount, 0);
+  const totalEvents = (events || []).reduce(
+    (acc, curr) => acc + curr.eventCount,
+    0
+  );
 
   return { events, totalEvents };
 };
