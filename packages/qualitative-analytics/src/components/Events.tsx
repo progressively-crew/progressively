@@ -66,7 +66,7 @@ export const Events = () => {
   const { events, totalEvents } = useEvents();
 
   return (
-    <>
+    <div id="progressively-events-overlay">
       {events.map((ev) => (
         <ElementAttached
           entry={ev}
@@ -74,6 +74,6 @@ export const Events = () => {
           ratio={ev.eventCount / totalEvents}
         />
       ))}
-    </>
+    </div>
   );
 };
