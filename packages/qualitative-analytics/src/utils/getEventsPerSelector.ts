@@ -17,5 +17,11 @@ export const getEventsPerSelector = (
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error("Not authorized to fetch the endpoint.");
+    }
+
+    return res.json();
+  });
 };

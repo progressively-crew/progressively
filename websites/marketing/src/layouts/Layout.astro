@@ -135,8 +135,8 @@ const scriptSrc = "/progressively.min.js";
   import { Progressively } from "@progressively/sdk-js";
 
   const sdk = Progressively.init(clientKey, {
-    apiUrl: "https://api.progressively.app",
-    websocketUrl: "wss://api.progressively.app",
+    apiUrl: import.meta.env.PUBLIC_PROGRESSIVELY_ENDPOINT,
+    websocketUrl: import.meta.env.PUBLIC_PROGRESSIVELY_ENDPOINT.replace("https", "wss")
   });
 
   ["nav-docs", "above-the-fold-cta", "schedule-call", "go-to-app"].forEach(
