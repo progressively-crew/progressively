@@ -1,17 +1,15 @@
 import { Constants } from "~/constants";
 
-export const getDistinctViewport = async (
+export const getEventHotSpots = async (
   projectId: string,
-  websiteUrl: string,
   timeframe: number,
   accessToken: string
-) => {
+): Promise<Array<{ url: string; selectorCount: number }>> => {
   const url = new URL(
-    `${Constants.BackendUrl}/projects/${projectId}/events/viewports`
+    `${Constants.BackendUrl}/projects/${projectId}/events/hot-spots`
   );
 
   url.searchParams.set("timeframe", String(timeframe));
-  url.searchParams.set("url", websiteUrl);
 
   return fetch(url, {
     headers: {

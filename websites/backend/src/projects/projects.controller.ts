@@ -367,24 +367,16 @@ export class ProjectsController {
     return this.eventService.getEventsBySelector(id, url, tf);
   }
 
-  @Get(':id/events/viewports')
+  @Get(':id/events/hot-spots')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async getViewports(
-    @Param('id') id: string,
-    @Query('timeframe') timeframe: string,
-    @Query('url') url: string,
-  ) {
+  getHotSpots(@Param('id') id: string, @Query('timeframe') timeframe: string) {
     if (!Timeframes.includes(timeframe)) {
       throw new BadRequestException('timeframe is required.');
     }
 
-    if (!url) {
-      throw new BadRequestException('url is required.');
-    }
-
     const tf = Number(timeframe) as Timeframe;
-    return await this.eventService.getDistinctViewport(id, tf, url);
+    return this.eventService.getHotSpots(id, tf);
   }
 
   @Get(':id/funnels/fields')

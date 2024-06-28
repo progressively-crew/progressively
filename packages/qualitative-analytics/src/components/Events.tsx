@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useEvents } from "../hooks/useEvents";
 import { ProgressivelyEventSelector } from "../types";
+import { getPointColor } from "../utils/getPointColor";
 
-const ElementAttached = ({ entry }: { entry: ProgressivelyEventSelector }) => {
+const ElementAttached = ({
+  entry,
+  ratio,
+}: {
+  entry: ProgressivelyEventSelector;
+  ratio: number;
+}) => {
   const [position, setPosition] = useState<
     { x: number; y: number; h: number; w: number } | undefined
   >(undefined);
@@ -17,13 +24,15 @@ const ElementAttached = ({ entry }: { entry: ProgressivelyEventSelector }) => {
 
   if (!position) return null;
 
+  const pointColor = getPointColor(ratio);
+
   return (
     <div
       style={{
         position: "absolute",
         top: position.y,
         left: position.x,
-        outline: "2px solid red",
+        outline: `2px solid red ${pointColor}`,
         zIndex: 9999,
         height: position.h,
         width: position.w,
@@ -54,12 +63,16 @@ const ElementAttached = ({ entry }: { entry: ProgressivelyEventSelector }) => {
 };
 
 export const Events = () => {
-  const events = useEvents();
+  const { events, totalEvents } = useEvents();
 
   return (
     <>
       {events.map((ev) => (
-        <ElementAttached entry={ev} key={ev.selector} />
+        <ElementAttached
+          entry={ev}
+          key={ev.selector}
+          ratio={ev.eventCount / totalEvents}
+        />
       ))}
     </>
   );

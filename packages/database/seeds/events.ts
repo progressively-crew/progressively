@@ -6,7 +6,8 @@ const createEvent = (
   os: string = "Mac OS",
   browser: string = "Safari",
   url: string = "/somepage",
-  name: string = "Page View"
+  name: string = "Page View",
+  selector: string = "body > button"
 ) => {
   return {
     date,
@@ -21,6 +22,7 @@ const createEvent = (
     sessionUuid: visitorId,
     viewportHeight: 480,
     viewportWidth: 640,
+    selector,
   };
 };
 

@@ -13,6 +13,7 @@ interface MenuItem {
   href?: string;
   onClick?: () => void;
   icon?: React.ReactNode;
+  noColor?: boolean;
 }
 
 export interface MenuButtonProps {
@@ -83,13 +84,16 @@ export const MenuButton = ({
                 <Root
                   to={item.href || ""}
                   onClick={item.onClick}
-                  className="whitespace-nowrap flex gap-2 min-w-[200px] items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 font-normal"
+                  className="hover:bg-gray-50 active:bg-gray-100 whitespace-nowrap flex gap-2 min-w-[200px] items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 font-normal"
                 >
-                  {item.icon && (
-                    <IconBox content={item.label} size="S">
-                      {item.icon}
-                    </IconBox>
-                  )}
+                  {item.icon &&
+                    (item.noColor ? (
+                      item.icon
+                    ) : (
+                      <IconBox content={item.label} size="S">
+                        {item.icon}
+                      </IconBox>
+                    ))}
                   {item.label}
                 </Root>
               </DropdownMenu.Item>
