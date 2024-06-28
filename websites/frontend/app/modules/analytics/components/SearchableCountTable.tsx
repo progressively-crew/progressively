@@ -14,10 +14,6 @@ export interface SearchableCountTableProps {
     [key: string]: string | number;
     pageViews: number;
   }) => string;
-  renderActions?: (d: {
-    [key: string]: string | number;
-    pageViews: number;
-  }) => React.ReactNode;
   title: string;
 }
 
@@ -28,7 +24,6 @@ export const SearchableCountTable = ({
   cellKey,
   shouldLink,
   renderLabel,
-  renderActions,
   title,
 }: SearchableCountTableProps) => {
   const [criteria, setCriteria] = useState("");
@@ -65,7 +60,6 @@ export const SearchableCountTable = ({
         cellName={cellName}
         cellKey={cellKey}
         renderLabel={renderLabel}
-        renderActions={renderActions}
         shouldLink={shouldLink}
       />
     </Card>

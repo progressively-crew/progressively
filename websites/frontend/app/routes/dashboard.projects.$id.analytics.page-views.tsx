@@ -1,6 +1,6 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Card, CardContent } from "~/components/Card";
@@ -14,8 +14,6 @@ import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
 import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageViewsGroupedByDate";
-import { LuInspect } from "react-icons/lu";
-import { IconButton } from "~/components/Buttons/IconButton";
 import { calculateGrowthRate } from "~/modules/misc/utils/calculateGrowthRate";
 import { LineChart } from "~/components/LineChart/LineChart";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
@@ -156,16 +154,6 @@ export default function ProjectInsights() {
               cellName={"Page URL"}
               cellKey="url"
               renderLabel={(d) => String(d.url)}
-              renderActions={(d) => (
-                <IconButton
-                  as={Link}
-                  to={`/dashboard/projects/${
-                    project.uuid
-                  }/analytics/viewports?url=${String(d.url)}`}
-                  icon={<LuInspect />}
-                  tooltip={"Open page details"}
-                />
-              )}
             />
           </Section>
 
