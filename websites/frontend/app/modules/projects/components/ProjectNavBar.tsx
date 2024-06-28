@@ -8,6 +8,9 @@ import { HomeIcon } from "~/components/Icons/HomeIcon";
 import { BiGroup } from "react-icons/bi";
 import { MenuButton } from "~/components/MenuButton";
 import { useLocation } from "@remix-run/react";
+import { FiEye } from "react-icons/fi";
+import { MdOutlineCandlestickChart } from "react-icons/md";
+import { BsFire } from "react-icons/bs";
 
 export interface ProjectNavBarProps {
   project: Project;
@@ -47,11 +50,21 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
             items={[
               {
                 label: "Page Views",
+                icon: <FiEye />,
                 href: `/dashboard/projects/${project.uuid}/analytics/page-views`,
+                noColor: true,
               },
               {
                 label: "Custom Events",
+                icon: <MdOutlineCandlestickChart />,
                 href: `/dashboard/projects/${project.uuid}/analytics/custom-events`,
+                noColor: true,
+              },
+              {
+                label: "Hot spots",
+                icon: <BsFire />,
+                href: `/dashboard/projects/${project.uuid}/analytics/hot-spots`,
+                noColor: true,
               },
             ]}
             labelClassName={

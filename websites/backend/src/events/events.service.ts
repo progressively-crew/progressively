@@ -492,6 +492,26 @@ export class EventsService {
     return await resultSet.json();
   }
 
+  async getHotSpots(projectId: string, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT
+                  url,
+                  COUNT(selector) AS selectorCount
+              FROM
+                  events
+              WHERE toDate(date) >= now() - INTERVAL ${timeframe} DAY
+              AND projectUuid = '${projectId}'
+              AND selector is not null
+              GROUP BY
+                  url
+      ORDER BY
+          selectorCount DESC;`,
+      format: 'JSONEachRow',
+    });
+
+    return await resultSet.json();
+  }
+
   async getDistinctViewport(
     projectId: string,
     timeframe: Timeframe,

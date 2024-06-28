@@ -367,6 +367,18 @@ export class ProjectsController {
     return this.eventService.getEventsBySelector(id, url, tf);
   }
 
+  @Get(':id/events/hot-spots')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getHotSpots(@Param('id') id: string, @Query('timeframe') timeframe: string) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+    return this.eventService.getHotSpots(id, tf);
+  }
+
   @Get(':id/events/viewports')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)

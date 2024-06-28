@@ -20,5 +20,7 @@ export const useEvents = () => {
     }
   }, [token]);
 
-  return events;
+  const totalEvents = events.reduce((acc, curr) => acc + curr.eventCount, 0);
+
+  return { events, totalEvents };
 };
