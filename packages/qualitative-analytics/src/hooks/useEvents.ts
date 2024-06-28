@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthToken } from "../context/AuthTokenContext";
 import { getEventsPerSelector } from "../utils/getEventsPerSelector";
 import { ProgressivelyEventSelector } from "../types";
+import { cleanUrl } from "../utils/cleanupUrl";
 
 export const useEvents = () => {
   const token = useAuthToken();
@@ -13,9 +14,10 @@ export const useEvents = () => {
     const projectId = search.get("__progressivelyProjectId");
 
     if (projectId) {
-      getEventsPerSelector(projectId, window.location.pathname, 30, token).then(
-        setEvents
-      );
+      const href = window.location.href;
+      const nextUrl = cleanUrl(href);
+
+      getEventsPerSelector(projectId, nextUrl, 30, token).then(setEvents);
     }
   }, [token]);
 
