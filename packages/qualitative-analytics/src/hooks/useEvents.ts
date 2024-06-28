@@ -22,7 +22,7 @@ export const useEvents = () => {
   }, [token]);
 
   const totalEvents = (events || []).reduce(
-    (acc, curr) => acc + curr.eventCount,
+    (acc, curr) => acc + Number(curr.eventCount),
     0
   );
 

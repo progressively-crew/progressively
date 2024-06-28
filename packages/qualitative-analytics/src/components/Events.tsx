@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useEvents } from "../hooks/useEvents";
 import { ProgressivelyEventSelector } from "../types";
 import { getPointColor } from "../utils/getPointColor";
+import { executeWhenEl } from "../utils/executeWhenEl";
 
 const ElementAttached = ({
   entry,
@@ -15,12 +16,26 @@ const ElementAttached = ({
   >(undefined);
 
   useEffect(() => {
-    const domNode = document.querySelector(entry.selector);
-    if (domNode) {
-      const rect = domNode.getBoundingClientRect();
-      setPosition({ y: rect.top, x: rect.left, h: rect.height, w: rect.width });
-    }
-  }, []);
+    const update = () => {
+      executeWhenEl(entry.selector, (el) => {
+        const rect = el.getBoundingClientRect();
+        setPosition({
+          y: rect.top + window.scrollY,
+          x: rect.left + window.scrollX,
+          h: rect.height,
+          w: rect.width,
+        });
+      });
+    };
+
+    update();
+
+    window.addEventListener("resize", update);
+
+    return () => {
+      window.removeEventListener("resize", update);
+    };
+  }, [entry.selector]);
 
   if (!position) return null;
 
@@ -32,10 +47,11 @@ const ElementAttached = ({
         position: "absolute",
         top: position.y,
         left: position.x,
-        outline: `2px solid red ${pointColor}`,
+        outline: `2px solid ${pointColor}`,
         zIndex: 9999,
         height: position.h,
         width: position.w,
+        pointerEvents: "none",
       }}
     >
       <div
@@ -43,16 +59,15 @@ const ElementAttached = ({
           position: "relative",
           height: "100%",
           width: "100%",
-          pointerEvents: "none",
         }}
       >
         <div
           style={{
             display: "inline-block",
             padding: 4,
-            background: "red",
+            background: pointColor,
             fontSize: "0.8em",
-            color: "white",
+            color: "black",
           }}
         >
           {entry.eventCount}

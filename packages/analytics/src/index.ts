@@ -5,6 +5,8 @@ import { showQualitativeAnalytics } from "./show-qualitative-analytics";
 import { AnalyticsEvent, TrackFn } from "./types";
 
 const { endpoint, bSixtyFour, shouldTrackQuantitative } = setup();
+const isShowingHotZones =
+  window.location.href.indexOf("#__progressively") !== -1;
 
 let eventsBuffer: Array<AnalyticsEvent> = [];
 const MAX_BATCH_SIZE = 10;
@@ -34,7 +36,7 @@ const flushEvents = () => {
     method: "POST",
     body: JSON.stringify(payloads),
     headers: { "Content-Type": "application/json" },
-  });
+  }).then((res) => res.json());
 };
 
 setInterval(() => {
@@ -49,20 +51,21 @@ const track: TrackFn = (eventName, opts = {}) => {
   if (eventsBuffer.length >= MAX_BATCH_SIZE) {
     flushEvents();
   }
+
+  return Promise.resolve(undefined);
 };
 
 const trackPageView = () => track("Page View");
 
-setupNavigationListeners(trackPageView);
-
-if (shouldTrackQuantitative) {
-  setupQualitativeTracking(track);
-}
-
-if (window.location.href.indexOf("#__progressively") !== -1) {
+if (isShowingHotZones) {
   showQualitativeAnalytics(endpoint);
-}
+} else {
+  setupNavigationListeners(trackPageView);
+  trackPageView();
 
-trackPageView();
+  if (shouldTrackQuantitative) {
+    setupQualitativeTracking(track, flushEvents);
+  }
+}
 
 (window as any).track = track;
