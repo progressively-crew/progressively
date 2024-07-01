@@ -2,6 +2,7 @@ import { Table, Th, Tbody, Td } from "~/components/Table";
 import { NumberValue } from "~/components/NumberValue";
 import { Link } from "~/components/Link";
 import { Tooltip } from "~/components/Tooltip/Tooltip";
+import { ReactNode } from "react";
 
 export interface CountTableProps {
   data: Array<{ [key: string]: string | number; pageViews: number }>;
@@ -13,6 +14,10 @@ export interface CountTableProps {
     [key: string]: string | number;
     pageViews: number;
   }) => string;
+  renderIcon?: (d: {
+    [key: string]: string | number;
+    pageViews: number;
+  }) => ReactNode;
 }
 
 export const CountTable = ({
@@ -21,6 +26,7 @@ export const CountTable = ({
   cellName,
   shouldLink,
   renderLabel,
+  renderIcon,
   cellKey,
 }: CountTableProps) => {
   let max = 0;
@@ -51,7 +57,8 @@ export const CountTable = ({
             return (
               <tr key={`${cellName}-${cellKey}-${index}`}>
                 <Td>
-                  <div className="relative flex items-center">
+                  <div className="relative flex items-center flex-row gap-2">
+                    {renderIcon && renderIcon(d)}
                     <div className="truncate w-[200px] relative z-10 text-gray-900">
                       {shouldLink ? (
                         <Tooltip tooltip={d[cellKey]}>

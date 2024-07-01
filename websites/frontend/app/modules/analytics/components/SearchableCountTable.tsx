@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, ReactNode, useState } from "react";
 import { Card, CardContent } from "~/components/Card";
 import { SearchBar } from "~/components/SearchBar";
 import { SectionHeader } from "~/components/Section";
@@ -15,6 +15,10 @@ export interface SearchableCountTableProps {
     pageViews: number;
   }) => string;
   title: string;
+  renderIcon?: (d: {
+    [key: string]: string | number;
+    pageViews: number;
+  }) => ReactNode;
 }
 
 export const SearchableCountTable = ({
@@ -25,6 +29,7 @@ export const SearchableCountTable = ({
   shouldLink,
   renderLabel,
   title,
+  renderIcon,
 }: SearchableCountTableProps) => {
   const [criteria, setCriteria] = useState("");
 
@@ -61,6 +66,7 @@ export const SearchableCountTable = ({
         cellKey={cellKey}
         renderLabel={renderLabel}
         shouldLink={shouldLink}
+        renderIcon={renderIcon}
       />
     </Card>
   );

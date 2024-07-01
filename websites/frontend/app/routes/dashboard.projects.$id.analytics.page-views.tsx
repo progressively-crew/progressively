@@ -18,6 +18,8 @@ import { calculateGrowthRate } from "~/modules/misc/utils/calculateGrowthRate";
 import { LineChart } from "~/components/LineChart/LineChart";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { SearchableCountTable } from "~/modules/analytics/components/SearchableCountTable";
+import { getBrowserIcon } from "~/modules/analytics/helpers/getBrowserIcon";
+import { getOSIcon } from "~/modules/analytics/helpers/getOSIcon";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -176,6 +178,7 @@ export default function ProjectInsights() {
               cellName={"Browser"}
               cellKey="browser"
               renderLabel={(d) => String(d.browser)}
+              renderIcon={(d) => getBrowserIcon(String(d.browser))}
             />
           </Section>
 
@@ -187,6 +190,7 @@ export default function ProjectInsights() {
               cellName={"Os"}
               cellKey="os"
               renderLabel={(d) => String(d.os)}
+              renderIcon={(d) => getOSIcon(String(d.os))}
             />
           </Section>
 
