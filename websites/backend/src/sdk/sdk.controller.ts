@@ -174,6 +174,8 @@ export class SdkController {
         projectUuid: concernedProject.uuid,
         sessionUuid: session.uuid,
         selector: ev.selector,
+        osVersion: deviceInfo.osVersion,
+        browserVersion: deviceInfo.browserVersion,
       }));
 
     await this.queuingService.send(KafkaTopics.AnalyticsHits, queuedEvents);
