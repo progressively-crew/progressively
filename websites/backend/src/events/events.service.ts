@@ -7,8 +7,10 @@ import { Timeframe } from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { ICachingService } from '../caching/types';
 import {
+  projectHotSpotsUrlKey,
   projectIdTimeframeEvent,
   projectIdTimeframeEventOverTime,
+  projectUrlSelectorsKey,
 } from '../caching/keys';
 
 @Injectable()
@@ -472,6 +474,11 @@ export class EventsService {
     url: string,
     timeframe: Timeframe,
   ) {
+    const cachingKey = projectUrlSelectorsKey(projectId, timeframe, url);
+
+    const cachedData = await this.cachingService.get(cachingKey);
+    if (cachedData) return cachedData;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT
                   selector,
@@ -489,10 +496,18 @@ export class EventsService {
       format: 'JSONEachRow',
     });
 
-    return await resultSet.json();
+    const result = await resultSet.json();
+    await this.cachingService.set(cachingKey, result, 'HalfAnHour');
+
+    return result;
   }
 
   async getHotSpots(projectId: string, timeframe: Timeframe) {
+    const cachingKey = projectHotSpotsUrlKey(projectId, timeframe);
+
+    const cachedData = await this.cachingService.get(cachingKey);
+    if (cachedData) return cachedData;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT
                   url,
@@ -509,6 +524,9 @@ export class EventsService {
       format: 'JSONEachRow',
     });
 
-    return await resultSet.json();
+    const result = await resultSet.json();
+    await this.cachingService.set(cachingKey, result, 'HalfAnHour');
+
+    return result;
   }
 }

@@ -14,6 +14,17 @@ export const projectIdTimeframeEvent = (
     ? `project:${projectId}:analytics:${timeframe}:${eventName}:in-past`
     : `project:${projectId}:analytics:${timeframe}:${eventName}`;
 
+export const projectHotSpotsUrlKey = (
+  projectId: string,
+  timeframe: Timeframe,
+) => `project:${projectId}:analytics-hotspots:${timeframe}`;
+
+export const projectUrlSelectorsKey = (
+  projectId: string,
+  timeframe: Timeframe,
+  url: string,
+) => `project:${projectId}:analytics-selectors:${timeframe}:${url}`;
+
 export const projectIdTimeframeEventOverTime = (
   projectId: string,
   timeframe: Timeframe,
