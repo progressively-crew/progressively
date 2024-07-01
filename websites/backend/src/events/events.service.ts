@@ -53,6 +53,8 @@ export class EventsService {
       posX: ev.posX,
       posY: ev.posY,
       selector: ev.selector,
+      osVersion: ev.osVersion,
+      browserVersion: ev.browserVersion,
     }));
 
     return this.clickhouse.insert({
