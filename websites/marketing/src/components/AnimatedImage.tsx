@@ -27,10 +27,7 @@ export const AnimatedImage = () => {
 
   return (
     <div className="origin-top relative" style={{ perspective: 2000 }}>
-      <div
-        style={{ transform: `rotateX(${rotateX}deg)` }}
-        className="p-4 bg-black/[.20] rounded-3xl"
-      >
+      <div style={{ transform: `rotateX(${rotateX}deg)` }}>
         <Browser>
           <div className="p-2">
             <img src={ffSrc.src} alt="Feature flags of progressively.app" />

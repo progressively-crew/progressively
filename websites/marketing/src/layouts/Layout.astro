@@ -1,4 +1,7 @@
 ---
+import Banner from "../components/Banner.astro";
+import Navbar from "../components/Navbar.astro";
+
 interface Props {
   title: string;
   description: string;
@@ -40,6 +43,19 @@ const scriptSrc = "/progressively.min.js";
     <title>{title}</title>
   </head>
   <body>
+    <header>
+      <Banner>
+        Thanks for your support on{" "}
+        <a
+          class="font-bold underline"
+          href="https://www.producthunt.com/posts/progressively-2"
+          id="ph-button"
+        >
+          ProductHunt
+        </a>! We've reached <strong>#7 of the day!</strong> 🥰
+      </Banner>
+    </header>
+    <Navbar />
     <slot />
   </body>
 </html>
@@ -136,7 +152,10 @@ const scriptSrc = "/progressively.min.js";
 
   const sdk = Progressively.init(clientKey, {
     apiUrl: import.meta.env.PUBLIC_PROGRESSIVELY_ENDPOINT,
-    websocketUrl: import.meta.env.PUBLIC_PROGRESSIVELY_ENDPOINT.replace("https", "wss")
+    websocketUrl: import.meta.env.PUBLIC_PROGRESSIVELY_ENDPOINT.replace(
+      "https",
+      "wss"
+    ),
   });
 
   ["nav-docs", "above-the-fold-cta", "schedule-call", "go-to-app"].forEach(

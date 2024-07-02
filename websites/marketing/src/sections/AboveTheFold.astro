@@ -6,36 +6,19 @@ import { AnimatedImage } from "../components/AnimatedImage";
 import Banner from "../components/Banner.astro";
 ---
 
-<div class="relative flex flex-col justify-center bg-rose-100">
-  <header>
-    <Banner>
-      Thanks for your support on{" "}
-      <a
-        class="font-bold underline"
-        href="https://www.producthunt.com/posts/progressively-2"
-        id="ph-button"
-      >
-        ProductHunt
-      </a>! We've reached <strong>#7 of the day!</strong> 🥰
-    </Banner>
-  </header>
-  <Navbar />
+<div class="relative flex flex-col justify-center">
   <div class="max-w-screen-xl mx-auto relative z-10 px-4 pt-32 md:pb-20">
-    <div class="flex flex-col gap-3 pb-16">
-      <Title tag="h1" size="XXL" className="font-extrabold max-w-3xl">
-        Your all-in-one<br />product toolbox
+    <div class="flex flex-col gap-6 pb-16 justify-center items-center">
+      <Title tag="h1" size="XL" className="font-extrabold text-center">
+        The product control tower
       </Title>
-      <p class="text-gray-600 text-2xl max-w-4xl">
-        The product control tower that helps you building a product with an
-        impact.
-      </p>
 
-      <div class="flex flex-col md:flex-row gap-4 items-center pt-4 md:pb-16">
+      <div class="pt-4 md:pb-16">
         <Button
           href="https://dashboard.progressively.app"
           id="above-the-fold-cta"
           size="XL"
-          variant="secondary"
+          variant="primary"
           target="_blank"
         >
           Get started

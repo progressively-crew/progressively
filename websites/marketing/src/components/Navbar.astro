@@ -2,12 +2,12 @@
 import Button from "./Button.astro";
 
 const navLinkStyles =
-  "px-2 md:px-6 py-2 text-gray-800 hover:text-gray-700 active:text-gray-600 rounded-xl block transition-all hover:bg-rose-200 active:bg-rose-300 text-lg font-semibold";
+  "px-2 md:px-6 py-2 text-xs md:text-base text-gray-700 hover:text-gray-600 active:text-gray-500 rounded-xl block transition-all hover:bg-gray-50 active:bg-gray-100";
 ---
 
-<nav class="pt-4 md:pt-12">
+<nav class="sticky top-0 bg-white z-30 py-4 border-b border-gray-100">
   <div
-    class="px-4 max-w-screen-xl w-full mx-auto flex flex-row justify-between items-center overflow-auto md:overflow-visible"
+    class="px-4 max-w-screen-xl w-full mx-auto flex flex-row justify-between items-center"
   >
     <ul class="flex flex-row gap-4 items-center shrink-0">
       <li class="flex flex-row gap-2 items-center shrink-0">
@@ -27,7 +27,7 @@ const navLinkStyles =
         <a
           href="https://docs.progressively.app/"
           id="nav-docs"
-          class={navLinkStyles}>Documentation</a
+          class={`hidden md:block ${navLinkStyles}`}>Documentation</a
         >
       </li>
 
@@ -50,7 +50,7 @@ const navLinkStyles =
         <Button
           href="https://dashboard.progressively.app/"
           id="go-to-app"
-          size="L"
+          size="M"
         >
           Go to app
         </Button>
